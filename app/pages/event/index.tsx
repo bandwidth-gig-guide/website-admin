@@ -1,6 +1,8 @@
 // React / Next
 import React, {useState, useEffect} from "react"
 import Head from 'next/head';
+import { PageType } from "../../types/enums/PageType";
+
 
 // Utils
 import { fetchIds } from '../../util/fetchIds'
@@ -10,7 +12,7 @@ const Event = () => {
   const [events, setEvents] = useState<uuid[]>([]);
 
   useEffect(() => {
-    fetchIds('event', setEvents);
+    fetchIds(PageType.Event, setEvents);
   }, []);
 
 

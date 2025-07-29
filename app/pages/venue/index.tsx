@@ -1,6 +1,7 @@
 // React / Next
 import React, {useState, useEffect} from "react"
 import Head from 'next/head';
+import { PageType } from "../../types/enums/PageType";
 
 // Utils
 import { fetchIds } from '../../util/fetchIds'
@@ -10,7 +11,7 @@ const Venue = () => {
   const [venues, setVenues] = useState<uuid[]>([]);
 
   useEffect(() => {
-    fetchIds('venue', setVenues);
+    fetchIds(PageType.Venue, setVenues);
   }, []);
 
 
