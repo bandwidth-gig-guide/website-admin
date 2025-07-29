@@ -1,0 +1,33 @@
+services:
+  db-main:
+    image: ghcr.io/bandwidth-gig-guide/db-main:latest
+    container_name: db-main
+    networks:
+      - network-bandwidth
+
+  service-public:
+    image: ghcr.io/bandwidth-gig-guide/service-public:latest
+    container_name: service-public
+    networks:
+      - network-bandwidth
+
+  service-admin:
+    image: ghcr.io/bandwidth-gig-guide/service-admin:latest
+    container_name: service-admin
+    networks:
+      - network-bandwidth
+
+  api-gateway:
+    image: ghcr.io/bandwidth-gig-guide/api-gateway:latest
+    container_name: api-gateway
+    depends_on:
+      - service-public
+      - service-admin
+    ports:
+      - "80:80"
+    networks:
+      - network-bandwidth
+
+networks:
+  network-bandwidth:
+    driver: bridge

@@ -1,0 +1,12 @@
+/* Work Sans */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --font-size-01: 12px;
+    --font-size-02: 16px;
+    --font-size-03: 24px;
+    --font-size-04: 32px;
+    --font-size-05: 48px;
+
+    --font-size: var(--font-size-02);
+}

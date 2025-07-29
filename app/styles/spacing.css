@@ -1,0 +1,27 @@
+:root {
+    --spacing-01: 4px; 
+    --spacing-02: 8px; 
+    --spacing-03: 12px; 
+    --spacing-04: 16px; 
+    --spacing-05: 24px; 
+    --spacing-06: 32px; 
+    --spacing-07: 48px; 
+    --spacing-08: 64px; 
+    --spacing-09: 80px; 
+
+    --spacing-app-max: 1600px;
+    --spacing-page-max: 1600px;
+
+    /* From left & right of screen / container */
+    --spacing-edge-desktop: var(--spacing-03);
+    --spacing-edge-tablet: var(--spacing-04);
+    --spacing-edge-mobile: var(--spacing-02);
+
+    /* Inline text spacing */
+    --spacing-inline: var(--spacing-04);
+
+    /* Grid, Flex & and Row */
+    --spacing-gap: var(--spacing-04);
+
+
+}
