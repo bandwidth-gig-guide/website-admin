@@ -1,12 +1,8 @@
-// React / Next
 import React, {useState, useEffect} from "react"
 import Head from 'next/head';
 import { PageType } from "../../types/enums/PageType";
-
-
-// Utils
+import Table from "../../components/Table/Table";
 import { fetchIds } from '../../util/fetchIds'
-
 
 const Artists = () => {
   const [artists, setArtists] = useState<uuid[]>([]);
@@ -15,7 +11,6 @@ const Artists = () => {
     fetchIds(PageType.Artist, setArtists);
   }, []);
 
-
   return (
     <>
       <Head>
@@ -23,9 +18,7 @@ const Artists = () => {
         <meta name="description" content="Welcome to my website" />
       </Head>
 
-      <h1>Artists</h1>
-      {artists}
-
+      <Table ids={artists} pageType={PageType.Artist} />
     </>
   );
 };

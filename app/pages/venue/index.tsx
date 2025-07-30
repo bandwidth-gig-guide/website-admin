@@ -1,19 +1,15 @@
-// React / Next
 import React, {useState, useEffect} from "react"
 import Head from 'next/head';
 import { PageType } from "../../types/enums/PageType";
-
-// Utils
+import Table from "../../components/Table/Table";
 import { fetchIds } from '../../util/fetchIds'
 
-
-const Venue = () => {
+const Venues = () => {
   const [venues, setVenues] = useState<uuid[]>([]);
 
   useEffect(() => {
     fetchIds(PageType.Venue, setVenues);
   }, []);
-
 
   return (
     <>
@@ -22,11 +18,9 @@ const Venue = () => {
         <meta name="description" content="Welcome to my website" />
       </Head>
 
-      <h1>Venues</h1>
-      {venues}
-
+      <Table ids={venues} pageType={PageType.Venue} />
     </>
   );
 };
 
-export default Venue;
+export default Venues;

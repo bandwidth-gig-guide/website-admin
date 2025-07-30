@@ -1,0 +1,34 @@
+.wrapper {
+
+    header {
+        padding: 16px;
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    nav {
+        display: flex;
+        gap: 16px;
+    }
+
+    .link {
+        color: var(--color-text-muted);
+        text-decoration: none;
+        font-weight: normal;
+    }
+
+    .active {
+        color: var(--color-accent);
+        font-weight: 500;
+    }
+}
+
+

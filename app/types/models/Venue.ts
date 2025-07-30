@@ -1,5 +1,6 @@
 import { Social } from "./Social";
 import { OpeningHours } from "./OpeningHours";
+import { VenueStage } from "./VenueStage";
 
 export type Venue = {
     venueId: uuid;
@@ -19,4 +20,5 @@ export type Venue = {
     tags: string[];
     openingHours?: OpeningHours;
     upcomingEventIds: url[];
+    venueStages: VenueStage[];
 }

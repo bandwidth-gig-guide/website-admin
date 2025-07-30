@@ -1,20 +1,15 @@
-// React / Next
 import React, {useState, useEffect} from "react"
 import Head from 'next/head';
 import { PageType } from "../../types/enums/PageType";
-
-
-// Utils
+import Table from "../../components/Table/Table";
 import { fetchIds } from '../../util/fetchIds'
 
-
-const Event = () => {
+const Events = () => {
   const [events, setEvents] = useState<uuid[]>([]);
 
   useEffect(() => {
     fetchIds(PageType.Event, setEvents);
   }, []);
-
 
   return (
     <>
@@ -23,11 +18,9 @@ const Event = () => {
         <meta name="description" content="Welcome to my website" />
       </Head>
 
-      <h1>Events</h1>
-      {events}
-
+      <Table ids={events} pageType={PageType.Event} />
     </>
   );
 };
 
-export default Event;
+export default Events;

@@ -11,4 +11,7 @@
     --color-text-muted: #838383;
     --color-text-light: #fff;
     --color-muted: #cdcdcd;
+    --color-border: #e0e0e0;
+    --color-table-header: #f2f2f5;
+    --color-table-row-hover: #f2f4f8;
 }
