@@ -29,6 +29,8 @@ a {
     text-decoration: none;
 }
 
+/* Table */
+
 table {
     width: fit-content;
     min-width: 100%;
@@ -67,4 +69,76 @@ tr:hover {
 
 .featuredIcon {
     height: 12px;
+}
+
+/* Form */
+form {
+    width: 100%;
+    flex: 1;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    padding: var(--spacing-06) var(--spacing-06);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-05);
+}
+
+form label {
+    font-weight: 600;
+    margin-bottom: var(--spacing-02);
+    color: var(--color-text);
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: var(--spacing-03) var(--spacing-04);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    font-size: var(--font-size);
+    color: var(--color-text);
+    transition: border-color 0.2s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+form button,
+form input[type="submit"] {
+    align-self: flex-end;
+    padding: var(--spacing-03) var(--spacing-05);
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+form button:hover,
+form input[type="submit"]:hover {
+    background-color: red;
+}
+
+form fieldset {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: var(--spacing-05) var(--spacing-05) var(--spacing-04) var(--spacing-05);
+    margin-bottom: var(--spacing-05);
+    background-color: var(--color-background);
+}
+
+form fieldset legend {
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: 0 var(--spacing-02);
+    font-size: 1.1em;
 }
