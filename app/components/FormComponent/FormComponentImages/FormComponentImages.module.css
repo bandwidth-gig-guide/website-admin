@@ -1,0 +1,121 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-02);
+
+    .cardWrapper {
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        background: var(--color-surface);
+        padding: var(--spacing-02);
+        cursor: move;
+        display: flex;
+        flex-direction: row;
+        gap: var(--spacing-02);
+
+        .imgWrapper {
+            height: 100px;
+            width: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: var(--color-surface-medium);
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+                margin: auto;
+                cursor: pointer;
+            }
+        }
+
+        .textWrapper {
+            width: 100%;
+
+            .topRow {
+                width: 100%;
+                flex: 1;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: var(--spacing-01);
+
+
+                input {
+                    width: 100%;
+                    padding: 4px;
+                    flex: 1;
+                }
+
+                button {
+                    border: none;
+                    background-color: transparent;
+                    opacity: .4;
+                    padding: 0;
+                    margin: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                    margin: auto;
+                }
+
+                button:hover {
+                    opacity: 1;
+                }
+            }
+
+            .metaText {
+                margin-top: var(--spacing-01);
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+
+.dragging {
+    opacity: 0.5;
+}
+
+.metaWarning {
+    color: red;
+}
+
+.addButton {
+    padding: var(--spacing-03);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    color: var(--color-text);
+}
+
+.addButton:hover {
+    background: var(--color-surface-medium);
+}
+
+.fullscreenOverlay {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.fullscreenImage {
+    max-width: 90vw;
+    max-height: 90vh;
+    box-shadow: 0 0 24px #000;
+}
