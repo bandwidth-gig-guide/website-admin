@@ -11,6 +11,10 @@ import FormComponentCheckbox from "../../FormComponent/FormComponentCheckbox/For
 import FormComponentTextArea from "../../FormComponent/FormComponentTextArea/FormComponentTextArea";
 import FormComponentImages from "../../FormComponent/FormComponentImages/FormComponentImages";
 import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormComponentSocials";
+import FormComponentList from "../../FormComponent/FormComponentList/FormComponentList";
+
+import { TAGS } from "../../../constants/tags";
+
 
 interface FormArtistProps {
   artist: Artist | null;
@@ -123,10 +127,16 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
 
       {/* Social Links */}
       <FormComponentSocials
-        socials={artist.socials}
-        onAdd={handleAddSocial}
-        onRemove={handleRemoveSocial}
-        onChange={handleSocialChange}
+        record={artist}
+        setRecord={setArtist}
+      />
+
+      {/* Tags */}
+      <FormComponentList
+        listName="tags"
+        options={TAGS}
+        record={artist}
+        setRecord={setArtist}
       />
 
       {/* Submit Button */}
