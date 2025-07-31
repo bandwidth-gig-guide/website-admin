@@ -20,8 +20,8 @@
         }
 
         .chip.active {
-            background: var(--color-surface-medium);
-            border: 1px solid var(--color-border-medium);
+            background: var(--color-checked);
+            border: 1px solid var(--color-checked-dark);
         }
 
         .clearAll {
