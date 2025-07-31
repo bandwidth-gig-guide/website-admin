@@ -1,8 +1,16 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import { Artist } from "../../../types/models/Artist";
-import { pascalcaseKeys } from "../../../util/pascalCaseKeys";
+import { pascalcaseKeys } from "../../../util/pascalcaseKeys";
 import axios from "axios";
 import apiUrl from "../../../api.config";
+
+// Reusable components
+import FormComponentTextInput from "../../FormComponent/FormComponentTextInput/FormComponentTextInput";
+import FormComponentNumberInput from "../../FormComponent/FormComponentNumberInput/FormComponentNumberInput";
+import FormComponentCheckbox from "../../FormComponent/FormComponentCheckbox/FormComponentCheckbox";
+import FormComponentTextArea from "../../FormComponent/FormComponentTextArea/FormComponentTextArea";
+import FormComponentImages from "../../FormComponent/FormComponentImages/FormComponentImages";
+import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormComponentSocials";
 
 interface FormArtistProps {
   artist: Artist | null;
@@ -12,6 +20,7 @@ interface FormArtistProps {
 const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
   if (!artist) return <div>Loading artist data...</div>;
 
+  // === General Handlers ===
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
     setArtist(prev => prev ? {
@@ -20,60 +29,34 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
     } : prev);
   };
 
-  const handleArrayChange = (key: keyof Artist, index: number, value: string) => {
-    if (!artist) return;
-    const updated = [...(artist[key] as string[])];
-    updated[index] = value;
-    setArtist({ ...artist, [key]: updated });
-  };
-
-  const handleArrayAdd = (key: keyof Artist) => {
-    if (!artist) return;
-    const updated = [...(artist[key] as string[]), ""];
-    setArtist({ ...artist, [key]: updated });
-  };
-
-  const handleArrayRemove = (key: keyof Artist, index: number) => {
-    if (!artist) return;
-    const updated = [...(artist[key] as string[])];
-    updated.splice(index, 1);
-    setArtist({ ...artist, [key]: updated });
-  };
-
-  const handleSocialChange = (index: number, field: string, value: string) => {
-    if (!artist) return;
+  // === Social Handlers ===
+  const handleSocialChange = (index: number, field: keyof typeof artist.socials[0], value: string) => {
     const updated = [...artist.socials];
     updated[index] = { ...updated[index], [field]: value };
     setArtist({ ...artist, socials: updated });
   };
 
   const handleAddSocial = () => {
-    if (!artist) return;
-    setArtist({
-      ...artist,
-      socials: [...artist.socials, { socialPlatform: "", handle: "", url: "" }]
-    });
+    setArtist({ ...artist, socials: [...artist.socials, { socialPlatform: "", handle: "", url: "" }] });
   };
 
   const handleRemoveSocial = (index: number) => {
-    if (!artist) return;
     const updated = artist.socials.filter((_, i) => i !== index);
     setArtist({ ...artist, socials: updated });
   };
 
+  // === Submit Handler ===
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!artist) return;
     try {
+      const data = pascalcaseKeys(artist);
       if (artist.artistId) {
-        // Existing artist - update (PUT)
-        await axios.put(`${apiUrl}/artist/${artist.artistId}`, pascalcaseKeys(artist), {
+        await axios.put(`${apiUrl}/artist/${artist.artistId}`, data, {
           headers: { "Content-Type": "application/json" }
         });
         alert("Artist updated!");
       } else {
-        // New artist - create (POST)
-        await axios.post(`${apiUrl}/artist`, pascalcaseKeys(artist), {
+        await axios.post(`${apiUrl}/artist`, data, {
           headers: { "Content-Type": "application/json" }
         });
         alert("Artist created!");
@@ -85,118 +68,70 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-  {/* Basic Info Section */}
-  <fieldset>
-    <legend>Basic Information</legend>
+      {/* Basic Info */}
+      <fieldset>
+        <legend>Basic Information</legend>
+        <FormComponentTextInput
+          label="Title"
+          name="title"
+          value={artist.title}
+          onChange={handleChange}
+        />
 
-    <label htmlFor="title">Title:</label>
-    <input
-      id="title"
-      type="text"
-      name="title"
-      value={artist.title}
-      onChange={handleChange}
-      required
-    />
-  </fieldset>
+        <FormComponentNumberInput
+          label="Year Founded"
+          name="yearFounded"
+          value={artist.yearFounded}
+          onChange={handleChange}
+          min={1920}
+          max={new Date().getFullYear()}
+          numberType="year"
+        />
+      </fieldset>
 
-  {/* Featured Flag Section */}
-  <fieldset>
-    <legend>Features</legend>
+      {/* Featured Flag */}
+      <fieldset>
+        <legend>Features</legend>
+        <FormComponentCheckbox
+          label="Featured"
+          name="isFeatured"
+          checked={artist.isFeatured}
+          onChange={handleChange}
+        />
+      </fieldset>
 
-    <input
-      id="isFeatured"
-      type="checkbox"
-      name="isFeatured"
-      checked={artist.isFeatured}
-      onChange={handleChange}
-    />
-    <label htmlFor="isFeatured">Is Featured</label>
-  </fieldset>
+      {/* Description */}
+      <fieldset>
+        <legend>Description</legend>
+        <FormComponentTextArea
+          label="Description"
+          name="description"
+          value={artist.description}
+          onChange={handleChange}
+          required={true}
+        />
+      </fieldset>
 
-  {/* Image URLs Section */}
-  <fieldset>
-    <legend>Image URLs</legend>
+      {/* Images */}
+      <fieldset>
+        <legend>Images</legend>
+        <FormComponentImages
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
 
-    {artist.imageUrls.map((url, idx) => {
-      const inputId = `imageUrl-${idx}`;
-      return (
-        <div key={idx}>
-          <label htmlFor={inputId}>{`Image URL #${idx + 1}:`}</label>
-          <input
-            id={inputId}
-            type="text"
-            value={url}
-            onChange={e => handleArrayChange("imageUrls", idx, e.target.value)}
-            placeholder={`Image URL #${idx + 1}`}
-          />
-          <button type="button" onClick={() => handleArrayRemove("imageUrls", idx)}>
-            Remove
-          </button>
-        </div>
-      );
-    })}
+      {/* Social Links */}
+      <FormComponentSocials
+        socials={artist.socials}
+        onAdd={handleAddSocial}
+        onRemove={handleRemoveSocial}
+        onChange={handleSocialChange}
+      />
 
-    <button type="button" onClick={() => handleArrayAdd("imageUrls")}>
-      Add Image
-    </button>
-  </fieldset>
-
-  {/* Socials Section */}
-  <fieldset>
-    <legend>Social Links</legend>
-
-    {artist.socials.map((social, idx) => {
-      const platformId = `socialPlatform-${idx}`;
-      const handleId = `socialHandle-${idx}`;
-      const urlId = `socialUrl-${idx}`;
-      return (
-        <div key={idx}>
-          <label htmlFor={platformId}>Platform:</label>
-          <input
-            id={platformId}
-            type="text"
-            placeholder="Platform"
-            value={social.socialPlatform}
-            onChange={e => handleSocialChange(idx, "socialPlatform", e.target.value)}
-          />
-
-          <label htmlFor={handleId}>Handle:</label>
-          <input
-            id={handleId}
-            type="text"
-            placeholder="Handle"
-            value={social.handle}
-            onChange={e => handleSocialChange(idx, "handle", e.target.value)}
-          />
-
-          <label htmlFor={urlId}>URL:</label>
-          <input
-            id={urlId}
-            type="text"
-            placeholder="URL"
-            value={social.url}
-            onChange={e => handleSocialChange(idx, "url", e.target.value)}
-          />
-
-          <button type="button" onClick={() => handleRemoveSocial(idx)}>
-            Remove
-          </button>
-        </div>
-      );
-    })}
-
-    <button type="button" onClick={handleAddSocial}>
-      Add Social
-    </button>
-  </fieldset>
-
-  {/* Submit Button */}
-  <button type="submit">
-    Save Changes
-  </button>
-</form>
-
+      {/* Submit Button */}
+      <button type="submit">Save Changes</button>
+    </form>
   );
 };
 
