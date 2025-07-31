@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./FormComponentCheckbox.module.css"
 
 interface Props {
   label: string;
@@ -8,7 +9,12 @@ interface Props {
 }
 
 const FormComponentCheckbox: React.FC<Props> = ({ label, name, checked, onChange }) => (
-  <div>
+  <div 
+    className={`
+      ${styles.wrapper} 
+      ${checked ? styles.checked : ''}
+    `}
+  >
     <input
       id={name}
       type="checkbox"
@@ -16,8 +22,13 @@ const FormComponentCheckbox: React.FC<Props> = ({ label, name, checked, onChange
       checked={checked}
       onChange={onChange}
     />
-    <label htmlFor={name}>{label}</label>
-  </div>
+    <label
+      htmlFor={name}
+    >
+      {label}
+    </label>
+</div>
+
 );
 
 export default FormComponentCheckbox;

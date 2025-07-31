@@ -1,6 +1,8 @@
 :root {
     --color-primary: #3498db;
     --color-secondary: #2ecc71;
+    --color-checked: #89caf5;
+    --color-checked-dark: #639ec5;
     --color-accent-dark: #bc0202;
     --color-accent: #ee0000;
     --color-background: #ffffff;

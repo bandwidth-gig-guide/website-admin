@@ -14,6 +14,7 @@ import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormC
 import FormComponentList from "../../FormComponent/FormComponentList/FormComponentList";
 
 import { TAGS } from "../../../constants/tags";
+import { ARTIST_TYPES } from "../../../constants/artistTypes";
 
 
 interface FormArtistProps {
@@ -132,12 +133,26 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
       />
 
       {/* Tags */}
-      <FormComponentList
-        listName="tags"
-        options={TAGS}
-        record={artist}
-        setRecord={setArtist}
-      />
+      <fieldset>
+        <legend>Tags</legend>
+        <FormComponentList
+          listName="tags"
+          options={TAGS}
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
+
+      {/* Types */}
+      <fieldset>
+        <legend>Types</legend>
+        <FormComponentList
+          listName="types"
+          options={ARTIST_TYPES}
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
 
       {/* Submit Button */}
       <button type="submit">Save Changes</button>
