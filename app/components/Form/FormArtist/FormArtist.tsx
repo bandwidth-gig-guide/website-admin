@@ -7,7 +7,7 @@ import apiUrl from "../../../api.config";
 // Reusable components
 import FormComponentTextInput from "../../FormComponent/FormComponentTextInput/FormComponentTextInput";
 import FormComponentNumberInput from "../../FormComponent/FormComponentNumberInput/FormComponentNumberInput";
-import FormComponentCheckbox from "../../FormComponent/FormComponentCheckbox/FormComponentCheckbox";
+import FormComponentDropdownList from "../../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
 import FormComponentTextArea from "../../FormComponent/FormComponentTextArea/FormComponentTextArea";
 import FormComponentImages from "../../FormComponent/FormComponentImages/FormComponentImages";
 import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormComponentSocials";
@@ -17,6 +17,8 @@ import FormComponentEmbed from "../../FormComponent/FormComponentEmbed/FormCompo
 
 import { TAGS } from "../../../constants/tags";
 import { ARTIST_TYPES } from "../../../constants/artistTypes";
+import { STATE_CODE } from "../../../constants/stateCode";
+import { COUNTRY } from "../../../constants/country";
 
 
 interface FormArtistProps {
@@ -60,22 +62,47 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
       {/* Basic Info */}
       <fieldset>
         <legend>Basic Information</legend>
-        <FormComponentTextInput
-          label="Title"
-          name="title"
-          value={artist.title}
-          onChange={handleChange}
-        />
-
-        <FormComponentNumberInput
-          label="Year Founded"
-          name="yearFounded"
-          value={artist.yearFounded}
-          onChange={handleChange}
-          min={1920}
-          max={new Date().getFullYear()}
-          numberType="year"
-        />
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px"
+        }}>
+          <FormComponentTextInput
+            label="Title"
+            name="title"
+            value={artist.title}
+            onChange={handleChange}
+          />
+          <FormComponentNumberInput
+            label="Year Founded"
+            name="yearFounded"
+            value={artist.yearFounded}
+            onChange={handleChange}
+            min={1920}
+            max={new Date().getFullYear()}
+            numberType="year"
+          />
+          <FormComponentDropdownList
+            label="Country"
+            name="country"
+            value={artist.country}
+            onChange={handleChange}
+            options={COUNTRY}
+          />
+          <FormComponentTextInput
+            label="City"
+            name="city"
+            value={artist.city}
+            onChange={handleChange}
+          />
+          <FormComponentDropdownList
+            label="State"
+            name="stateCode"
+            value={artist.stateCode}
+            onChange={handleChange}
+            options={STATE_CODE}
+          />
+        </div>
       </fieldset>
 
 
@@ -95,69 +122,69 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
       {/* Embeds */}
       <fieldset>
         <legend>Embeds</legend>
-        <div style={{ 
+        <div style={{
           overflowX: "scroll",
-          display: "flex", 
-          flexDirection: "row", 
+          display: "flex",
+          flexDirection: "row",
           flexWrap: "nowrap",
           gap: "12px"
-          }}>
-        <FormComponentEmbed
-          label="Spotify"
-          name="spotifyEmbedUrl"
-          url={artist.spotifyEmbedUrl}
-          onChange={handleChange}
-          required={true}
+        }}>
+          <FormComponentEmbed
+            label="Spotify"
+            name="spotifyEmbedUrl"
+            url={artist.spotifyEmbedUrl}
+            onChange={handleChange}
+            required={true}
+          />
+          <FormComponentEmbed
+            label="Youtube"
+            name="youtubeEmbedUrl"
+            url={artist.youtubeEmbedUrl}
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
+      </fieldset>
+
+      {/* Images */}
+      <fieldset>
+        <legend>Images</legend>
+        <FormComponentImages
+          record={artist}
+          setRecord={setArtist}
         />
-        <FormComponentEmbed
-          label="Youtube"
-          name="youtubeEmbedUrl"
-          url={artist.youtubeEmbedUrl}
-          onChange={handleChange}
-          required={true}
+      </fieldset>
+
+      {/* Social Links */}
+      <FormComponentSocials
+        record={artist}
+        setRecord={setArtist}
+      />
+
+      {/* Tags */}
+      <fieldset>
+        <legend>Tags</legend>
+        <FormComponentList
+          listName="tags"
+          options={TAGS}
+          record={artist}
+          setRecord={setArtist}
         />
-      </div>
-    </fieldset>
+      </fieldset>
 
-      {/* Images */ }
-  <fieldset>
-    <legend>Images</legend>
-    <FormComponentImages
-      record={artist}
-      setRecord={setArtist}
-    />
-  </fieldset>
+      {/* Types */}
+      <fieldset>
+        <legend>Types</legend>
+        <FormComponentList
+          listName="types"
+          options={ARTIST_TYPES}
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
 
-  {/* Social Links */ }
-  <FormComponentSocials
-    record={artist}
-    setRecord={setArtist}
-  />
-
-  {/* Tags */ }
-  <fieldset>
-    <legend>Tags</legend>
-    <FormComponentList
-      listName="tags"
-      options={TAGS}
-      record={artist}
-      setRecord={setArtist}
-    />
-  </fieldset>
-
-  {/* Types */ }
-  <fieldset>
-    <legend>Types</legend>
-    <FormComponentList
-      listName="types"
-      options={ARTIST_TYPES}
-      record={artist}
-      setRecord={setArtist}
-    />
-  </fieldset>
-
-  {/* Submit Button */ }
-  <button type="submit">Save Changes</button>
+      {/* Submit Button */}
+      <button type="submit">Save Changes</button>
     </form >
   );
 };
