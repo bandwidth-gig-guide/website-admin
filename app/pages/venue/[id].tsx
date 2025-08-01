@@ -6,10 +6,10 @@ import apiUrl from "../../api.config"
 import { Venue } from "../../types/models/Venue"
 import styles from "../../styles/page.module.css"
 import JsonPreview from "../../components/JsonPreview/JsonPreview";
+import FormVenue from "../../components/Form/FormVenue/FormVenue";
 
 const VenueDetail = () => {
-  const [venue, setVenue] = useState<Venue>({} as Venue)
-
+  const [venue, setVenue] = useState<Venue | null>(null)
   const router = useRouter();
   const { id } = router.query;
 
@@ -19,11 +19,10 @@ const VenueDetail = () => {
   }, [id]);
 
   return (
-    <>
-      <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-        <JsonPreview json={venue} />
-      </div>
-    </>
+    <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+      <FormVenue venue={venue} setVenue={setVenue} />
+      {/* <JsonPreview json={venue} /> */}
+    </div>
   );
 };
 

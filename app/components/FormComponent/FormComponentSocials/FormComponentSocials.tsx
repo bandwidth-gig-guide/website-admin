@@ -85,8 +85,7 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
   };
 
   return (
-    <fieldset className={styles.wrapper}>
-      <legend>Socials</legend>
+    <div className={styles.wrapper}>
       {draftSocials.map((social, index) => (
         <div key={index} className={styles.socialRow}>
           <div
@@ -119,7 +118,7 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
           />
         </div>
       ))}
-    </fieldset>
+    </div>
   );
 };
 

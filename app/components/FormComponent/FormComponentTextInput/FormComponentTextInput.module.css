@@ -1,9 +1,11 @@
 .wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     gap: 12px;
+    width: 100%;
+
 
     input {
         flex: 1;

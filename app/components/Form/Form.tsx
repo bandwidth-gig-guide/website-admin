@@ -17,8 +17,7 @@ const Form: React.FC<Props> = ({ type, record, setRecord }) => {
     case "artist":
       return <FormArtist artist={record} setArtist={setRecord} />;
     case "venue":
-      return <p>Venue Form</p>
-      // return <FormVenue venue={record} setVenue={setRecord} />;
+      return <FormVenue venue={record} setVenue={setRecord} />;
     case "event":
       return <p>Event Form</p>
       // return <FormEvent event={record} setEvent={setRecord} />;

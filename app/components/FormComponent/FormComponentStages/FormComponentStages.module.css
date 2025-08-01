@@ -1,0 +1,62 @@
+.wrapper {
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: var(--spacing-04) 0;
+    border-bottom: 1px solid var(--color-border);
+
+    .topRow {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-01);
+
+
+      input {
+        width: 100%;
+        padding: 4px;
+        flex: 1;
+      }
+
+      button {
+        border: none;
+        background-color: transparent;
+        opacity: .4;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        margin: auto;
+      }
+
+      button:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .card:first-child {
+    padding-top: 0;
+  }
+
+  .addButton {
+    padding: var(--spacing-03);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    color: var(--color-text);
+    margin-top: var(--spacing-04);
+}
+
+.addButton:hover {
+    background: var(--color-surface-medium);
+}
+}

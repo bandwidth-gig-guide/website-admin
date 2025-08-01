@@ -9,7 +9,7 @@ interface Props {
   required?: boolean;
   min?: number;
   max?: number;
-  numberType?: 'year' | 'price' | 'any';
+  numberType?: 'year' | 'postCode' | 'price' | 'any';
 }
 
 const FormComponentNumberInput: React.FC<Props> = ({
@@ -46,6 +46,12 @@ const FormComponentNumberInput: React.FC<Props> = ({
   };
 
   if (numberType === 'year') {
+    inputProps.min = min !== undefined ? min : 1000;
+    inputProps.max = max !== undefined ? max : 9999;
+    inputProps.step = 1;
+    inputProps.pattern = "\\d{4}";
+    inputProps.maxLength = 4;
+  } else if (numberType === 'postCode') {
     inputProps.min = min !== undefined ? min : 1000;
     inputProps.max = max !== undefined ? max : 9999;
     inputProps.step = 1;

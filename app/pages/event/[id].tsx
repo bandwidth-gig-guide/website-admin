@@ -7,6 +7,7 @@ import { Event } from "../../types/models/Event"
 import styles from "../../styles/page.module.css"
 import WebPageEmbed from "../../components/WebpagePreview/WebpagePreivew";
 import JsonPreview from "../../components/JsonPreview/JsonPreview";
+import FormEvent from "../../components/Form/FormEvent/FormEvent"
 
 const EventDetail = () => {
   const [event, setEvent] = useState<Event>({} as Event)
@@ -22,8 +23,8 @@ const EventDetail = () => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+        <FormEvent event={event} setEvent={setEvent} />
         <JsonPreview json={event} />
-        <WebPageEmbed url='https://thetotehotel.com/' />
       </div>
     </>
   );
