@@ -22,7 +22,7 @@ main {
     background-color: var(--color-background);
     width: 100%;
     margin: auto;
-    padding: var(--spacing-06) var(--spacing-edge-desktop);
+    padding: var(--spacing-edge-desktop);
 }
 
 a {

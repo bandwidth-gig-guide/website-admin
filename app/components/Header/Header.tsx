@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import styles from './Header.module.css'
 
 const routes = [
-  { label: "Events", href: "/event" },
-  { label: "Artists", href: "/artist" },
-  { label: "Venues", href: "/venue" },
-  { label: "Images", href: "/images" },
+  { label: "Events", type: 'event', href: "/event" },
+  { label: "Artists", type: 'artist', href: "/artist" },
+  { label: "Venues", type: 'venue', href: "/venue" },
+  { label: "Images", type: 'image', href: "/images" },
 ];
 
 const toggles = [
@@ -17,6 +17,9 @@ const toggles = [
 
 const Header = () => {
   const router = useRouter();
+  const { id } = router.query;
+  const { pageType } = router.query;
+  const pageTypeLabel = routes.find(route => router.pathname.startsWith(route.href))?.type || pageType;
 
   return (
     <div className={styles.wrapper}>
@@ -36,17 +39,19 @@ const Header = () => {
             );
           })}
         </nav>
-        <div className={styles.toggles}>
-          {toggles.map(toggle => (
-            <img 
-              src={toggle.src} 
-              alt={toggle.label} 
-              title={toggle.label}
-              key={toggle.label}
-            />
-          ))}
-        </div>
-      </header>
+        {id && (
+          <div className={styles.toggles}>
+            {toggles.map(toggle => (
+              <img
+                src={toggle.src}
+                alt={toggle.label}
+                title={toggle.label}
+                key={toggle.label}
+              />
+            ))}
+          </div>
+        )}
+        </header>
     </div>
   )
 }

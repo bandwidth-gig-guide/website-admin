@@ -1,17 +1,14 @@
 .wrapper {
-
-    height: 36px;
-
     header {
         padding: 16px 27px;
         border-bottom: 1px solid var(--color-border);
         display: flex;
         flex-direction: row;
+        justify-content: left;
         align-items: center;
         gap: 24px;
-        position: fixed;
         width: 100%;
-        background-color: var(--color-surface);
+        background-color: var(--color-header);
     }
 
     h1 {
@@ -26,7 +23,7 @@
     }
 
     .link {
-        color: var(--color-text-muted);
+        color: var(--color-text);
         text-decoration: none;
         font-weight: normal;
     }
@@ -37,6 +34,7 @@
     }
 
     .toggles {
+        justify-self: right;
         display: flex;
         flex-direction: row;
         gap: 8px;
