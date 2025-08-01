@@ -1,0 +1,7 @@
+.wrapper {
+    .wordCount {
+        .warning {
+            color: var(--color-accent);
+        }
+    }
+}
