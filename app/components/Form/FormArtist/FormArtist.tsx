@@ -12,6 +12,8 @@ import FormComponentTextArea from "../../FormComponent/FormComponentTextArea/For
 import FormComponentImages from "../../FormComponent/FormComponentImages/FormComponentImages";
 import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormComponentSocials";
 import FormComponentList from "../../FormComponent/FormComponentList/FormComponentList";
+import FormComponentEmbed from "../../FormComponent/FormComponentEmbed/FormComponentEmbed";
+
 
 import { TAGS } from "../../../constants/tags";
 import { ARTIST_TYPES } from "../../../constants/artistTypes";
@@ -117,46 +119,73 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
         />
       </fieldset>
 
-      {/* Images */}
+      {/* Embeds */}
       <fieldset>
-        <legend>Images</legend>
-        <FormComponentImages
-          record={artist}
-          setRecord={setArtist}
+        <legend>Embeds</legend>
+        <div style={{ 
+          overflowX: "scroll",
+          display: "flex", 
+          flexDirection: "row", 
+          flexWrap: "nowrap",
+          gap: "12px"
+          }}>
+        <FormComponentEmbed
+          label="Spotify"
+          name="spotifyEmbedUrl"
+          url={artist.spotifyEmbedUrl}
+          onChange={handleChange}
+          required={true}
         />
-      </fieldset>
-
-      {/* Social Links */}
-      <FormComponentSocials
-        record={artist}
-        setRecord={setArtist}
-      />
-
-      {/* Tags */}
-      <fieldset>
-        <legend>Tags</legend>
-        <FormComponentList
-          listName="tags"
-          options={TAGS}
-          record={artist}
-          setRecord={setArtist}
+        <FormComponentEmbed
+          label="Youtube"
+          name="youtubeEmbedUrl"
+          url={artist.youtubeEmbedUrl}
+          onChange={handleChange}
+          required={true}
         />
-      </fieldset>
+      </div>
+    </fieldset>
 
-      {/* Types */}
-      <fieldset>
-        <legend>Types</legend>
-        <FormComponentList
-          listName="types"
-          options={ARTIST_TYPES}
-          record={artist}
-          setRecord={setArtist}
-        />
-      </fieldset>
+      {/* Images */ }
+  <fieldset>
+    <legend>Images</legend>
+    <FormComponentImages
+      record={artist}
+      setRecord={setArtist}
+    />
+  </fieldset>
 
-      {/* Submit Button */}
-      <button type="submit">Save Changes</button>
-    </form>
+  {/* Social Links */ }
+  <FormComponentSocials
+    record={artist}
+    setRecord={setArtist}
+  />
+
+  {/* Tags */ }
+  <fieldset>
+    <legend>Tags</legend>
+    <FormComponentList
+      listName="tags"
+      options={TAGS}
+      record={artist}
+      setRecord={setArtist}
+    />
+  </fieldset>
+
+  {/* Types */ }
+  <fieldset>
+    <legend>Types</legend>
+    <FormComponentList
+      listName="types"
+      options={ARTIST_TYPES}
+      record={artist}
+      setRecord={setArtist}
+    />
+  </fieldset>
+
+  {/* Submit Button */ }
+  <button type="submit">Save Changes</button>
+    </form >
   );
 };
 
