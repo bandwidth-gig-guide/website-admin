@@ -102,22 +102,53 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
             onChange={handleChange}
             options={STATE_CODE}
           />
+          <FormComponentTextArea
+            label="Description"
+            name="description"
+            value={artist.description}
+            onChange={handleChange}
+            required={true}
+          />
         </div>
       </fieldset>
 
+      {/* Social Links */}
+      <FormComponentSocials
+        record={artist}
+        setRecord={setArtist}
+      />
 
-
-      {/* Description */}
+      {/* Images */}
       <fieldset>
-        <legend>Description</legend>
-        <FormComponentTextArea
-          label="Description"
-          name="description"
-          value={artist.description}
-          onChange={handleChange}
-          required={true}
+        <legend>Images</legend>
+        <FormComponentImages
+          record={artist}
+          setRecord={setArtist}
         />
       </fieldset>
+
+      {/* Tags */}
+      <fieldset>
+        <legend>Tags</legend>
+        <FormComponentList
+          listName="tags"
+          options={TAGS}
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
+
+      {/* Types */}
+      <fieldset>
+        <legend>Types</legend>
+        <FormComponentList
+          listName="types"
+          options={ARTIST_TYPES}
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
+
 
       {/* Embeds */}
       <fieldset>
@@ -146,42 +177,8 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
         </div>
       </fieldset>
 
-      {/* Images */}
-      <fieldset>
-        <legend>Images</legend>
-        <FormComponentImages
-          record={artist}
-          setRecord={setArtist}
-        />
-      </fieldset>
 
-      {/* Social Links */}
-      <FormComponentSocials
-        record={artist}
-        setRecord={setArtist}
-      />
 
-      {/* Tags */}
-      <fieldset>
-        <legend>Tags</legend>
-        <FormComponentList
-          listName="tags"
-          options={TAGS}
-          record={artist}
-          setRecord={setArtist}
-        />
-      </fieldset>
-
-      {/* Types */}
-      <fieldset>
-        <legend>Types</legend>
-        <FormComponentList
-          listName="types"
-          options={ARTIST_TYPES}
-          record={artist}
-          setRecord={setArtist}
-        />
-      </fieldset>
 
       {/* Submit Button */}
       <button type="submit">Save Changes</button>

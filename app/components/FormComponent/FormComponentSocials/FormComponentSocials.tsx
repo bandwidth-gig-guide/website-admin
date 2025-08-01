@@ -89,20 +89,20 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
       <legend>Socials</legend>
       {draftSocials.map((social, index) => (
         <div key={index} className={styles.socialRow}>
-            <div
+          <div
             className={`
               ${styles.iconWrapper} 
               ${!(social.handle && social.url) ? styles.incomplete : ""}
             `}
-            >
+          >
             {socialIcons[social.socialPlatform] && (
               <img
-              src={socialIcons[social.socialPlatform]}
-              alt=""
+                src={socialIcons[social.socialPlatform]}
+                alt=""
               />
             )}
             <span>{social.socialPlatform}</span>
-            </div>
+          </div>
           <input
             type="text"
             placeholder="@handle"

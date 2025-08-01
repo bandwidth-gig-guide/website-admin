@@ -22,8 +22,7 @@ const FormComponentEmbed: React.FC<Props> = ({ label, name, url, onChange, requi
     <div className={styles.wrapper}>
       <div className={styles.inputWrapper}>
         <label htmlFor={name}>
-          <img src={nameToIconMap[name]} alt="" />
-          <span>{label}</span>
+          <img src={nameToIconMap[name]} alt={label} />
         </label>
         <input
           id={name}
@@ -31,6 +30,7 @@ const FormComponentEmbed: React.FC<Props> = ({ label, name, url, onChange, requi
           value={url}
           onChange={onChange}
           required={required}
+          placeholder={label}
         />
       </div>
       <iframe

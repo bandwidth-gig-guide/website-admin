@@ -24,7 +24,7 @@ const ArtistPage = () => {
   return (
     <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
       <FormArtist artist={artist} setArtist={setArtist} />
-      <JsonPreview json={artist} />
+      {/* <JsonPreview json={artist} /> */}
     </div>
   );
 };

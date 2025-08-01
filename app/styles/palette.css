@@ -15,6 +15,7 @@
     --color-muted: #cdcdcd;
     --color-border: #e0e0e0;
     --color-border-medium: #bfbdbd;
+    --color-border-dark: #cbc8c8;
     --color-table-header: #f2f2f5;
     --color-table-row-hover: #f2f4f8;
     --color-header: var(--color-surface);
