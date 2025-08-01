@@ -78,16 +78,7 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
         />
       </fieldset>
 
-      {/* Featured Flag */}
-      <fieldset>
-        <legend>Features</legend>
-        <FormComponentCheckbox
-          label="Featured"
-          name="isFeatured"
-          checked={artist.isFeatured}
-          onChange={handleChange}
-        />
-      </fieldset>
+
 
       {/* Description */}
       <fieldset>
