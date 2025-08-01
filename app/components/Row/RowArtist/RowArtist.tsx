@@ -58,7 +58,7 @@ const RowArtist: React.FC<Props> = ({ artistId }) => {
   return (
     <tr className={styles.wrapper} onClick={handleRowClick}>
       <td>{artist.artistId}</td>
-      <td>{artist.isFeatured ? <img src='./featured-red.svg' className='featuredIcon'/> : ''} {artist.title}</td>
+      <td>{artist.title}</td>
       <td>{upcomingEventCount}</td>
       <td>{artist.stateCode}</td>
       <td>{artist.country}</td>

@@ -62,7 +62,7 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
   return (
     <tr className={styles.wrapper} onClick={handleRowClick}>
       <td>{venue.venueId}</td>
-      <td>{venue.isFeatured ? <img src='./featured-red.svg' className='featuredIcon'/> : ''} {venue.title}</td>
+      <td>{venue.title}</td>
       <td>{upcomingEventCount}</td>
       <td>{venue.stateCode}</td>
       <td>{venue.city}</td>
