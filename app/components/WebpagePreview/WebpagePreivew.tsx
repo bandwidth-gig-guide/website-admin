@@ -12,6 +12,7 @@ const WebPageEmbed: React.FC<Props> = ({ url, title = 'Embedded Page' }) => {
       <iframe
         src={url}
         title={title}
+        sandbox="allow-scripts allow-same-origin"
       />
     </div>
   );
