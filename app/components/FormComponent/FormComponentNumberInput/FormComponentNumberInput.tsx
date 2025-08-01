@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './FormComponentNumberInput.module.css'
 
 interface Props {
   label: string;
@@ -61,7 +62,7 @@ const FormComponentNumberInput: React.FC<Props> = ({
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <label htmlFor={name}>{label}</label>
       <input
         id={name}

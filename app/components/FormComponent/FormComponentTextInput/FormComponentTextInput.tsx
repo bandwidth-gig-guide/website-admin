@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './FormComponentTextInput.module.css'
 
 interface Props {
   label: string;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const FormComponentTextInput: React.FC<Props> = ({ label, name, value, onChange, required }) => (
-  <div>
+  <div className={styles.wrapper}>
     <label htmlFor={name}>{label}</label>
     <input id={name} name={name} value={value} onChange={onChange} required={required} />
   </div>
