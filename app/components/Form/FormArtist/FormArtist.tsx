@@ -27,7 +27,6 @@ interface FormArtistProps {
 const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
   if (!artist) return <div>Loading artist data...</div>;
 
-  // === General Handlers ===
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
     setArtist(prev => prev ? {
@@ -36,23 +35,6 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
     } : prev);
   };
 
-  // === Social Handlers ===
-  const handleSocialChange = (index: number, field: keyof typeof artist.socials[0], value: string) => {
-    const updated = [...artist.socials];
-    updated[index] = { ...updated[index], [field]: value };
-    setArtist({ ...artist, socials: updated });
-  };
-
-  const handleAddSocial = () => {
-    setArtist({ ...artist, socials: [...artist.socials, { socialPlatform: "", handle: "", url: "" }] });
-  };
-
-  const handleRemoveSocial = (index: number) => {
-    const updated = artist.socials.filter((_, i) => i !== index);
-    setArtist({ ...artist, socials: updated });
-  };
-
-  // === Submit Handler ===
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
