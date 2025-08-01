@@ -44,7 +44,17 @@ const FormComponentTextArea: React.FC<Props> = ({
 
   return (
     <div className={styles.wrapper}>
-      <label htmlFor={name}>{label}</label>
+      <div className={styles.textWrapper}>
+        <label htmlFor={name}>{label}</label>
+        <div className={styles.wordCount}>
+          <span className={!isAppropriateLength ? styles.warning : ''}>
+            {wordCount}
+          </span>
+          {isDescription && (
+            <span>&nbsp;| Target: {DESCRIPTION_MIN} - {DESCRIPTION_MAX}</span>
+          )}
+        </div>
+      </div>
       <textarea
         id={name}
         name={name}
@@ -52,15 +62,9 @@ const FormComponentTextArea: React.FC<Props> = ({
         onChange={onChange}
         required={required}
         rows={rows}
+        style={{ resize: "vertical" }}
       />
-      <div className={styles.wordCount}>
-        <span className={!isAppropriateLength ? styles.warning : ''}>
-          {wordCount}
-        </span>
-        {isDescription && (
-          <span>&nbsp;| Target: {DESCRIPTION_MIN} - {DESCRIPTION_MAX}</span>
-        )}
-      </div>
+
     </div>
   );
 };
