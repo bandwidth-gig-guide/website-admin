@@ -51,6 +51,9 @@ const Header = () => {
             ))}
           </div>
         )}
+        <div className={styles.searchBar}>
+          [ Search Bar ]
+        </div>
         </header>
     </div>
   )
