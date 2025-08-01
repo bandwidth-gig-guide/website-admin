@@ -24,7 +24,6 @@ const EventDetail = () => {
       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
         <JsonPreview json={event} />
         <WebPageEmbed url='https://thetotehotel.com/' />
-        <WebPageEmbed url='https://thetotehotel.oztix.com.au/outlet/event/219ae37e-9956-401a-b430-c2a03f7828f3?utm_source=TheToteHotel&utm_medium=Website' />
       </div>
     </>
   );
