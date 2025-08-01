@@ -4,6 +4,8 @@ import { Artist } from "../../../types/models/Artist";
 import { Event } from "../../../types/models/Event";
 import { Venue } from "../../../types/models/Venue";
 
+import { IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT } from "../../../constants/minMaxValues";
+
 type RecordWithImages = Artist | Event | Venue;
 
 type ImageMetaData = {
@@ -188,9 +190,15 @@ const FormComponentImages = ({ record, setRecord }: Props) => {
               </div>
               <div className={styles.metaText}>
                 {meta.width > 0 && (
-                  <span className={meta.width < 500 || meta.height < 500 ? styles.metaWarning : ""}>
-                    {meta.width} x {meta.height}
-                  </span>
+                  <>
+                    <span className={meta.width < IMAGE_MIN_WIDTH ? styles.metaWarning : ""}>
+                      {meta.width}
+                    </span>
+                    <span>&nbsp;x&nbsp;</span>
+                    <span className={meta.height < IMAGE_MIN_HEIGHT ? styles.metaWarning : ""}>
+                      {meta.height}
+                    </span>
+                  </>
                 )}
                 {meta.fileSizeDisplay && (
                   <span className={meta.fileSizeBytes > 500 * 1024 ? styles.metaWarning : ""}>
