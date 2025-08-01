@@ -6,5 +6,10 @@
     border-radius: 8px;
     padding: var(--spacing-06);
     flex: 1;
-    overflow-x: scroll;
+    overflow-x: hidden;
+
+    .innerWrapper {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }

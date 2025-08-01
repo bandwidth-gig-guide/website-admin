@@ -9,7 +9,9 @@ interface Props {
 const JsonPreview: React.FC<Props> = ({ json }) => {
   return (
     <div className={styles.wrapper}>
-      <pre>{JSON.stringify(pascalcaseKeys(json), null, 2)}</pre>
+      <div className={styles.innerWrapper}>
+        <pre>{JSON.stringify(pascalcaseKeys(json), null, 2)}</pre>
+      </div>
     </div>
   )
 }
