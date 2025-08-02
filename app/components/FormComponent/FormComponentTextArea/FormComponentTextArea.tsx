@@ -18,7 +18,7 @@ const FormComponentTextArea: React.FC<Props> = ({
   value,
   onChange,
   required = true,
-  rows = 10,
+  rows = 6,
   isDescription = true
 }) => {
 

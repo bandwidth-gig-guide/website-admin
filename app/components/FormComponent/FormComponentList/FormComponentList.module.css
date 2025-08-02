@@ -2,7 +2,7 @@
     .chipWrapper {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 4px;
 
         .chip {
             border: 1px solid var(--color-border);

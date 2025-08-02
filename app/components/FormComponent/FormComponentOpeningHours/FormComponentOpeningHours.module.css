@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
   width: 100%;
 
   .row {
@@ -12,7 +12,7 @@
     flex-direction: row;
     justify-content: left;
     align-items: center;
-    gap: 12px;
+    gap: 4px;
 
     label {
       margin: 0;

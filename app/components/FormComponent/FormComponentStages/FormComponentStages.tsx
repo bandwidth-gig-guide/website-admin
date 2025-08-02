@@ -82,7 +82,7 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
             name={`stage-description-${index}`}
             value={stage.description}
             onChange={e => handleChange(index, "description", e.target.value)}
-            rows={5}
+            rows={3}
             isDescription={false}
           />
 
