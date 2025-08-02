@@ -3,6 +3,7 @@ import { Artist } from "../../../types/models/Artist";
 import { pascalcaseKeys } from "../../../util/pascalcaseKeys";
 import axios from "axios";
 import apiUrl from "../../../api.config";
+import styles from './FormArtist.module.css'
 
 // Reusable components
 import FormComponentTextInput from "../../FormComponent/FormComponentTextInput/FormComponentTextInput";
@@ -58,14 +59,35 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.wrapper}>
+
+      {/* Header */}
+      <div className={styles.headerWrapper}>
+        <div className={styles.headerText}>
+          <h1>{artist.artistId ? artist.title : 'New Artist'}</h1>
+          <h2>{artist.artistId ? artist.artistId : artist.title}</h2>
+        </div>
+        <div className={styles.buttonRow}>
+          <button type="button">
+            <img src="/refresh.svg" alt="Refresh Icon" />
+          </button>
+          <button type="button">
+            <img src="/delete.svg" alt="Delete Icon" />
+          </button>
+
+          <button type="submit">
+            <img src="/save.svg" alt="Save Icon" onClick={handleSubmit} />
+          </button>
+        </div>
+      </div>
+
       {/* Basic Info */}
       <fieldset>
         <legend>Basic Information</legend>
         <div style={{
           display: "flex",
           flexDirection: "column",
-          gap: "8px"
+          gap: "4px"
         }}>
           <FormComponentTextInput
             label="Title"
@@ -113,10 +135,13 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
       </fieldset>
 
       {/* Social Links */}
-      <FormComponentSocials
-        record={artist}
-        setRecord={setArtist}
-      />
+      <fieldset>
+        <legend>Socials</legend>
+        <FormComponentSocials
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
 
       {/* Images */}
       <fieldset>
@@ -180,8 +205,7 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
 
 
 
-      {/* Submit Button */}
-      <button type="submit">Save Changes</button>
+
     </form >
   );
 };
