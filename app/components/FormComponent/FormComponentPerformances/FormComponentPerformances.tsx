@@ -11,23 +11,23 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      {!record.performances ? (
-      <div className={styles.emptyState}>No performances.</div>
-      ) : (
-      record.performances.map((performance, index) => (
-        <div className={styles.cardWrapper} key={index}>
-        <div className={styles.imgWrapper}>
-          <img src={performance.imageUrl} alt={performance.title} />
-        </div>
-        <span>{performance.title}</span>
-        <span>{performance.startDateTime.toLocaleString()}</span>
-        </div>
-      ))
-      )}
+
+      {record.performances &&
+        record.performances.map((performance, index) => (
+          <div className={styles.cardWrapper} key={index}>
+            <div className={styles.imgWrapper}>
+              <img src={performance.imageUrl} alt={performance.title} />
+            </div>
+            <span>{performance.title}</span>
+            <span>{performance.startDateTime.toLocaleString()}</span>
+          </div>
+        ))
+      }
 
       <button type="button" className={styles.addButton}>
-      Add Performance
+        Add Performance
       </button>
+      
     </div>
   );
 };
