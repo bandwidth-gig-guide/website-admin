@@ -39,7 +39,6 @@ interface Props {
 
 const FormComponentSocials = ({ record, setRecord }: Props) => {
 
-  // Get local copy of socials.
   const [draftSocials, setDraftSocials] = useState<Social[]>(
     SOCIAL_PLATFORMS.map(platform => ({
       socialPlatform: platform,
@@ -48,8 +47,9 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
     }))
   );
 
-  // 
   useEffect(() => {
+    if (record.socials === undefined) return;
+
     const platformMap: { [key: string]: Social } = {};
     record.socials.forEach(social => {
       platformMap[social.socialPlatform] = social;
