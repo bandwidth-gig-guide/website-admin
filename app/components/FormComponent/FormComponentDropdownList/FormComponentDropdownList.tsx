@@ -11,12 +11,12 @@ interface Props {
 }
 
 const FormComponentInputWithOptions: React.FC<Props> = ({
-  label,
-  name,
-  value,
-  options,
+  label = "",
+  name = "",
+  value = "",
+  options = [],
   onChange,
-  required
+  required = true
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -30,7 +30,7 @@ const FormComponentInputWithOptions: React.FC<Props> = ({
         list={`${name}-options`}
       />
       <datalist id={`${name}-options`}>
-        {options.map((option) => (
+        {options && options.map((option) => (
           <option key={option} value={option} />
         ))}
       </datalist>
