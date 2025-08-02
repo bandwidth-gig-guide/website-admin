@@ -7,6 +7,7 @@ const routes = [
   { label: "Artists", type: 'artist', href: "/artist" },
   { label: "Venues", type: 'venue', href: "/venue" },
   { label: "Images", type: 'image', href: "/images" },
+  { label: "Featured", type: 'feature', href: "/features" },
 ];
 
 const toggles = [
