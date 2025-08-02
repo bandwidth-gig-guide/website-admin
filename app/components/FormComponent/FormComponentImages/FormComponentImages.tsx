@@ -23,7 +23,7 @@ interface Props {
 }
 
 const FormComponentImages = ({ record, setRecord }: Props) => {
-  const urls = record.imageUrls;
+  const urls = record.imageUrls || [];
   const [metaDataList, setMetaDataList] = useState<ImageMetaData[]>([]);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
@@ -44,7 +44,7 @@ const FormComponentImages = ({ record, setRecord }: Props) => {
         return prev[index];
       });
     });
-  }, [urls]);
+  }, [urls, record.imageUrls]);
 
   const updateUrls = (newUrls: string[]) => {
     setRecord(prev => ({
