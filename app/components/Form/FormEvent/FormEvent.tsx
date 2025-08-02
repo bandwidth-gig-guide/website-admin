@@ -7,11 +7,13 @@ import apiUrl from "../../../api.config";
 // Reusable components
 import FormComponentTextInput from "../../FormComponent/FormComponentTextInput/FormComponentTextInput";
 import FormComponentNumberInput from "../../FormComponent/FormComponentNumberInput/FormComponentNumberInput";
-import FormComponentDropdownList from "../../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
+import FormComponentPerformances from "../../FormComponent/FormComponentPerformances/FormComponentPerformances";
 import FormComponentTextArea from "../../FormComponent/FormComponentTextArea/FormComponentTextArea";
 import FormComponentImages from "../../FormComponent/FormComponentImages/FormComponentImages";
 import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormComponentSocials";
 import FormComponentList from "../../FormComponent/FormComponentList/FormComponentList";
+import FormComponentDropdownList from "../../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
+import FormComponentDateTime from "../../FormComponent/FormComponentDateTime/FormComponentDateTime";
 
 
 import { TAGS } from "../../../constants/tags";
@@ -27,10 +29,17 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
   if (!event) return <div>Loading event data...</div>;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setEvent(prev => prev ? {
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: value
+    } : prev);
+  };
+
+  const handleChangeDateTime = (name: string, newIso: string) => {
+    setEvent(prev => prev ? {
+      ...prev,
+      [name]: newIso
     } : prev);
   };
 
@@ -70,6 +79,23 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
             value={event.title}
             onChange={handleChange}
           />
+          <FormComponentDateTime
+            label="Start Date & Time"
+            name="startDateTime"
+            value={event.startDateTime}
+            onChange={(newIso) => handleChangeDateTime("startDateTime", newIso)}
+            required={true}
+          />
+
+          {/* TODO */}
+          {/* <FormComponentDropdownList
+            label="Venue"
+            name="venue.title"
+            value={event.venue.title}
+            options={["The Gaso", "The Tote"]}
+            onchange={handleChange}
+            required={true}
+          /> */}
           <FormComponentTextInput
             label="Original Post URL"
             name="originalPostUrl"
@@ -82,32 +108,32 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
             value={event.ticketSaleUrl}
             onChange={handleChange}
           />
-          <FormComponentTextArea
+          {/* <FormComponentTextArea
             label="Description"
             name="description"
             value={event.description}
             onChange={handleChange}
             required={true}
-          />
+          /> */}
         </div>
       </fieldset>
 
       {/* Social Links */}
       <fieldset>
         <legend>Socials</legend>
-        <FormComponentSocials
+        {/* <FormComponentSocials
           record={event}
           setRecord={setEvent}
-        />
+        /> */}
       </fieldset>
 
       {/* Images */}
       <fieldset>
         <legend>Images</legend>
-        <FormComponentImages
+        {/* <FormComponentImages
           record={event}
           setRecord={setEvent}
-        />
+        /> */}
       </fieldset>
 
       {/* Tags */}
@@ -127,6 +153,15 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
         <FormComponentList
           listName="types"
           options={EVENT_TYPES}
+          record={event}
+          setRecord={setEvent}
+        />
+      </fieldset>
+
+      {/* Performances */}
+      <fieldset>
+        <legend>Performances</legend>
+        <FormComponentPerformances
           record={event}
           setRecord={setEvent}
         />
