@@ -4,7 +4,7 @@ import styles from './FormComponentDateTime.module.css';
 interface Props {
   label: string;
   name: string;
-  value: string; // ISO string: "2025-08-20T18:00:00"
+  value: Date; // ISO string: "2025-08-20T18:00:00"
   onChange: (newIsoValue: string) => void;
   required?: boolean;
 }
