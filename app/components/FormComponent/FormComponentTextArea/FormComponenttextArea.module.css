@@ -23,7 +23,7 @@
     .wordCount {
         margin-top: 6px;
 
-        span {
+        p {
             color: var(--color-text-muted);
         }
 

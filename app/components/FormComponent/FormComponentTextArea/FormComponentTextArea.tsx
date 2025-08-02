@@ -32,6 +32,10 @@ const FormComponentTextArea: React.FC<Props> = ({
   }, [isDescription])
 
   useEffect(() => {
+    if (value === undefined) {
+      setWordCount(0);
+      return;
+    }
     const count = value.trim().split(/\s+/).filter(Boolean).length;
     setWordCount(count);
     if (isDescription) {
@@ -47,11 +51,11 @@ const FormComponentTextArea: React.FC<Props> = ({
       <div className={styles.textWrapper}>
         <label htmlFor={name}>{label}</label>
         <div className={styles.wordCount}>
-          <span className={!isAppropriateLength ? styles.warning : ''}>
-            {wordCount}
-          </span>
+          <p className={!isAppropriateLength ? styles.warning : ''}>
+            {wordCount} Words
+          </p>
           {isDescription && (
-            <span>&nbsp;| Target: {DESCRIPTION_MIN} - {DESCRIPTION_MAX}</span>
+            <p>Target: {DESCRIPTION_MIN} - {DESCRIPTION_MAX}</p>
           )}
         </div>
       </div>
