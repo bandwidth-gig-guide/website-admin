@@ -14,6 +14,7 @@ import FormComponentSocials from "../../FormComponent/FormComponentSocials/FormC
 import FormComponentList from "../../FormComponent/FormComponentList/FormComponentList";
 import FormComponentDropdownList from "../../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
 import FormComponentDateTime from "../../FormComponent/FormComponentDateTime/FormComponentDateTime";
+import FormComponentTicketPrices from "../../FormComponent/FormComponentTicketPrices/FormComponentTicketPrices";
 
 
 import { TAGS } from "../../../constants/tags";
@@ -167,6 +168,14 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
         />
       </fieldset>
 
+      {/* Prices */}
+      <fieldset>
+        <legend>Ticket Prices</legend>
+        <FormComponentTicketPrices
+          record={event}
+          setRecord={setEvent}
+        />
+      </fieldset>
 
       {/* Submit Button */}
       <button type="submit">Save Changes</button>

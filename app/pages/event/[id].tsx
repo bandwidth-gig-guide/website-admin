@@ -24,7 +24,7 @@ const EventDetail = () => {
     <>
       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
         <FormEvent event={event} setEvent={setEvent} />
-        <JsonPreview json={event} />
+        {/* <JsonPreview json={event} /> */}
       </div>
     </>
   );
