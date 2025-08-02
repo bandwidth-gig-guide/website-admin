@@ -26,7 +26,7 @@ interface FormEventProps {
 }
 
 const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
-  if (!event) return <div>Loading event data...</div>;
+  if (!event) return <div>Loading venue data...</div>;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -88,14 +88,14 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
           />
 
           {/* TODO */}
-          {/* <FormComponentDropdownList
+          <FormComponentDropdownList
             label="Venue"
             name="venue.title"
-            value={event.venue.title}
+            value={event.venue ? event.venue.title : ""}
             options={["The Gaso", "The Tote"]}
             onchange={handleChange}
             required={true}
-          /> */}
+          />
           <FormComponentTextInput
             label="Original Post URL"
             name="originalPostUrl"
@@ -108,32 +108,32 @@ const FormEvent: React.FC<FormEventProps> = ({ event, setEvent }) => {
             value={event.ticketSaleUrl}
             onChange={handleChange}
           />
-          {/* <FormComponentTextArea
+          <FormComponentTextArea
             label="Description"
             name="description"
             value={event.description}
             onChange={handleChange}
             required={true}
-          /> */}
+          />
         </div>
       </fieldset>
 
       {/* Social Links */}
       <fieldset>
         <legend>Socials</legend>
-        {/* <FormComponentSocials
+        <FormComponentSocials
           record={event}
           setRecord={setEvent}
-        /> */}
+        />
       </fieldset>
 
       {/* Images */}
       <fieldset>
         <legend>Images</legend>
-        {/* <FormComponentImages
+        <FormComponentImages
           record={event}
           setRecord={setEvent}
-        /> */}
+        />
       </fieldset>
 
       {/* Tags */}
