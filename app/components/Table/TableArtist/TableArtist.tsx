@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './TableArtist.module.css'
-import RowArtist from '../../../components/Row/RowArtist/RowArtist';
+import RowArtist from '../../Row/RowArtist';
 
 interface Props {
   ids: uuid[];

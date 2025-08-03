@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './TableVenue.module.css'
-import RowVenue from '../../Row/RowVenue/RowVenue';
+import RowVenue from '../../Row/RowVenue';
 
 interface Props {
   ids: uuid[];

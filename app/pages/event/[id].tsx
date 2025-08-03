@@ -1,33 +1,38 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import axios from "axios"
+import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
-import apiUrl from "../../api.config"
-import { Event } from "../../types/models/Event"
-import styles from "../../styles/page.module.css"
-import WebPageEmbed from "../../components/WebpagePreview/WebpagePreivew";
-import JsonPreview from "../../components/JsonPreview/JsonPreview";
-import FormEvent from "../../components/Form/FormEvent/FormEvent"
 
-const EventDetail = () => {
-  const [event, setEvent] = useState<Event>({} as Event)
+// Config
+import apiUrl from "../../api.config";
 
-  const router = useRouter();
-  const { id } = router.query;
+// Types
+import { Event } from "../../types/models/Event";
+import { PageType } from "../../types/enums/PageType";
+
+// Components
+import Form from "../../components/Form/Form"
+
+
+const EventPage = () => {
+  const [event, setEvent] = useState<Event>();
+  const { id } = useRouter().query;
 
   useEffect(() => {
+    if (!id) return;
     axios.get(`${apiUrl}/event/${id}`)
-      .then(response => { setEvent(camelcaseKeys(response.data, { deep: true })) })
+      .then(response => {
+        setEvent(camelcaseKeys(response.data, { deep: true }));
+      });
   }, [id]);
 
   return (
-    <>
-      <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-        <FormEvent event={event} setEvent={setEvent} />
-        {/* <JsonPreview json={event} /> */}
-      </div>
-    </>
+    <Form
+      type={PageType.Event}
+      record={event}
+      setRecord={setEvent}
+    />
   );
 };
 
-export default EventDetail;
+export default EventPage;

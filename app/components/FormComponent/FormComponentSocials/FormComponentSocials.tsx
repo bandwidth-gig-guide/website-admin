@@ -4,6 +4,16 @@ import { Artist } from "../../../types/models/Artist";
 import { Event } from "../../../types/models/Event";
 import { Venue } from "../../../types/models/Venue";
 
+const SOCIALS = [
+  { platform: "Website", icon: "/website.svg" },
+  { platform: "Instagram", icon: "/instagram.svg" },
+  { platform: "Facebook", icon: "/facebook.svg" },
+  { platform: "Twitter", icon: "/twitter.svg" },
+  { platform: "TikTok", icon: "/tiktok.svg" },
+  { platform: "SoundCloud", icon: "/soundcloud.svg" },
+  { platform: "Bandcamp", icon: "/bandcamp.svg" },
+];
+
 type RecordWithSocials = Artist | Event | Venue;
 
 interface Social {
@@ -12,35 +22,18 @@ interface Social {
   url: string;
 }
 
-const SOCIAL_PLATFORMS = [
-  "Website",
-  "Instagram",
-  "Facebook",
-  "Twitter",
-  "TikTok",
-  "SoundCloud",
-  "Bandcamp",
-];
-
-const socialIcons: { [key: string]: string } = {
-  Bandcamp: "/bandcamp.svg",
-  Facebook: "/facebook.svg",
-  Instagram: "/instagram.svg",
-  SoundCloud: "/soundcloud.svg",
-  TikTok: "/tiktok.svg",
-  Twitter: "/twitter.svg",
-  Website: "/website.svg",
-};
-
-interface Props {
-  record: RecordWithSocials;
-  setRecord: React.Dispatch<React.SetStateAction<RecordWithSocials>>;
+interface Props<T extends RecordWithSocials> {
+  record: T;
+  setRecord: React.Dispatch<React.SetStateAction<T>>;
 }
 
-const FormComponentSocials = ({ record, setRecord }: Props) => {
+const FormComponentSocials = <T extends RecordWithSocials>({
+  record,
+  setRecord
+}: Props<T>) => {
 
   const [draftSocials, setDraftSocials] = useState<Social[]>(
-    SOCIAL_PLATFORMS.map(platform => ({
+    SOCIALS.map(({ platform }) => ({
       socialPlatform: platform,
       handle: "",
       url: "",
@@ -55,7 +48,7 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
       platformMap[social.socialPlatform] = social;
     });
 
-    const updatedDraft = SOCIAL_PLATFORMS.map(platform => {
+    const updatedDraft = SOCIALS.map(({ platform }) => {
       return (
         platformMap[platform] || {
           socialPlatform: platform,
@@ -76,7 +69,6 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
     };
     setDraftSocials(updated);
 
-    // Filter out incomplete entries
     const valid = updated.filter(s => s.handle.trim() && s.url.trim());
     setRecord(prev => ({
       ...prev,
@@ -86,38 +78,41 @@ const FormComponentSocials = ({ record, setRecord }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      {draftSocials.map((social, index) => (
-        <div key={index} className={styles.socialRow}>
-          <div
-            className={`
-              ${styles.iconWrapper} 
-              ${!(social.handle && social.url) ? styles.incomplete : ""}
-            `}
-          >
-            {socialIcons[social.socialPlatform] && (
-              <img
-                src={socialIcons[social.socialPlatform]}
-                alt=""
-              />
-            )}
-            <span>{social.socialPlatform}</span>
+      {draftSocials.map((social, index) => {
+        const { icon } = SOCIALS[index];
+        return (
+          <div key={index} className={styles.socialRow}>
+            <div
+              className={`
+                ${styles.iconWrapper} 
+                ${!(social.handle && social.url) ? styles.incomplete : ""}
+              `}
+            >
+              {icon && (
+                <img
+                  src={icon}
+                  alt=""
+                />
+              )}
+              <span>{social.socialPlatform}</span>
+            </div>
+            <input
+              type="text"
+              placeholder="@handle"
+              value={social.handle}
+              onChange={e => handleChange(index, "handle", e.target.value)}
+              className={styles.input}
+            />
+            <input
+              type="text"
+              placeholder="https://"
+              value={social.url}
+              onChange={e => handleChange(index, "url", e.target.value)}
+              className={styles.input}
+            />
           </div>
-          <input
-            type="text"
-            placeholder="@handle"
-            value={social.handle}
-            onChange={e => handleChange(index, "handle", e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="text"
-            placeholder="https://"
-            value={social.url}
-            onChange={e => handleChange(index, "url", e.target.value)}
-            className={styles.input}
-          />
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

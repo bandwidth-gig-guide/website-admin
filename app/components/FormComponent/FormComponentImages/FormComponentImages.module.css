@@ -76,7 +76,7 @@
 }
 
 .metaWarning {
-    color: red;
+    color: var(--color-warning);
 }
 
 .fullscreenOverlay {

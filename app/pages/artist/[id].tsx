@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
-import FormArtist from "../../components/Form/FormArtist/FormArtist";
-import apiUrl from "../../api.config";
-import { Artist } from "../../types/models/Artist";
-import JsonPreview from "../../components/JsonPreview/JsonPreview";
-import WebpagePreview from "../../components/WebpagePreview/WebpagePreivew"
 
-import { useRouter } from "next/router";
+// Config
+import apiUrl from "../../api.config";
+
+// Types
+import { Artist } from "../../types/models/Artist";
+import { PageType } from "../../types/enums/PageType";
+
+// Components
+import Form from "../../components/Form/Form"
+
 
 const ArtistPage = () => {
-  const [artist, setArtist] = useState<Artist | null>(null);
-  const router = useRouter();
-  const { id } = router.query;
+  const [artist, setArtist] = useState<Artist>();
+  const { id } = useRouter().query;
 
   useEffect(() => {
     if (!id) return;
@@ -23,10 +27,11 @@ const ArtistPage = () => {
   }, [id]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-      <FormArtist artist={artist} setArtist={setArtist} />
-      {/* <JsonPreview json={artist} /> */}
-    </div>
+    <Form
+      type={PageType.Artist}
+      record={artist}
+      setRecord={setArtist}
+    />
   );
 };
 

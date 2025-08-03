@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Venue } from '../../../types/models/Venue'
-import { Social } from '../../../types/models/Social';
-import axios from 'axios';
-import apiUrl from '../../../api.config'
-import camelcaseKeys from "camelcase-keys";
-import styles from './RowVenue.module.css'
-import IconCheck from '../../IconCheck/IconCheck';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import camelcaseKeys from "camelcase-keys";
+
+// Config
+import apiUrl from '../../api.config'
+
+// Types
+import { Venue } from '../../types/models/Venue'
+import { Social } from '../../types/models/Social';
+
+// Components
+import IconCheck from '../IconCheck/IconCheck';
 
 interface Props {
   venueId: uuid
@@ -14,14 +19,14 @@ interface Props {
 
 const RowVenue: React.FC<Props> = ({ venueId }) => {
   const [venue, setVenue] = useState<Venue>({} as Venue);
-  const [socials, setSocials] = useState<string[]>([]);
-  const [contacts, setContacts] = useState<string[]>([]);
-  const [typeCount, setTypeCount] = useState<number>(0);
+  const [imageCount, setImageCount] = useState<number>(0);
   const [stageCount, setStageCount] = useState<number>(0);
   const [tagCount, setTagCount] = useState<number>(0);
+  const [typeCount, setTypeCount] = useState<number>(0);
   const [upcomingEventCount, setUpcomingEventCount] = useState<number>(0);
-  const [imageCount, setImageCount] = useState<number>(0);
+  const [contacts, setContacts] = useState<string[]>([]);
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
+  const [socials, setSocials] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -30,11 +35,17 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
   }, [venueId]);
 
   useEffect(() => {
-      setTypeCount(Array.isArray(venue.types) ? venue.types.length : 0);
+      setImageCount(Array.isArray(venue.imageUrls) ? venue.imageUrls.length : 0);
       setStageCount(Array.isArray(venue.venueStages) ? venue.venueStages.length : 0);
       setTagCount(Array.isArray(venue.tags) ? venue.tags.length : 0);
+      setTypeCount(Array.isArray(venue.types) ? venue.types.length : 0);
       setUpcomingEventCount(Array.isArray(venue.upcomingEventIds) ? venue.upcomingEventIds.length : 0);
-      setImageCount(Array.isArray(venue.imageUrls) ? venue.imageUrls.length : 0);
+      setContacts([
+        venue.websiteUrl && 'Website',
+        venue.phoneNumber && 'Phone',
+        venue.googleMapsEmbedUrl && 'GoogleMaps',
+        venue.openingHours && 'Hours',
+      ].filter(Boolean) as string[]);
       setDescriptionWordCount(
         typeof venue.description === 'string'
           ? venue.description.trim().split(/\s+/).length
@@ -47,12 +58,6 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
               .filter(Boolean)
           : []
       );
-      setContacts([
-        venue.websiteUrl && 'Website',
-        venue.phoneNumber && 'Phone',
-        venue.googleMapsEmbedUrl && 'GoogleMaps',
-        venue.openingHours && 'Hours',
-      ].filter(Boolean) as string[]);
     }, [venue]);
 
   const handleRowClick = () => {
@@ -60,7 +65,7 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
   };
 
   return (
-    <tr className={styles.wrapper} onClick={handleRowClick}>
+    <tr onClick={handleRowClick}>
       <td>{venue.venueId}</td>
       <td>{venue.title}</td>
       <td>{upcomingEventCount}</td>

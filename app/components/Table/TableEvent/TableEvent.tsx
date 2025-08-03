@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './TableEvent.module.css'
-import RowEvent from '../../Row/RowEvent/RowEvent'
+import RowEvent from '../../Row/RowEvent'
 
 interface Props {
   ids: uuid[];

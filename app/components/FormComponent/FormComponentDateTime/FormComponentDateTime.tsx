@@ -9,7 +9,13 @@ interface Props {
   required?: boolean;
 }
 
-const FormComponentDateTime: React.FC<Props> = ({ label, name, value, onChange, required }) => {
+const FormComponentDateTime: React.FC<Props> = ({ 
+  label,
+  name,
+  value,
+  onChange,
+  required = true 
+}) => {
   const [datePart = "", timePart = ""] = (value || "").split("T");
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
