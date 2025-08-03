@@ -13,12 +13,6 @@
     width: 100%;
     cursor: move;
 
-    input {
-      flex: 1;
-      padding: 4px 8px;
-      font-size: 14px;
-    }
-
     button {
       border: none;
       background-color: transparent;

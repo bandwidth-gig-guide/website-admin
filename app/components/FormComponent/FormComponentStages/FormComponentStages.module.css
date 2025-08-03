@@ -16,12 +16,6 @@
       gap: var(--spacing-01);
 
 
-      input {
-        width: 100%;
-        padding: 4px;
-        flex: 1;
-      }
-
       button {
         border: none;
         background-color: transparent;

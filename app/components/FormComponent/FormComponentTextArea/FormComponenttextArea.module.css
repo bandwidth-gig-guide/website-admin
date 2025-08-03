@@ -5,19 +5,9 @@
     align-items: flex-start;
     gap: 12px;
 
-    textarea {
-        flex: 1;
-        padding: var(--spacing-02);
-        font-size: 14px;
-    }
-
     .textWrapper {
         min-width: 160px;
         padding-top: 6px;
-    }
-
-    label {
-        margin: 0;
     }
 
     .wordCount {

@@ -72,6 +72,7 @@ tr:hover {
 }
 
 /* Form */
+
 form {
     width: 100%;
     max-width: 50%;
@@ -90,15 +91,18 @@ form {
 
 form label {
     font-weight: 600;
+    margin: 0;
     margin-bottom: var(--spacing-02);
     color: var(--color-text);
+    min-width: 160px;
 }
 
 form input,
 form select,
 form textarea {
     width: 100%;
-    padding: var(--spacing-03) var(--spacing-04);
+    flex: 1;
+    padding: 4px 8px;
     border: 1px solid var(--color-border);
     border-radius: 4px;
     background-color: var(--color-background);

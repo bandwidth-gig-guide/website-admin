@@ -24,12 +24,6 @@
   object-fit: contain;
 }
 
-.input {
-  flex: 1;
-  padding: 4px 8px;
-  font-size: 14px;
-}
-
 .incomplete {
     opacity: .35;
 }
