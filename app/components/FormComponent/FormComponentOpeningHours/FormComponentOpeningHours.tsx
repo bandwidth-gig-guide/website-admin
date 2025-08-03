@@ -98,20 +98,20 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
           <button
             type="button"
             onClick={() => handleClosed(openKey, closeKey)}
-            className={
-              record.openingHours[openKey] === "00:00:00" && 
-              record.openingHours[closeKey] === "00:00:00"
-                ? styles.active 
-                : ''
-            }
-
+            className={`
+              toggleButton
+              ${record.openingHours[openKey] === "00:00:00" && record.openingHours[closeKey] === "00:00:00" ? "activeButton" : ''}
+            `}
           >
             Closed
           </button>
           <button
             type="button"
             onClick={() => handleOpenTilLate(closeKey)}
-            className={record.openingHours[closeKey] === "23:59:00" ? styles.active : ''}
+            className={`
+              toggleButton
+              ${record.openingHours[closeKey] === "23:59:00" ? "activeButton" : ''}
+            `}
           >
             Open til late
           </button>

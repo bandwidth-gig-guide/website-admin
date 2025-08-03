@@ -66,7 +66,7 @@ const FormComponentTicketPrices: React.FC<Props> = ({ record, setRecord }) => {
         </div>
       ))}
 
-      <button type="button" onClick={handleAdd} className={styles.addButton}>
+      <button type="button" onClick={handleAdd} className="addButton">
         Add Ticket Price
       </button>
     </div>

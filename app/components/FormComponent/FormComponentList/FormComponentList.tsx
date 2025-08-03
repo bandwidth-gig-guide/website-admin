@@ -47,14 +47,15 @@ const FormComponentList = ({ listName, options, record, setRecord }: Props) => {
             {option}
           </button>
         ))}
-        <button
-          type="button"
-            className={`${styles.chip} ${styles.clearAll}`}
-          onClick={clearAll}
-          disabled={selectedItems.length === 0}
-        >
-          Clear All
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={clearAll}
+            className={styles.removeButton}
+          >
+            <img src="/circle-cross.svg" alt="Clear All" />
+          </button>
+        </div>
       </div>
     </div>
   );

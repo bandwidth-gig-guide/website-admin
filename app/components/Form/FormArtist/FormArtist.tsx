@@ -84,11 +84,6 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
       {/* Basic Info */}
       <fieldset>
         <legend>Basic Information</legend>
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "4px"
-        }}>
           <FormComponentTextInput
             label="Title"
             name="title"
@@ -131,7 +126,6 @@ const FormArtist: React.FC<FormArtistProps> = ({ artist, setArtist }) => {
             onChange={handleChange}
             required={true}
           />
-        </div>
       </fieldset>
 
       {/* Social Links */}

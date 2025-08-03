@@ -36,12 +36,13 @@ table {
     min-width: 100%;
     border-collapse: collapse;
     background-color: var(--color-surface);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     border-radius: 8px;
     overflow: hidden;
 }
 
-th, td {
+th,
+td {
     padding: var(--spacing-03) var(--spacing-04);
     text-align: left;
     max-width: 400px;
@@ -81,7 +82,7 @@ form {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     padding: var(--spacing-06) var(--spacing-06);
     display: flex;
     flex-direction: column;
@@ -118,6 +119,15 @@ form textarea:focus {
     outline: none;
 }
 
+form input[type="time"] {
+    padding: 3px;
+}
+
+form input[type="date"]:hover,
+form input[type="time"]:hover {
+    cursor: pointer;
+}
+
 form button,
 form input[type="submit"] {
     align-self: flex-end;
@@ -130,21 +140,54 @@ form input[type="submit"] {
     cursor: pointer;
 }
 
-form button:hover,
-form input[type="submit"]:hover {
-    background-color: red;
-}
-
 form fieldset {
     border: none;
 }
 
 form fieldset legend {
     font-weight: 600;
-    color: var(--color-checked-dark);
+    color: var(--color-text-heading);
     font-size: 1.1em;
     width: 100%;
     border-bottom: 1px solid var(--color-border);
     padding-bottom: var(--spacing-02);
     margin-bottom: var(--spacing-04);
+}
+
+
+.addButton {
+    padding: var(--spacing-03);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    color: var(--color-text);
+}
+
+.addButton:hover {
+    background-color: color-mix(in srgb, white 95%, black 5%);
+    border-color: var(--color-border-dark);
+}
+
+
+.toggleButton {
+    padding: 5px 1rem;
+    font-size: 14px;
+    display: inline-block;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text);
+    font-weight: 400;
+}
+
+.toggleButton:not(.activeButton):hover {
+    background-color: color-mix(in srgb, white 95%, black 5%);
+    border-color: var(--color-border-dark);
+}
+
+.activeButton {
+    background-color: var(--color-checked);
+    border-color: var(--color-checked-dark);
 }

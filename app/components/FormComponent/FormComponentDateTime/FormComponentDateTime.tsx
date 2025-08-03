@@ -54,7 +54,10 @@ const FormComponentDateTime: React.FC<Props> = ({ label, name, value, onChange, 
       <button 
         type="button" 
         onClick={handleTimeUnknown}
-        className={timePart === "00:01:00" ? styles.active : ""}
+        className={`
+          toggleButton
+          ${timePart === "00:01:00" ? "activeButton" : ""}
+        `}
       >
         Time unknown
       </button>

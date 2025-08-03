@@ -216,7 +216,7 @@ const FormComponentImages = ({ record, setRecord }: Props) => {
         );
       })}
 
-      <button type="button" onClick={handleAdd} className={styles.addButton}>
+      <button type="button" onClick={handleAdd} className="addButton">
         Add Image
       </button>
 

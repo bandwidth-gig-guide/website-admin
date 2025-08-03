@@ -1,19 +1,19 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-02);
+    gap: 4px;
 
     .cardWrapper {
         border-radius: 8px;
         cursor: move;
         display: flex;
         flex-direction: row;
-        gap: var(--spacing-02);
+        gap: 4px;
         background-color: var(--color-surface);
 
         .imgWrapper {
             height: 100px;
-            width: 201px;
+            width: 194px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,20 +77,6 @@
 
 .metaWarning {
     color: red;
-}
-
-.addButton {
-    padding: var(--spacing-03);
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    color: var(--color-text);
-}
-
-.addButton:hover {
-    background: var(--color-surface-medium);
 }
 
 .fullscreenOverlay {

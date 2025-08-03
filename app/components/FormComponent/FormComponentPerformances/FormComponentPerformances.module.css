@@ -13,21 +13,6 @@
         width: 100%;
         cursor: move;
 
-        .imgWrapper {
-            height: 56px;
-            width: 100px;
-            overflow: hidden;
-            border-radius: 4px;
-
-            img {
-                height: 100%;
-                width: 100%;
-                min-height: 100%;
-                min-width: 100%;
-                margin: auto;
-            }
-        }
-
         .inputWrapper {
             display: flex;
             flex-direction: column;
@@ -69,19 +54,5 @@
                 padding-right: 28px;
             }
         }
-    }
-
-    .addButton {
-        padding: var(--spacing-03);
-        background: var(--color-background);
-        border: 1px solid var(--color-border);
-        border-radius: 8px;
-        cursor: pointer;
-        width: 100%;
-        color: var(--color-text);
-    }
-
-    .addButton:hover {
-        background: var(--color-surface-medium);
     }
 }

@@ -89,7 +89,7 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
         </div>
       ))}
 
-      <button type="button" onClick={handleAdd} className={styles.addButton}>
+      <button type="button" onClick={handleAdd} className="addButton">
         Add Stage
       </button>
     </div>
