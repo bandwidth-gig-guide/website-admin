@@ -29,7 +29,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
   };
 
   const handleAddPerformance = () => {
-    setRecord(prev => {
+    setRecord((prev: any) => {
       if (!prev) return prev;
       const newPerformance = {
         title: "",
