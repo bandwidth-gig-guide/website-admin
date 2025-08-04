@@ -120,7 +120,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
                     name={`performances[${index}].title`}
                     value={performance.title}
                     options={["Amber Drift", "The Amazing Devil"]}
-                    onchange={() => { }}
+                    onChange={() => { }}
                     required={true}
                   />
                 </div>
