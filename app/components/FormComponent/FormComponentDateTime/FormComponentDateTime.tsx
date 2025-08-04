@@ -16,7 +16,7 @@ const FormComponentDateTime: React.FC<Props> = ({
   onChange,
   required = true 
 }) => {
-  const [datePart = "", timePart = ""] = (value || "").split("T");
+  const [datePart = "", timePart = ""] = (value ? value.toISOString() : "").split("T");
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;
