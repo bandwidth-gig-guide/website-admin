@@ -40,6 +40,7 @@ function formatTime(time: string) {
 }
 
 const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
+
   useEffect(() => {
     if (!record.openingHours) {
       setRecord(prev => ({
@@ -50,7 +51,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
   }, []);
 
   const handleTimeChange = (key: string, value: string) => {
-    setRecord(prev => ({
+    setRecord((prev: any) => ({
       ...prev,
       openingHours: {
         ...prev.openingHours,
@@ -60,7 +61,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
   };
 
   const handleClosed = (openKey: string, closeKey: string) => {
-    setRecord(prev => ({
+    setRecord((prev: any) => ({
       ...prev,
       openingHours: {
         ...prev.openingHours,
@@ -71,7 +72,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
   };
 
   const handleOpenTilLate = (closeKey: string) => {
-    setRecord(prev => ({
+    setRecord((prev: any) => ({
       ...prev,
       openingHours: {
         ...prev.openingHours,
