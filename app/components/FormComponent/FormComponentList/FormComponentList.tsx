@@ -6,14 +6,19 @@ import { Venue } from "../../../types/models/Venue";
 
 type RecordWithList = Artist | Event | Venue;
 
-interface Props {
-  listName: keyof RecordWithList;
+interface Props<T> {
+  listName: keyof T;
   options: string[];
-  record: RecordWithList;
-  setRecord: React.Dispatch<React.SetStateAction<RecordWithList>>;
+  record: T;
+  setRecord: React.Dispatch<React.SetStateAction<T>>;
 }
 
-const FormComponentList = ({ listName, options, record, setRecord }: Props) => {
+const FormComponentList = <T extends RecordWithList>({ 
+  listName,
+  options,
+  record,
+  setRecord 
+}: Props<T>) => {
   const selectedItems = (record[listName] ?? []) as string[];
 
   const toggleItem = (item: string) => {
@@ -47,14 +52,15 @@ const FormComponentList = ({ listName, options, record, setRecord }: Props) => {
             {option}
           </button>
         ))}
-        <button
-          type="button"
-            className={`${styles.chip} ${styles.clearAll}`}
-          onClick={clearAll}
-          disabled={selectedItems.length === 0}
-        >
-          Clear All
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={clearAll}
+            className={styles.removeButton}
+          >
+            <img src="/circle-cross.svg" alt="Clear All" />
+          </button>
+        </div>
       </div>
     </div>
   );

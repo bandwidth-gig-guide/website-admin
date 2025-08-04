@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./FormComponentStages.module.css";
 import { Venue } from "../../../types/models/Venue";
 
-// Reuse shared form components
 import FormComponentTextInput from "../FormComponentTextInput/FormComponentTextInput"
 import FormComponentNumberInput from "../FormComponentNumberInput/FormComponentNumberInput"
 import FormComponentTextArea from "../FormComponentTextArea/FormComponentTextArea"
@@ -30,18 +29,17 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
 
   const handleAdd = () => {
     const newStage = {
-      stageID: "",
+      stageId: "",
       title: "",
       description: "",
       capacity: 0,
     };
-    setRecord(prev => ({
+    setRecord((prev: any) => ({
       ...prev,
       venueStages: [...prev.venueStages, newStage],
     }));
   };
 
-  // Only allow removal of new rows (stageID === "")
   const handleRemove = (index: number) => {
     const updated = [...stages];
     updated.splice(index, 1);
@@ -59,7 +57,7 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
               value={stage.title}
               onChange={e => handleChange(index, "title", e.target.value)}
             />
-            {stage.stageID === "" && (
+            {stage.stageId === "" && (
               <button
                 type="button"
                 onClick={() => handleRemove(index)}
@@ -69,7 +67,6 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
               </button>
             )}
           </div>
-
           <FormComponentNumberInput
             label="Capacity"
             name={`stage-capacity-${index}`}
@@ -85,11 +82,9 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
             rows={3}
             isDescription={false}
           />
-
         </div>
       ))}
-
-      <button type="button" onClick={handleAdd} className={styles.addButton}>
+      <button type="button" onClick={handleAdd} className="addButton">
         Add Stage
       </button>
     </div>

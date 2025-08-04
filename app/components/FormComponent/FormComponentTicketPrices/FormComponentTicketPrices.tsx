@@ -8,6 +8,7 @@ interface Props {
 }
 
 const FormComponentTicketPrices: React.FC<Props> = ({ record, setRecord }) => {
+
   const handleChange = (index: number, field: "ticketType" | "price", value: string) => {
     setRecord(prev => {
       if (!prev) return prev;
@@ -21,7 +22,7 @@ const FormComponentTicketPrices: React.FC<Props> = ({ record, setRecord }) => {
   };
 
   const handleAdd = () => {
-    setRecord(prev => {
+    setRecord((prev: any) => {
       if (!prev) return prev;
       return {
         ...prev,
@@ -65,8 +66,7 @@ const FormComponentTicketPrices: React.FC<Props> = ({ record, setRecord }) => {
           </button>
         </div>
       ))}
-
-      <button type="button" onClick={handleAdd} className={styles.addButton}>
+      <button type="button" onClick={handleAdd} className="addButton">
         Add Ticket Price
       </button>
     </div>

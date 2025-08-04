@@ -22,13 +22,26 @@ const FormComponentNumberInput: React.FC<Props> = ({
   max,
   numberType = 'any'
 }) => {
-
-  // Set input attributes based on numberType
   let inputProps: React.InputHTMLAttributes<HTMLInputElement> = {};
 
-  // Handler to restrict input length for year type
+  if (numberType === 'year' || numberType === 'postCode') {
+    inputProps.min = min !== undefined ? min : 1000;
+    inputProps.max = max !== undefined ? max : 9999;
+    inputProps.step = 1;
+    inputProps.pattern = "\\d{4}";
+    inputProps.maxLength = 4;
+  } else if (numberType === 'price') {
+    inputProps.min = min !== undefined ? min : 0;
+    inputProps.max = max;
+    inputProps.step = 0.01;
+    inputProps.inputMode = "decimal";
+  } else {
+    if (min !== undefined) inputProps.min = min;
+    if (max !== undefined) inputProps.max = max;
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (numberType === 'year') {
+    if (numberType === 'year' || numberType === 'postCode') {
       const newValue = e.target.value.replace(/\D/g, '').slice(0, 4);
       if (newValue !== e.target.value) {
         const syntheticEvent = {
@@ -44,28 +57,6 @@ const FormComponentNumberInput: React.FC<Props> = ({
     }
     onChange(e);
   };
-
-  if (numberType === 'year') {
-    inputProps.min = min !== undefined ? min : 1000;
-    inputProps.max = max !== undefined ? max : 9999;
-    inputProps.step = 1;
-    inputProps.pattern = "\\d{4}";
-    inputProps.maxLength = 4;
-  } else if (numberType === 'postCode') {
-    inputProps.min = min !== undefined ? min : 1000;
-    inputProps.max = max !== undefined ? max : 9999;
-    inputProps.step = 1;
-    inputProps.pattern = "\\d{4}";
-    inputProps.maxLength = 4;
-  } else if (numberType === 'price') {
-    inputProps.min = min !== undefined ? min : 0;
-    inputProps.max = max;
-    inputProps.step = 0.01;
-    inputProps.inputMode = "decimal";
-  } else {
-    if (min !== undefined) inputProps.min = min;
-    if (max !== undefined) inputProps.max = max;
-  }
 
   return (
     <div className={styles.wrapper}>

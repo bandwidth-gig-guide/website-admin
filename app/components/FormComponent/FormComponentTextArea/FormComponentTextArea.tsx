@@ -21,7 +21,6 @@ const FormComponentTextArea: React.FC<Props> = ({
   rows = 6,
   isDescription = true
 }) => {
-
   const [isAppropriateLength, setIsAppropriateLength] = useState<boolean>(false);
   const [wordCount, setWordCount] = useState<number>(0);
 
@@ -68,7 +67,6 @@ const FormComponentTextArea: React.FC<Props> = ({
         rows={rows}
         style={{ resize: "vertical" }}
       />
-
     </div>
   );
 };

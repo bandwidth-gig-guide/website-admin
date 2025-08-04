@@ -13,12 +13,6 @@
     width: 100%;
     cursor: move;
 
-    input {
-      flex: 1;
-      padding: 4px 8px;
-      font-size: 14px;
-    }
-
     button {
       border: none;
       background-color: transparent;
@@ -36,19 +30,5 @@
       opacity: 1;
     }
 
-  }
-
-  .addButton {
-    padding: var(--spacing-03);
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    color: var(--color-text);
-  }
-
-  .addButton:hover {
-    background: var(--color-surface-medium);
   }
 }

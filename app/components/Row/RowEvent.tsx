@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Event } from '../../../types/models/Event'
-import { Social } from '../../../types/models/Social';
-import axios from 'axios';
-import apiUrl from '../../../api.config'
-import camelcaseKeys from "camelcase-keys";
-import styles from './RowEvent.module.css'
-import IconCheck from '../../IconCheck/IconCheck';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import camelcaseKeys from "camelcase-keys";
+
+// Config
+import apiUrl from '../../api.config'
+
+// Types
+import { Event } from '../../types/models/Event'
+import { Social } from '../../types/models/Social';
+
+// Components
+import IconCheck from '../IconCheck/IconCheck';
 
 interface Props {
   eventId: uuid
@@ -14,13 +19,13 @@ interface Props {
 
 const RowEvent: React.FC<Props> = ({ eventId }) => {
   const [event, setEvent] = useState<Event>({} as Event);
-  const [socials, setSocials] = useState<string[]>([]);
-  const [typeCount, setTypeCount] = useState<number>(0);
-  const [tagCount, setTagCount] = useState<number>(0);
-  const [imageCount, setImageCount] = useState<number>(0);
   const [artistCount, setArtistCount] = useState<number>(0);
+  const [imageCount, setImageCount] = useState<number>(0);
   const [priceCount, setPriceCount] = useState<number>(0);
+  const [tagCount, setTagCount] = useState<number>(0);
+  const [typeCount, setTypeCount] = useState<number>(0);
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
+  const [socials, setSocials] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,16 +34,16 @@ const RowEvent: React.FC<Props> = ({ eventId }) => {
   }, [eventId]);
 
   useEffect(() => {
-    setTypeCount(Array.isArray(event.types) ? event.types.length : 0);
-    setTagCount(Array.isArray(event.tags) ? event.tags.length : 0);
+    setArtistCount(Array.isArray(event.performances) ? event.performances.length : 0);
     setImageCount(Array.isArray(event.imageUrls) ? event.imageUrls.length : 0);
+    setPriceCount(Array.isArray(event.prices) ? event.prices.length : 0);
+    setTagCount(Array.isArray(event.tags) ? event.tags.length : 0);
+    setTypeCount(Array.isArray(event.types) ? event.types.length : 0);
     setDescriptionWordCount(
       typeof event.description === 'string'
         ? event.description.trim().split(/\s+/).length
         : 0
     );
-    setArtistCount(Array.isArray(event.performances) ? event.performances.length : 0);
-    setPriceCount(Array.isArray(event.prices) ? event.prices.length : 0);
     setSocials(
       Array.isArray(event.socials)
         ? event.socials
@@ -53,10 +58,10 @@ const RowEvent: React.FC<Props> = ({ eventId }) => {
   };
 
   return (
-    <tr className={styles.wrapper} onClick={handleRowClick}>
+    <tr onClick={handleRowClick}>
       <td>{event.eventId}</td>
       <td>{event.title}</td>
-      <td>{event.startDateTime}</td>
+      <td>{event.startDateTime ? new Date(event.startDateTime).toLocaleString() : '-'}</td>
       <td>{event.venue?.title}</td>
       <td>{event.venue?.stageTitle}</td>
       <td>{event.performances && event.performances.length > 0 ? event.performances[0].title : ''}</td>

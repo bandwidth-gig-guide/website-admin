@@ -11,9 +11,9 @@ interface Props {
 }
 
 const FormComponentInputWithOptions: React.FC<Props> = ({
-  label = "",
-  name = "",
-  value = "",
+  label,
+  name,
+  value,
   options = [],
   onChange,
   required = true

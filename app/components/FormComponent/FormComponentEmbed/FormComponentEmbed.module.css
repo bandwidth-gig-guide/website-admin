@@ -37,6 +37,7 @@
 
         input {
             margin-bottom: 4px;
+            flex-grow: 0;
         }
     }
 

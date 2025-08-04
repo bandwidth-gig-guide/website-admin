@@ -3,40 +3,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 4px;
     width: 100%;
-
-
-    input {
-        flex: 1;
-        padding: 4px 8px;
-        font-size: 14px;
-        display: inline-block;
-    }
-
-    label {
-        margin: 0;
-        min-width: 160px;
-    }
-
-    button {
-      padding: 6.5px 1rem;
-      font-size: 14px;
-      display: inline-block;
-      background-color: var(--color-background);
-      border: 1px solid var(--color-border);
-      border-radius: 50px;
-      color: var(--color-text);
-      font-weight: 400;
-    }
-
-    button:not(.active):hover {
-      background-color: color-mix(in srgb, white 95%, black 5%);
-    }
-
-    .active {
-      background-color: var(--color-surface-medium);
-      border: 1px solid var(--color-border-medium);
-    }
-
 }

@@ -17,12 +17,15 @@ type ImageMetaData = {
   height: number;
 };
 
-interface Props {
-  record: RecordWithImages;
-  setRecord: React.Dispatch<React.SetStateAction<RecordWithImages>>;
+interface Props<T extends RecordWithImages> {
+  record: T;
+  setRecord: React.Dispatch<React.SetStateAction<T>>;
 }
 
-const FormComponentImages = ({ record, setRecord }: Props) => {
+const FormComponentImages = <T extends RecordWithImages>({ 
+  record, 
+  setRecord 
+}: Props<T>) => {
   const urls = record.imageUrls || [];
   const [metaDataList, setMetaDataList] = useState<ImageMetaData[]>([]);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
@@ -216,7 +219,7 @@ const FormComponentImages = ({ record, setRecord }: Props) => {
         );
       })}
 
-      <button type="button" onClick={handleAdd} className={styles.addButton}>
+      <button type="button" onClick={handleAdd} className="addButton">
         Add Image
       </button>
 

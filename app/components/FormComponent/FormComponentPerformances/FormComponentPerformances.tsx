@@ -19,7 +19,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
       const updatedPerformances = [...prev.performances];
       updatedPerformances[index] = {
         ...updatedPerformances[index],
-        startDateTime: newIso
+        startDateTime: new Date(newIso)
       };
       return {
         ...prev,
@@ -29,7 +29,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
   };
 
   const handleAddPerformance = () => {
-    setRecord(prev => {
+    setRecord((prev: any) => {
       if (!prev) return prev;
       const newPerformance = {
         title: "",
@@ -112,12 +112,6 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
               }
             }}
           >
-            <div className={styles.imgWrapper}>
-              {performance.imageUrl && (
-                <img src={performance.imageUrl} alt={performance.title} />
-              )}
-            </div>
-
             <div className={styles.inputWrapper}>
               <div className={styles.topRow}>
                 <div className={styles.topRowInput}>
@@ -126,7 +120,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
                     name={`performances[${index}].title`}
                     value={performance.title}
                     options={["Amber Drift", "The Amazing Devil"]}
-                    onchange={() => { }}
+                    onChange={() => { }}
                     required={true}
                   />
                 </div>
@@ -150,14 +144,11 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
                   required={true}
                 />
               </div>
-
             </div>
-
-
           </div>
         ))}
 
-      <button type="button" className={styles.addButton} onClick={handleAddPerformance}>
+      <button type="button" className="addButton" onClick={handleAddPerformance}>
         Add Performance
       </button>
     </div>

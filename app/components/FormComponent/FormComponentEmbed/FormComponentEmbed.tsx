@@ -10,26 +10,34 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
 }
+const embedConfigMap: Record<EmbedName, { icon: string; url: string }> = {
+  spotifyEmbedUrl: {
+    icon: '/spotify.svg',
+    url: 'https://open.spotify.com/',
+  },
+  youtubeEmbedUrl: {
+    icon: '/youtube.svg',
+    url: 'https://www.youtube.com/',
+  },
+  googleMapsEmbedUrl: {
+    icon: '/google-maps.svg',
+    url: 'https://www.google.com/maps',
+  },
+};
 
-const nameToIconMap: Record<EmbedName, string> = {
-  spotifyEmbedUrl: '/spotify.svg',
-  youtubeEmbedUrl: '/youtube.svg',
-  googleMapsEmbedUrl: '/google-maps.svg'
-}
-
-const nameToUrlMap: Record<EmbedName, string> = {
-  spotifyEmbedUrl: 'https://open.spotify.com/',
-  youtubeEmbedUrl: 'https://www.youtube.com/',
-  googleMapsEmbedUrl: 'https://www.google.com/maps'
-}
-
-const FormComponentEmbed: React.FC<Props> = ({ label, name, url, onChange, required }) => {
+const FormComponentEmbed: React.FC<Props> = ({
+  label,
+  name,
+  url = "",
+  onChange,
+  required = true
+}) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputWrapper}>
         <label htmlFor={name}>
-          <a href={nameToUrlMap[name]} target="_blank">
-            <img src={nameToIconMap[name]} alt={label} />
+          <a href={embedConfigMap[name].icon} target="_blank">
+            <img src={embedConfigMap[name].url} alt={label} />
           </a>
         </label>
         <input
@@ -41,10 +49,7 @@ const FormComponentEmbed: React.FC<Props> = ({ label, name, url, onChange, requi
           placeholder={label}
         />
       </div>
-      <iframe
-        src={url}
-        loading="lazy"
-      />
+      <iframe src={url} loading="lazy" />
     </div>
   );
 };

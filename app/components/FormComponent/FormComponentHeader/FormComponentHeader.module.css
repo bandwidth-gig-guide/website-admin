@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .headerText {
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+    }
+
+    .buttonRow {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        margin-top: 4px;
+
+        button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            opacity: .35;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+    }
+}

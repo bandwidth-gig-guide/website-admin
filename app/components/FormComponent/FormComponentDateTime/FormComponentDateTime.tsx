@@ -9,8 +9,14 @@ interface Props {
   required?: boolean;
 }
 
-const FormComponentDateTime: React.FC<Props> = ({ label, name, value, onChange, required }) => {
-  const [datePart = "", timePart = ""] = (value || "").split("T");
+const FormComponentDateTime: React.FC<Props> = ({ 
+  label,
+  name,
+  value,
+  onChange,
+  required = true 
+}) => {
+  const [datePart = "", timePart = ""] = (value ? value.toISOString() : "").split("T");
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;
@@ -54,7 +60,10 @@ const FormComponentDateTime: React.FC<Props> = ({ label, name, value, onChange, 
       <button 
         type="button" 
         onClick={handleTimeUnknown}
-        className={timePart === "00:01:00" ? styles.active : ""}
+        className={`
+          toggleButton
+          ${timePart === "00:01:00" ? "activeButton" : ""}
+        `}
       >
         Time unknown
       </button>

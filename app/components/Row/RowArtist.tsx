@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Artist } from '../../../types/models/Artist'
-import { Social } from '../../../types/models/Social';
-import axios from 'axios';
-import apiUrl from '../../../api.config'
-import camelcaseKeys from "camelcase-keys";
-import styles from './RowArtist.module.css'
-import IconCheck from '../../../components/IconCheck/IconCheck';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import camelcaseKeys from "camelcase-keys";
+
+// Config
+import apiUrl from '../../api.config'
+
+// Types
+import { Artist } from '../../types/models/Artist'
+import { Social } from '../../types/models/Social';
+
+// Components
+import IconCheck from '../IconCheck/IconCheck';
 
 interface Props {
   artistId: uuid
@@ -14,13 +19,13 @@ interface Props {
 
 const RowArtist: React.FC<Props> = ({ artistId }) => {
   const [artist, setArtist] = useState<Artist>({} as Artist);
-  const [embeds, setEmbeds] = useState<string[]>([]);
-  const [socials, setSocials] = useState<string[]>([]);
-  const [typeCount, setTypeCount] = useState<number>(0);
-  const [tagCount, setTagCount] = useState<number>(0);
-  const [upcomingEventCount, setUpcomingEventCount] = useState<number>(0);
   const [imageCount, setImageCount] = useState<number>(0);
+  const [tagCount, setTagCount] = useState<number>(0);
+  const [typeCount, setTypeCount] = useState<number>(0);
+  const [upcomingEventCount, setUpcomingEventCount] = useState<number>(0);
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
+  const [socials, setSocials] = useState<string[]>([]);
+  const [embeds, setEmbeds] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,10 +34,10 @@ const RowArtist: React.FC<Props> = ({ artistId }) => {
   }, [artistId]);
 
   useEffect(() => {
-    setTypeCount(Array.isArray(artist.types) ? artist.types.length : 0);
-    setTagCount(Array.isArray(artist.tags) ? artist.tags.length : 0);
-    setUpcomingEventCount(Array.isArray(artist.upcomingEventIds) ? artist.upcomingEventIds.length : 0);
     setImageCount(Array.isArray(artist.imageUrls) ? artist.imageUrls.length : 0);
+    setTagCount(Array.isArray(artist.tags) ? artist.tags.length : 0);
+    setTypeCount(Array.isArray(artist.types) ? artist.types.length : 0);
+    setUpcomingEventCount(Array.isArray(artist.upcomingEventIds) ? artist.upcomingEventIds.length : 0);
     setDescriptionWordCount(
       typeof artist.description === 'string'
         ? artist.description.trim().split(/\s+/).length
@@ -56,7 +61,7 @@ const RowArtist: React.FC<Props> = ({ artistId }) => {
   };
 
   return (
-    <tr className={styles.wrapper} onClick={handleRowClick}>
+    <tr onClick={handleRowClick}>
       <td>{artist.artistId}</td>
       <td>{artist.title}</td>
       <td>{upcomingEventCount}</td>

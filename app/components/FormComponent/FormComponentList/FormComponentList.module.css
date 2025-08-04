@@ -10,13 +10,14 @@
             color: var(--color-text);
             font-weight: 400;
             background: white;
-            padding: 0.375rem .825rem;
+            padding: 6px 12px;
             border-radius: 16px;
             cursor: pointer;
         }
 
         .chip:hover {
             background-color: color-mix(in srgb, white 95%, black 5%);
+            border-color: var(--color-border-dark);
         }
 
         .chip.active {
@@ -24,17 +25,24 @@
             border: 1px solid var(--color-checked-dark);
         }
 
-        .clearAll {
-            background-color: var(--color-accent);
-            border: 1px solid var(--color-accent-dark);
-            color: var(--color-background);
+        .removeButton {
+            border: none;
+            background-color: transparent;
+            opacity: .4;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: fit-content;
+            margin: auto;
         }
 
-        .clearAll:hover {
-            background-color: var(--color-accent-dark);
+        .removeButton:hover {
+            opacity: 1;
         }
-
     }
 
-    
+
 }

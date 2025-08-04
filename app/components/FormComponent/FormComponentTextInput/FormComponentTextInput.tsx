@@ -9,11 +9,25 @@ interface Props {
   required?: boolean;
 }
 
-const FormComponentTextInput: React.FC<Props> = ({ label, name, value, onChange, required }) => (
-  <div className={styles.wrapper}>
-    <label htmlFor={name}>{label}</label>
-    <input id={name} name={name} value={value} onChange={onChange} required={required} />
-  </div>
-);
+const FormComponentTextInput: React.FC<Props> = ({
+  label,
+  name,
+  value,
+  onChange,
+  required = true
+}) => {
+  return (
+    <div className={styles.wrapper}>
+      <label htmlFor={name}>{label}</label>
+      <input
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+      />
+    </div>
+  )
+};
 
 export default FormComponentTextInput;
