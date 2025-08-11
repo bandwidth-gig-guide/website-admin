@@ -4,7 +4,7 @@ import styles from './FormComponentDateTime.module.css';
 interface Props {
   label: string;
   name: string;
-  value: Date; // ISO string: "2025-08-20T18:00:00"
+  value: string; // ISO string: "2025-08-20T18:00:00"
   onChange: (newIsoValue: string) => void;
   required?: boolean;
 }
@@ -16,7 +16,7 @@ const FormComponentDateTime: React.FC<Props> = ({
   onChange,
   required = true 
 }) => {
-  const [datePart = "", timePart = ""] = (value ? value.toISOString() : "").split("T");
+  const [datePart = "", timePart = ""] = (value ? value : "").split("T");
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;
