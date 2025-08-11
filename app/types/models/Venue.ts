@@ -18,7 +18,7 @@ export type Venue = {
     socials: Social[];
     types: string[];
     tags: string[];
-    openingHours?: OpeningHours;
+    openingHours: OpeningHours;
     upcomingEventIds: url[];
     venueStages: VenueStage[];
 }

@@ -13,4 +13,5 @@ export type OpeningHours = {
     satClose: string
     sunOpen: string
     sunClose: string
+    [key: string]: string;
 }

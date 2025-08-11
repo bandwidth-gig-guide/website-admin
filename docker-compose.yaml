@@ -28,6 +28,14 @@ services:
     networks:
       - network-bandwidth
 
+  website-main:
+    image: ghcr.io/bandwidth-gig-guide/website-main:latest
+    container_name: website-main
+    ports:
+      - "8000:3000"
+    networks:
+      - network-bandwidth
+
 networks:
   network-bandwidth:
     driver: bridge
