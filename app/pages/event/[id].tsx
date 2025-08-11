@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from 'next/head';
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
 
@@ -27,11 +28,18 @@ const EventPage = () => {
   }, [id]);
 
   return (
-    <Form
-      type={PageType.Event}
-      record={event}
-      setRecord={setEvent}
-    />
+    <>
+      <Head>
+        <title>Bandwidth Admin | {event?.title}</title>
+        <meta name="description" content="" />
+      </Head>
+
+      <Form
+        type={PageType.Event}
+        record={event}
+        setRecord={setEvent}
+      />
+    </>
   );
 };
 

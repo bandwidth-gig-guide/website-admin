@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from 'next/head';
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
 
@@ -27,11 +28,19 @@ const ArtistPage = () => {
   }, [id]);
 
   return (
-    <Form
-      type={PageType.Artist}
-      record={artist}
-      setRecord={setArtist}
-    />
+    <>
+      <Head>
+        <title>Bandwidth Admin | {artist?.title}</title>
+        <meta name="description" content="" />
+      </Head>
+
+      <Form
+        type={PageType.Artist}
+        record={artist}
+        setRecord={setArtist}
+      />
+    </>
+
   );
 };
 

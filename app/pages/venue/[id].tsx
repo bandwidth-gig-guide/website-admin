@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from 'next/head';
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
 
@@ -26,11 +27,17 @@ const VenuePage = () => {
   }, [id]);
 
   return (
+    <>
+      <Head>
+        <title>Bandwidth Admin | {venue?.title}</title>
+        <meta name="description" content="" />
+      </Head>
     <Form
       type={PageType.Venue}
       record={venue}
       setRecord={setVenue}
     />
+    </>
   );
 };
 
