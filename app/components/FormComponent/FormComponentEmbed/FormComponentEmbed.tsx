@@ -36,8 +36,8 @@ const FormComponentEmbed: React.FC<Props> = ({
     <div className={styles.wrapper}>
       <div className={styles.inputWrapper}>
         <label htmlFor={name}>
-          <a href={embedConfigMap[name].icon} target="_blank">
-            <img src={embedConfigMap[name].url} alt={label} />
+          <a href={embedConfigMap[name].url} target="_blank">
+            <img src={embedConfigMap[name].icon} alt={label} />
           </a>
         </label>
         <input
