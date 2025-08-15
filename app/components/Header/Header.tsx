@@ -1,33 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
+
+// Styling
 import styles from './Header.module.css'
 
-const routes = [
-  { label: "Events", type: 'event', href: "/event" },
-  { label: "Artists", type: 'artist', href: "/artist" },
-  { label: "Venues", type: 'venue', href: "/venue" },
-  { label: "Images", type: 'image', href: "/images" },
-  { label: "Featured", type: 'feature', href: "/features" },
-];
+// Constants
+import { CURRENT_TOGGLE_KEY } from '../../constants/localstorage';
+import { TOGGLES } from '../../constants/toggles';
+import { ROUTES } from '../../constants/routes';
 
-const toggles = [
-  { label: "json", src: "/json-object.svg" },
-  { label: "Original Post", src: "/original-post.svg" },
-  { label: "Ticket Sale", src: "/ticket-sale.svg" },
-]
+interface Props {
+  currentToggle: string | null;
+  setCurrentToggle: React.Dispatch<React.SetStateAction<string | null>>;
+  availableToggleIds: string[];
+}
 
-const Header = () => {
+
+const Header: React.FC<Props> = ({ currentToggle, setCurrentToggle, availableToggleIds }) => {
   const router = useRouter();
   const { id } = router.query;
-  const { pageType } = router.query;
-  const pageTypeLabel = routes.find(route => router.pathname.startsWith(route.href))?.type || pageType;
+
+  const handleToggleClick = (toggleId: string) => {
+		setCurrentToggle(prev => (prev === toggleId ? null : toggleId));
+	};
 
   return (
     <div className={styles.wrapper}>
       <header>
         <h1>Bandwidth Admin</h1>
+
+        {/* Nav Bar */}
         <nav>
-          {routes.map(route => {
+          {ROUTES.map(route => {
             const isActive = router.pathname.startsWith(route.href);
             return (
               <a
@@ -40,22 +44,34 @@ const Header = () => {
             );
           })}
         </nav>
+
+        {/* Toggles */}
         {id && (
           <div className={styles.toggles}>
-            {toggles.map(toggle => (
-              <img
-                src={toggle.src}
-                alt={toggle.label}
-                title={toggle.label}
-                key={toggle.label}
-              />
-            ))}
+            {availableToggleIds.map(toggleId => {
+              const toggle = TOGGLES.find(toggle => toggle.id === toggleId);
+              if (!toggle) return null;
+              const isActive = currentToggle === toggle.id;
+              return (
+                <img
+                  src={toggle.src}
+                  alt={toggle.label}
+                  title={toggle.label}
+                  key={toggle.label}
+                  className={isActive ? styles.activeToggle : ''}
+                  onClick={() => handleToggleClick(toggle.id)}
+                />
+              );
+            })}
           </div>
         )}
+
+        {/* Search Bar */}
         <div className={styles.searchBar}>
           [ Search Bar ]
         </div>
-        </header>
+
+      </header>
     </div>
   )
 }

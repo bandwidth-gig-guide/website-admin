@@ -36,7 +36,16 @@ const FormComponentHeader: React.FC<Props> = ({
     <div className={styles.wrapper}>
       <div className={styles.headerText}>
         <h1>{id ? title : `New ${displayType}`}</h1>
-        <h2>{id ? `${displayType} | ${id}` : title}</h2>
+        <h2 className={styles.subHeader}>
+          {id 
+            ? (
+              <>
+                <span className={styles.noSelect}>{`${displayType} | `}</span>{id}
+              </>
+            )
+            : title
+          }
+        </h2>
       </div>
       <div className={styles.buttonRow}>
         <button type="button" onClick={onReset}>

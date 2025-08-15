@@ -14,7 +14,11 @@ import { PageType } from "../../types/enums/PageType";
 // Components
 import Form from "../../components/Form/Form"
 
-const VenuePage = () => {
+interface Props {
+  currentToggle: string | null;
+}
+
+const VenuePage: React.FC<Props> = ({ currentToggle }) => {
   const [venue, setVenue] = useState<Venue>();
   const { id } = useRouter().query;
 
@@ -36,6 +40,7 @@ const VenuePage = () => {
       type={PageType.Venue}
       record={venue}
       setRecord={setVenue}
+      currentToggle={currentToggle}
     />
     </>
   );
