@@ -43,6 +43,15 @@
 
         img {
             cursor: pointer;
+            opacity: .35;
+        }
+
+        img:hover:not(.activeToggle) {
+            opacity: .7;
+        }
+
+        .activeToggle {
+            opacity: 1;
         }
     }
 }
