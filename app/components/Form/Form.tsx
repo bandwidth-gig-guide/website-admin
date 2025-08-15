@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { pascalcaseKeys } from "../../util/pascalcaseKeys";
@@ -32,24 +32,23 @@ const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
 
   const recordId: uuid = record[`${type}Id`];
   const isExistingRecord: boolean = recordId != undefined;
-  const url = `${apiUrl}/${type}${isExistingRecord ? `/${recordId}` : ''}`
-  const urlMainWebsite = `http://localhost:8000/${type}`
+  const url = `${apiUrl}/${type}${isExistingRecord ? `/${recordId}` : ''}`;
+  const urlMainWebsite = `http://localhost:8000/${type}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setRecord((prev: any) => prev ? { ...prev, [name]: value } : prev);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     try {
       const data = pascalcaseKeys(record);
       const headers = { headers: { "Content-Type": "application/json" } };
       if (isExistingRecord) {
         await axios.put(url, data, headers);
         alert(`Successfully updated ${type}`);
-      }
-      else {
+      } else {
         await axios.post(url, data, headers);
         alert(`Successfully created ${type}`);
       }
@@ -59,6 +58,18 @@ const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
     }
   };
 
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Enter" && e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  }, [record]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
   const handleDelete = async () => {
     try {
       if (isExistingRecord) {
@@ -66,8 +77,7 @@ const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
         await axios.delete(url);
         alert(`Successfully deleted ${type}`);
         useRouter().push(`/${type}`);
-      }
-      else {
+      } else {
         if (!window.confirm(`Are you sure you want to cancel this ${type}?`)) return;
         useRouter().push(`/${type}`);
       }
@@ -83,10 +93,10 @@ const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
 
   return (
     <div className={styles.wrapper}>
-
-      {/* Form */}
       <div className={styles.formWrapper}>
         <form>
+
+          {/* Form Header */}
           <FormComponentHeader
             type={type}
             record={record}
@@ -95,41 +105,43 @@ const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
             onReset={handleReset}
           />
 
-          {type === PageType.Artist &&
-            <FormArtist
-              artist={record}
-              setArtist={setRecord}
-              onChange={handleChange}
-            />
-          }
+          {/* Form */}
+          <>
+            {type === PageType.Artist &&
+              <FormArtist
+                artist={record}
+                setArtist={setRecord}
+                onChange={handleChange}
+              />
+            }
+            {type === PageType.Event &&
+              <FormEvent
+                event={record}
+                setEvent={setRecord}
+                onChange={handleChange}
+              />
+            }
+            {type === PageType.Venue &&
+              <FormVenue
+                venue={record}
+                setVenue={setRecord}
+                onChange={handleChange}
+              />
+            }
+          </>
 
-          {type === PageType.Event &&
-            <FormEvent
-              event={record}
-              setEvent={setRecord}
-              onChange={handleChange}
-            />
-          }
-
-          {type === PageType.Venue &&
-            <FormVenue
-              venue={record}
-              setVenue={setRecord}
-              onChange={handleChange}
-            />
-          }
         </form>
       </div>
 
-      {/* Preview (Current Toggle) */}
+      {/* Previews */}
       <>
         <JsonPreview json={record} isVisible={currentToggle === "json"} />
         <WebPagePreview url={record.originalPostUrl} isVisible={currentToggle === "og-post"} />
         <WebPagePreview url={record.ticketSaleUrl} isVisible={currentToggle === "ticket-sale"} />
-        {isExistingRecord && <WebPagePreview url={urlMainWebsite} isVisible={currentToggle === "website-main"} />}
+        <WebPagePreview url={urlMainWebsite} isVisible={currentToggle === "website-main"} />
       </>
     </div>
-  )
+  );
 };
 
 export default Form;
