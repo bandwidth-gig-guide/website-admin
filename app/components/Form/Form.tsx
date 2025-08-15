@@ -75,6 +75,10 @@ const Form: React.FC<Props> = ({ type, record, setRecord }) => {
   };
 
   return (
+    <div className={styles.wrapper}>
+
+      {/* Form */}
+      <div className={styles.formWrapper}>
     <form>
       <FormComponentHeader
         type={type}
