@@ -50,39 +50,39 @@ function MyApp({ Component, pageProps }: AppProps) {
 		}
 	}, [id, availableToggleIds, currentToggle]);
 
-		// Load current toggle from localStorage on mount
-		useEffect(() => {
-			if (typeof window !== 'undefined') {
-				setCurrentToggle(localStorage.getItem(CURRENT_TOGGLE_KEY));
+	// Load current toggle from localStorage on mount
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			setCurrentToggle(localStorage.getItem(CURRENT_TOGGLE_KEY));
 
+		}
+	}, []);
+
+	// Update localStorage when currentToggle changes
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			if (currentToggle) {
+				localStorage.setItem(CURRENT_TOGGLE_KEY, currentToggle);
+			} else {
+				localStorage.removeItem(CURRENT_TOGGLE_KEY);
 			}
-		}, []);
+		}
+	}, [currentToggle]);
 
-		  // Update localStorage when currentToggle changes
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (currentToggle) {
-        localStorage.setItem(CURRENT_TOGGLE_KEY, currentToggle);
-      } else {
-        localStorage.removeItem(CURRENT_TOGGLE_KEY);
-      }
-    }
-  }, [currentToggle]);
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [handleKeyDown]);
 
-  useEffect(() => {
-	window.addEventListener('keydown', handleKeyDown);
-	return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
-
-  // Ensure currentToggle is always in availableToggleIds
-  useEffect(() => {
-	if (currentToggle && !availableToggleIds.includes(currentToggle)) {
-	  setCurrentToggle(null);
-	  if (typeof window !== 'undefined') {
-		localStorage.removeItem(CURRENT_TOGGLE_KEY);
-	  }
-	}
-  }, [currentToggle, availableToggleIds]);
+	// Ensure currentToggle is always in availableToggleIds
+	useEffect(() => {
+		if (currentToggle && !availableToggleIds.includes(currentToggle)) {
+			setCurrentToggle(null);
+			if (typeof window !== 'undefined') {
+				localStorage.removeItem(CURRENT_TOGGLE_KEY);
+			}
+		}
+	}, [currentToggle, availableToggleIds]);
 
 
 	return (
@@ -92,8 +92,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<meta charSet="utf-8" />
 			</Head>
 			<div className='app-wrapper'>
-				<Header 
-					currentToggle={currentToggle} 
+				<Header
+					currentToggle={currentToggle}
 					setCurrentToggle={setCurrentToggle}
 					availableToggleIds={availableToggleIds}
 				/>
