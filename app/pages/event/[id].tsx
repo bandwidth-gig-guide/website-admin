@@ -14,8 +14,11 @@ import { PageType } from "../../types/enums/PageType";
 // Components
 import Form from "../../components/Form/Form"
 
+interface Props {
+  currentToggle: string | null;
+}
 
-const EventPage = () => {
+const EventPage: React.FC<Props>= ({ currentToggle }) => {
   const [event, setEvent] = useState<Event>();
   const { id } = useRouter().query;
 
@@ -38,6 +41,7 @@ const EventPage = () => {
         type={PageType.Event}
         record={event}
         setRecord={setEvent}
+        currentToggle={currentToggle}
       />
     </>
   );

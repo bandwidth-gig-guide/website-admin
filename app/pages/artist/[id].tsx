@@ -14,8 +14,11 @@ import { PageType } from "../../types/enums/PageType";
 // Components
 import Form from "../../components/Form/Form"
 
+interface Props {
+  currentToggle: string | null;
+}
 
-const ArtistPage = () => {
+const ArtistPage: React.FC<Props> = ({ currentToggle }) => {
   const [artist, setArtist] = useState<Artist>();
   const { id } = useRouter().query;
 
@@ -38,6 +41,7 @@ const ArtistPage = () => {
         type={PageType.Artist}
         record={artist}
         setRecord={setArtist}
+        currentToggle={currentToggle}
       />
     </>
 
