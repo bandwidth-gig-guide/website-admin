@@ -19,7 +19,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
       const updatedPerformances = [...prev.performances];
       updatedPerformances[index] = {
         ...updatedPerformances[index],
-        startDateTime: new Date(newIso)
+        startDateTime: newIso
       };
       return {
         ...prev,

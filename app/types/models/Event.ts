@@ -6,7 +6,7 @@ import { EventPrice } from "./EventPrice";
 export type Event = {
     eventId: uuid;
     title: string;
-    startDateTime: Date;
+    startDateTime: string;
     description: string;
     originalPostUrl: url;
     ticketSaleUrl: url;

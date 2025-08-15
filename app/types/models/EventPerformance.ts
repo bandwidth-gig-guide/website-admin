@@ -3,5 +3,5 @@ export type EventPerformance = {
     title: string;
     imageUrl: url;
     setListPosition: number;
-    startDateTime: Date;
+    startDateTime: string;
 }
