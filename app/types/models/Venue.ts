@@ -1,6 +1,7 @@
 import { Social } from "./Social";
 import { OpeningHours } from "./OpeningHours";
 import { VenueStage } from "./VenueStage";
+import { Image } from "./Image"
 
 export type Venue = {
     venueId: uuid;
@@ -14,7 +15,7 @@ export type Venue = {
     phoneNumber: string;
     googleMapsEmbedUrl?: url;
     isFeatured: boolean;
-    imageUrls: url[];
+    images: Image[];
     socials: Social[];
     types: string[];
     tags: string[];
