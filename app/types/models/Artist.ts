@@ -1,4 +1,5 @@
 import { Social } from "./Social";
+import { Image } from "./Image"
 
 export type Artist = {
     artistId: uuid;
@@ -11,7 +12,7 @@ export type Artist = {
     spotifyEmbedUrl?: url;
     youtubeEmbedUrl?: url;
     isFeatured: boolean;
-    imageUrls: url[];
+    images: Image[];
     socials: Social[];
     types: string[];
     tags: string[];

@@ -3,6 +3,7 @@ import styles from "./FormComponentImages.module.css";
 import { Artist } from "../../../types/models/Artist";
 import { Event } from "../../../types/models/Event";
 import { Venue } from "../../../types/models/Venue";
+import { Image as ImageObject } from "../../../types/models/Image";
 
 import { IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT } from "../../../constants/minMaxValues";
 
@@ -26,17 +27,17 @@ const FormComponentImages = <T extends RecordWithImages>({
   record, 
   setRecord 
 }: Props<T>) => {
-  const urls = record.imageUrls || [];
+  const images: ImageObject[] = (record.images || []).slice().sort((a, b) => a.displayOrder - b.displayOrder);
   const [metaDataList, setMetaDataList] = useState<ImageMetaData[]>([]);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     setMetaDataList(prev => {
-      return urls.map((url, index) => {
-        if (prev[index]?.url !== url) {
+      return images.map((image, index) => {
+        if (prev[index]?.url !== image.url) {
           return {
-            url,
+            url: image.url,
             fileType: "",
             fileSizeDisplay: "",
             fileSizeBytes: 0,
@@ -47,47 +48,55 @@ const FormComponentImages = <T extends RecordWithImages>({
         return prev[index];
       });
     });
-  }, [urls, record.imageUrls]);
+  }, [images, record.images]);
 
-  const updateUrls = (newUrls: string[]) => {
+  const updateImages = (newImages: ImageObject[]) => {
+    const orderedImages = newImages.map((img, idx) => ({
+      ...img,
+      displayOrder: idx + 1,
+    }));
     setRecord(prev => ({
       ...prev,
-      imageUrls: newUrls,
+      images: orderedImages,
     }));
   };
 
   const handleInputChange = (index: number, value: string) => {
     const stripped = value.split("?")[0];
-    const updated = [...urls];
-    updated[index] = stripped;
-    updateUrls(updated);
+    const updated = [...images];
+    updated[index] = {
+      ...updated[index],
+      url: stripped,
+    };
+    updateImages(updated);
   };
 
   const handleAdd = () => {
-    updateUrls([...urls, ""]);
+    updateImages([
+      ...images,
+      { url: "", displayOrder: images.length }
+    ]);
   };
 
   const handleRemove = (index: number) => {
-    const updated = [...urls];
+    const updated = [...images];
     updated.splice(index, 1);
-    updateUrls(updated);
+    updateImages(updated);
   };
 
   const handleReorder = (fromIndex: number, toIndex: number) => {
     if (
       fromIndex < 0 ||
       toIndex < 0 ||
-      fromIndex >= urls.length ||
-      toIndex >= urls.length ||
+      fromIndex >= images.length ||
+      toIndex >= images.length ||
       fromIndex === toIndex
     ) return;
 
-    // Reorder URLs
-    const updatedUrls = [...urls];
-    const [movedUrl] = updatedUrls.splice(fromIndex, 1);
-    updatedUrls.splice(toIndex, 0, movedUrl);
+    const updatedImages = [...images];
+    const [movedImage] = updatedImages.splice(fromIndex, 1);
+    updatedImages.splice(toIndex, 0, movedImage);
 
-    // Reorder metaDataList
     setMetaDataList(prev => {
       const updatedMeta = [...prev];
       const [movedMeta] = updatedMeta.splice(fromIndex, 1);
@@ -95,9 +104,8 @@ const FormComponentImages = <T extends RecordWithImages>({
       return updatedMeta;
     });
 
-    updateUrls(updatedUrls);
+    updateImages(updatedImages);
   };
-
 
   const handleImageLoad = (index: number, e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -142,9 +150,9 @@ const FormComponentImages = <T extends RecordWithImages>({
 
   return (
     <div className={styles.wrapper}>
-      {urls.map((url, index) => {
+      {images.map((image, index) => {
         const meta = metaDataList[index] || {
-          url,
+          url: image.url,
           fileType: "",
           fileSizeDisplay: "",
           fileSizeBytes: 0,
@@ -153,7 +161,7 @@ const FormComponentImages = <T extends RecordWithImages>({
         };
         return (
           <div
-            key={index}
+            key={image.imageId ?? index}
             className={`${styles.cardWrapper} ${draggedIndex === index ? styles.dragging : ""}`}
             draggable
             onDragStart={() => setDraggedIndex(index)}
@@ -166,9 +174,9 @@ const FormComponentImages = <T extends RecordWithImages>({
             }}
           >
             <div className={styles.imgWrapper}>
-              {url && (
+              {image && image.url && (
                 <img
-                  src={url}
+                  src={image.url}
                   alt=""
                   onLoad={e => handleImageLoad(index, e)}
                   className={styles.thumbnail}
@@ -181,7 +189,7 @@ const FormComponentImages = <T extends RecordWithImages>({
                 <input
                   id={`image-${index}`}
                   type="text"
-                  value={url}
+                  value={image.url}
                   onChange={e => handleInputChange(index, e.target.value)}
                 />
                 <button 
@@ -225,7 +233,7 @@ const FormComponentImages = <T extends RecordWithImages>({
 
       {fullscreenIndex !== null && (
         <div className={styles.fullscreenOverlay} onClick={() => setFullscreenIndex(null)}>
-          <img src={urls[fullscreenIndex]} alt="" className={styles.fullscreenImage} />
+          <img src={images[fullscreenIndex].url} alt="" className={styles.fullscreenImage} />
         </div>
       )}
 

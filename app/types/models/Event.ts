@@ -2,6 +2,7 @@ import { Social } from "./Social"
 import { EventVenue } from "./EventVenue"
 import { EventPerformance } from "./EventPerformance";
 import { EventPrice } from "./EventPrice";
+import { Image } from "./Image"
 
 export type Event = {
     eventId: uuid;
@@ -11,7 +12,7 @@ export type Event = {
     originalPostUrl: url;
     ticketSaleUrl: url;
     isFeatured: boolean;
-    imageUrls: url[];
+    images: Image[];
     socials: Social[];
     types: string[];
     tags: string[];
