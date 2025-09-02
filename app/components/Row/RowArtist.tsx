@@ -34,7 +34,7 @@ const RowArtist: React.FC<Props> = ({ artistId }) => {
   }, [artistId]);
 
   useEffect(() => {
-    setImageCount(Array.isArray(artist.imageUrls) ? artist.imageUrls.length : 0);
+    setImageCount(Array.isArray(artist.images) ? artist.images.length : 0);
     setTagCount(Array.isArray(artist.tags) ? artist.tags.length : 0);
     setTypeCount(Array.isArray(artist.types) ? artist.types.length : 0);
     setUpcomingEventCount(Array.isArray(artist.upcomingEventIds) ? artist.upcomingEventIds.length : 0);

@@ -35,7 +35,7 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
   }, [venueId]);
 
   useEffect(() => {
-      setImageCount(Array.isArray(venue.imageUrls) ? venue.imageUrls.length : 0);
+      setImageCount(Array.isArray(venue.images) ? venue.images.length : 0);
       setStageCount(Array.isArray(venue.venueStages) ? venue.venueStages.length : 0);
       setTagCount(Array.isArray(venue.tags) ? venue.tags.length : 0);
       setTypeCount(Array.isArray(venue.types) ? venue.types.length : 0);
