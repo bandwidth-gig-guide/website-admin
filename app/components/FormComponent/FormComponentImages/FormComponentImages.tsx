@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from "./FormComponentImages.module.css";
 import { Artist } from "../../../types/models/Artist";
 import { Event } from "../../../types/models/Event";
@@ -27,14 +27,18 @@ const FormComponentImages = <T extends RecordWithImages>({
   record, 
   setRecord 
 }: Props<T>) => {
-  const images: ImageObject[] = (record.images || []).slice().sort((a, b) => a.displayOrder - b.displayOrder);
+  const images: ImageObject[] = useMemo(
+    () => (record.images || []).slice().sort((a, b) => a.displayOrder - b.displayOrder),
+    [record.images]
+  );
+
   const [metaDataList, setMetaDataList] = useState<ImageMetaData[]>([]);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    setMetaDataList(prev => {
-      return images.map((image, index) => {
+    setMetaDataList(prev =>
+      images.map((image, index) => {
         if (prev[index]?.url !== image.url) {
           return {
             url: image.url,
@@ -46,9 +50,9 @@ const FormComponentImages = <T extends RecordWithImages>({
           };
         }
         return prev[index];
-      });
-    });
-  }, [images, record.images]);
+      })
+    );
+  }, [images]);
 
   const updateImages = (newImages: ImageObject[]) => {
     const orderedImages = newImages.map((img, idx) => ({
@@ -236,7 +240,6 @@ const FormComponentImages = <T extends RecordWithImages>({
           <img src={images[fullscreenIndex].url} alt="" className={styles.fullscreenImage} />
         </div>
       )}
-
     </div>
   );
 };
