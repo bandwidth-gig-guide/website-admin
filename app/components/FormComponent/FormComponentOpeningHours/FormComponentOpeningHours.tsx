@@ -83,7 +83,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      {DAYS.map(({ label, openKey, closeKey }) => (
+      {record.openingHours && DAYS.map(({ label, openKey, closeKey }) => (
         <div key={label} className={styles.row}>
           <label>{label}</label>
           <input

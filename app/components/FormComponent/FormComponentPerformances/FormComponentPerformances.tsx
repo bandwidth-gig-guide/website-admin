@@ -34,12 +34,12 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
       const newPerformance = {
         title: "",
         imageUrl: "",
-        setListPosition: prev.performances.length + 1,
+        setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
         startDateTime: prev.startDateTime
       };
       return {
         ...prev,
-        performances: [...prev.performances, newPerformance]
+        performances: [...(prev.performances || []), newPerformance]
       };
     });
   };

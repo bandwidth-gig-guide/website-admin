@@ -12,7 +12,7 @@ interface Props {
 }
 
 const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
-  const stages = record.venueStages;
+  const stages = record.venueStages ?? [];
 
   const handleChange = (
     index: number,
@@ -36,7 +36,7 @@ const FormComponentStages: React.FC<Props> = ({ record, setRecord }) => {
     };
     setRecord((prev: any) => ({
       ...prev,
-      venueStages: [...prev.venueStages, newStage],
+      venueStages: prev.venueStages ? [...prev.venueStages, newStage] : [newStage],
     }));
   };
 

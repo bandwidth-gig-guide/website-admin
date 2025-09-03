@@ -46,7 +46,7 @@ const FormEvent: React.FC<FormEventProps> = ({
         <FormComponentDateTime
           label="Start Date & Time"
           name="startDateTime"
-          value={event.startDateTime}
+          value={event.startDateTime || new Date().toISOString()}
           onChange={(newIso) => handleChangeDateTime("startDateTime", newIso)}
         />
         <FormComponentDropdownList
