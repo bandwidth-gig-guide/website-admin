@@ -13,7 +13,7 @@ export type Venue = {
     description: string;
     websiteUrl: url;
     phoneNumber: string;
-    googleMapsEmbedUrl?: url;
+    googleMapsEmbedUrl: url;
     isFeatured: boolean;
     images: Image[];
     socials: Social[];
