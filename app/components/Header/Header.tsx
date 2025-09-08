@@ -27,7 +27,7 @@ const Header: React.FC<Props> = ({ currentToggle, setCurrentToggle, availableTog
   return (
     <div className={styles.wrapper}>
       <header>
-        <h1>Bandwidth Admin</h1>
+        <h1 onClick={() => router.push("/")}>Bandwidth Admin</h1>
 
         {/* Nav Bar */}
         <nav>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { PageType } from '../../types/enums/PageType';
 
 // Styles
@@ -13,12 +13,40 @@ interface Props {
   pageType: PageType;
 }
 
-const Table: React.FC<Props> = ({ids, pageType}) => {
+const PAGE_SIZE = 4;
+
+const Table: React.FC<Props> = ({ ids, pageType }) => {
+  const [page, setPage] = useState(0);
+
+  const start = page * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const paginatedIds = ids.slice(start, end);
+
+  const totalPages = Math.ceil(ids.length / PAGE_SIZE);
+
   return (
     <div className={styles.wrapper}>
-      {pageType === PageType.Artist && <TableArtist ids={ids} />}
-      {pageType === PageType.Event && <TableEvent ids={ids} />}
-      {pageType === PageType.Venue && <TableVenue ids={ids} />}
+      {pageType === PageType.Artist && <TableArtist ids={paginatedIds} />}
+      {pageType === PageType.Event && <TableEvent ids={paginatedIds} />}
+      {pageType === PageType.Venue && <TableVenue ids={paginatedIds} />}
+
+      <div className={styles.pagination}>
+        <button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 0}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page + 1} of {totalPages}
+        </span>
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page + 1 >= totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   )
 }
