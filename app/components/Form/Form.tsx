@@ -31,7 +31,7 @@ const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
   if (!record) return;
 
   const recordId: uuid = record[`${type}Id`];
-  const isExistingRecord: boolean = recordId != undefined;
+  const isExistingRecord: boolean = recordId !== undefined && recordId !== "";
   const url = `${apiUrl}/${type}${isExistingRecord ? `/${recordId}` : ''}`;
   const urlMainWebsite = `http://localhost:8000/${type}`;
 
