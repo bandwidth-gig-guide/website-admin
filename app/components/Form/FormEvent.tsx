@@ -10,6 +10,7 @@ import FormComponentSocials from "../FormComponent/FormComponentSocials/FormComp
 import FormComponentTextArea from "../FormComponent/FormComponentTextArea/FormComponentTextArea";
 import FormComponentTextInput from "../FormComponent/FormComponentTextInput/FormComponentTextInput";
 import FormComponentTicketPrices from "../FormComponent/FormComponentTicketPrices/FormComponentTicketPrices";
+import FormComponentVenue from "../FormComponent/FormComponentVenue/FormComponentVenue";
 
 // Types and Constants
 import { Event } from "../../types/models/Event";
@@ -49,12 +50,11 @@ const FormEvent: React.FC<FormEventProps> = ({
           value={event.startDateTime || new Date().toISOString()}
           onChange={(newIso) => handleChangeDateTime("startDateTime", newIso)}
         />
-        <FormComponentDropdownList
+        <FormComponentVenue
           label="Venue"
           name="venue.title"
-          value={event.venue ? event.venue.title : ""}
-          options={["The Gaso", "The Tote"]}
-          onChange={onChange}
+          record={event}
+          setRecord={setEvent}
         />
         <FormComponentTextInput
           label="Original Post URL"
