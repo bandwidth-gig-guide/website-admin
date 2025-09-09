@@ -3,12 +3,15 @@ import styles from './FormComponentDropdownList.module.css';
 
 type Option = string | number | { value: string | number; label: string };
 
+type ValueChangeHandler = (value: { value: string; label: string } | string) => void;
+type EventChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
+
 interface Props {
   label: string;
   name: string;
   value: string;
   options: Option[];
-  onChange: (value: { value: string; label: string } | string) => void;
+  onChange: ValueChangeHandler | EventChangeHandler;
   required?: boolean;
 }
 
@@ -43,10 +46,17 @@ const FormComponentDropdownList: React.FC<Props> = ({
     setInputValue(newText);
 
     const match = normalizedOptions.find(o => o.label === newText);
-    if (match) {
-      onChange(match);
-    } else {
-      onChange(newText);
+
+    if (typeof onChange === "function") {
+      if (onChange.length === 1 && "target" in e) {
+        (onChange as EventChangeHandler)(e);
+      } else {
+        if (match) {
+          (onChange as ValueChangeHandler)(match);
+        } else {
+          (onChange as ValueChangeHandler)(newText);
+        }
+      }
     }
   };
 
