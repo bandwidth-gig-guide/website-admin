@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import styles from "./FormComponentPerformances.module.css";
 import { Event } from "../../../types/models/Event";
 import axios from "axios";
-import camelcaseKeys from "camelcase-keys";
 import apiUrl from "../../../api.config";
 
-
 import FormComponentDateTime from "../FormComponentDateTime/FormComponentDateTime";
-import FormComponentDropdownList from "../FormComponentDropdownList/FormComponentDropdownList";
+import FormComponentDropdownListAdvanced from "../FormComponentDropdownListAdvanced/FormComponentDropdownListAdvanced";
 
 interface Props {
   record: Event;
@@ -19,15 +17,15 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
   const [artistOptions, setArtistOptions] = useState<{ value: string; label: string }[]>([]);
 
   useEffect(() => {
-  axios.get(`${apiUrl}/artist/id-and-title`)
-    .then(response => {
-      const options = response.data.map((artist: { ArtistID: string; Title: string }) => ({
-        value: artist.ArtistID,
-        label: artist.Title
-      }));
-      setArtistOptions(options);
-    });
-}, []);
+    axios.get(`${apiUrl}/artist/id-and-title`)
+      .then(response => {
+        const options = response.data.map((artist: { ArtistID: string; Title: string }) => ({
+          value: artist.ArtistID,
+          label: artist.Title
+        }));
+        setArtistOptions(options);
+      });
+  }, []);
 
 
   const handleChangeDateTime = (index: number, newIso: string) => {
@@ -132,29 +130,23 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
             <div className={styles.inputWrapper}>
               <div className={styles.topRow}>
                 <div className={styles.topRowInput}>
-                  <FormComponentDropdownList
+                  <FormComponentDropdownListAdvanced
                     label={formatLabel(performance.setListPosition)}
-                    name={`performances[${index}].title`}
-                    value={performance.artistId || performance.title}
+                    name={`performances[${index}].artist`}
+                    value={performance.artistId || ""}
                     options={artistOptions}
-                    onChange={(val: string | { value: string; label: string }) => {
+                    setValue={(val) => {
                       setRecord(prev => {
                         const updated = [...prev.performances];
-                        if (typeof val === "string") {
-                          updated[index] = { ...updated[index], title: val, artistId: "" };
-                        } else {
-                          updated[index] = {
-                            ...updated[index],
-                            title: val.label,
-                            artistId: val.value
-                          };
-                        }
+                        updated[index] = {
+                          ...updated[index],
+                          artistId: val.value,
+                          title: val.label
+                        };
                         return { ...prev, performances: updated };
                       });
                     }}
-                    required={true}
                   />
-
                 </div>
                 <div>
                   <button

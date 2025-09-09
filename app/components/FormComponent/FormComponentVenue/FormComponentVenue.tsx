@@ -4,7 +4,7 @@ import { Event } from "../../../types/models/Event";
 import axios from "axios";
 import apiUrl from "../../../api.config";
 
-import FormComponentDropdownList from "../FormComponentDropdownList/FormComponentDropdownList";
+import FormComponentDropdownListAdvanced from "../FormComponentDropdownListAdvanced/FormComponentDropdownListAdvanced";
 
 interface Props {
   label: string;
@@ -29,41 +29,23 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <FormComponentDropdownList
+      <FormComponentDropdownListAdvanced
         label={label}
         name={name}
-        value={record.venue ? record.venue?.title : ""}
+        value={record?.venue?.venueID || ""}
         options={venueOptions}
-        onChange={(val: string | { value: string; label: string }) => {
-          setRecord(prev => {
-            if (!prev) return prev;
-
-            if (typeof val === "string") {
-              return {
-                ...prev,
-                venue: {
-                  ...prev.venue,
-                  title: val,
-                  venueID: "",
-                  stageTitle: prev.venue?.stageTitle || "",
-                  imageUrl: prev.venue?.imageUrl || ""
-                }
-              };
-            } else {
-              return {
-                ...prev,
-                venue: {
-                  ...prev.venue,
-                  title: val.label,
-                  venueID: val.value,
-                  stageTitle: prev.venue?.stageTitle || "",
-                  imageUrl: prev.venue?.imageUrl || ""
-                }
-              };
+        setValue={(val) => {
+          setRecord(prev => ({
+            ...prev,
+            venue: {
+              ...prev.venue,
+              venueID: val.value,
+              title: val.label,
+              stageTitle: prev.venue?.stageTitle || "",
+              imageUrl: prev.venue?.imageUrl || ""
             }
-          });
+          }));
         }}
-        required={true}
       />
     </div>
   );
