@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./FormComponentPerformances.module.css";
 import { Event } from "../../../types/models/Event";
+import axios from "axios";
+import camelcaseKeys from "camelcase-keys";
+import apiUrl from "../../../api.config";
+
 
 import FormComponentDateTime from "../FormComponentDateTime/FormComponentDateTime";
 import FormComponentDropdownList from "../FormComponentDropdownList/FormComponentDropdownList";
@@ -12,6 +16,19 @@ interface Props {
 
 const FormComponentPerformances = ({ record, setRecord }: Props) => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [artistOptions, setArtistOptions] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+  axios.get(`${apiUrl}/artist/id-and-title`)
+    .then(response => {
+      const options = response.data.map((artist: { ArtistID: string; Title: string }) => ({
+        value: artist.ArtistID,
+        label: artist.Title
+      }));
+      setArtistOptions(options);
+    });
+}, []);
+
 
   const handleChangeDateTime = (index: number, newIso: string) => {
     setRecord(prev => {
@@ -118,11 +135,26 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
                   <FormComponentDropdownList
                     label={formatLabel(performance.setListPosition)}
                     name={`performances[${index}].title`}
-                    value={performance.title}
-                    options={["Amber Drift", "The Amazing Devil"]}
-                    onChange={() => { }}
+                    value={performance.artistId || performance.title}
+                    options={artistOptions}
+                    onChange={(val: string | { value: string; label: string }) => {
+                      setRecord(prev => {
+                        const updated = [...prev.performances];
+                        if (typeof val === "string") {
+                          updated[index] = { ...updated[index], title: val, artistId: "" };
+                        } else {
+                          updated[index] = {
+                            ...updated[index],
+                            title: val.label,
+                            artistId: val.value
+                          };
+                        }
+                        return { ...prev, performances: updated };
+                      });
+                    }}
                     required={true}
                   />
+
                 </div>
                 <div>
                   <button
