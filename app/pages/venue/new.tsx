@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 
 // Types
-import { Venue } from "../../types/models/Venue";
+import { Venue, defaultVenue } from "../../types/models/Venue";
 import { PageType } from "../../types/enums/PageType";
 
 // Components
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const NewVenuePage: React.FC<Props> = ({ currentToggle }) => {
-  const [Venue, setVenue] = useState<Venue>({} as Venue);
+  const [venue, setVenue] = useState<Venue>(defaultVenue);
 
   return (
     <>
@@ -24,7 +24,7 @@ const NewVenuePage: React.FC<Props> = ({ currentToggle }) => {
 
       <Form
         type={PageType.Venue}
-        record={Venue}
+        record={venue}
         setRecord={setVenue}
         currentToggle={currentToggle}
       />
