@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from './FormComponentDropdownList.module.css';
+
+type Option = string | number | { value: string | number; label: string };
 
 interface Props {
   label: string;
   name: string;
   value: string;
-  options: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  options: Option[];
+  onChange: (value: { value: string; label: string } | string) => void;
   required?: boolean;
 }
 
-const FormComponentInputWithOptions: React.FC<Props> = ({
+const FormComponentDropdownList: React.FC<Props> = ({
   label,
   name,
   value,
@@ -18,6 +20,36 @@ const FormComponentInputWithOptions: React.FC<Props> = ({
   onChange,
   required = true
 }) => {
+  const normalizedOptions = options.map(opt => {
+    if (typeof opt === "string" || typeof opt === "number") {
+      return { value: String(opt), label: String(opt) };
+    }
+    return { value: String(opt.value), label: String(opt.label) };
+  });
+
+  const initialLabel =
+    normalizedOptions.find(o => o.value === value)?.label || value;
+
+  const [inputValue, setInputValue] = useState(initialLabel);
+
+  useEffect(() => {
+    const newLabel =
+      normalizedOptions.find(o => o.value === value)?.label || value;
+    setInputValue(newLabel);
+  }, [value, normalizedOptions]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newText = e.target.value;
+    setInputValue(newText);
+
+    const match = normalizedOptions.find(o => o.label === newText);
+    if (match) {
+      onChange(match);
+    } else {
+      onChange(newText);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <label htmlFor={name}>{label}</label>
@@ -25,18 +57,18 @@ const FormComponentInputWithOptions: React.FC<Props> = ({
         type="search"
         id={name}
         name={name}
-        value={value}
-        onChange={onChange}
+        value={inputValue}
+        onChange={handleChange}
         required={required}
         list={`${name}-options`}
       />
       <datalist id={`${name}-options`}>
-        {options && options.map((option) => (
-          <option key={option} value={option} />
+        {normalizedOptions.map(opt => (
+          <option key={opt.value} value={opt.label} />
         ))}
       </datalist>
     </div>
   );
 };
 
-export default FormComponentInputWithOptions;
+export default FormComponentDropdownList;
