@@ -79,7 +79,7 @@ tr:hover {
 /* Form */
 
 form {
-    max-width: 45vw;
+    max-width: 800px;
     margin: auto;
     flex: 1;
     display: flex;
