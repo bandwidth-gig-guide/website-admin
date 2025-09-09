@@ -19,6 +19,7 @@ interface Props {
 const Header: React.FC<Props> = ({ currentToggle, setCurrentToggle, availableToggleIds }) => {
   const router = useRouter();
   const { id } = router.query;
+  const isCreatingNewRecord = router.asPath.endsWith('/new');
 
   const handleToggleClick = (toggleId: string) => {
 		setCurrentToggle(prev => (prev === toggleId ? null : toggleId));
@@ -46,7 +47,7 @@ const Header: React.FC<Props> = ({ currentToggle, setCurrentToggle, availableTog
         </nav>
 
         {/* Toggles */}
-        {id && (
+        {(id || isCreatingNewRecord) && (
           <div className={styles.toggles}>
             {availableToggleIds.map(toggleId => {
               const toggle = TOGGLES.find(toggle => toggle.id === toggleId);
