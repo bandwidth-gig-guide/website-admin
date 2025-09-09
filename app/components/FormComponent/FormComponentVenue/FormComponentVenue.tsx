@@ -14,14 +14,18 @@ interface Props {
 }
 
 const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
-  const [venueOptions, setVenueOptions] = useState<{ value: string; label: string }[]>([]);
+  const [venueOptions, setVenueOptions] = useState<
+    { value: string; label: string; stageId: string; stageTitle: string }[]
+  >([]);
 
   useEffect(() => {
     axios.get(`${apiUrl}/venue/id-and-title`)
       .then(response => {
-        const options = response.data.map((venue: { VenueID: string; Title: string }) => ({
+        const options = response.data.map((venue: { VenueID: string; Title: string; StageID: string; StageTitle: string }) => ({
           value: venue.VenueID,
-          label: venue.Title
+          label: `${venue.Title} | ${venue.StageTitle}`,
+          stageId: venue.StageID,
+          stageTitle: venue.StageTitle
         }));
         setVenueOptions(options);
       });
@@ -35,14 +39,17 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
         value={record?.venue?.venueID || ""}
         options={venueOptions}
         setValue={(val) => {
+          const selectedStageTitle = val.label.split(" | ")[1];
+          const selectedVenue = venueOptions.find((venue) => venue.stageTitle === selectedStageTitle);
           setRecord(prev => ({
             ...prev,
             venue: {
               ...prev.venue,
               venueID: val.value,
-              title: val.label,
-              stageTitle: prev.venue?.stageTitle || "",
-              imageUrl: prev.venue?.imageUrl || ""
+              title: val.label.split(" | ")[0],
+              stageId: selectedVenue?.stageId || "",
+              stageTitle: selectedStageTitle,
+              imageUrl: prev.venue?.imageUrl || "https://dummy.com"
             }
           }));
         }}
