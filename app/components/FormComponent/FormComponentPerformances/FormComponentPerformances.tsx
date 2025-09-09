@@ -137,7 +137,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
                     name={`performances[${index}].title`}
                     value={performance.artistId || performance.title}
                     options={artistOptions}
-                    onChange={(val) => {
+                    onChange={(val: string | { value: string; label: string }) => {
                       setRecord(prev => {
                         const updated = [...prev.performances];
                         if (typeof val === "string") {

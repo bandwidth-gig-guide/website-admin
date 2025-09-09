@@ -34,7 +34,7 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
         name={name}
         value={record.venue ? record.venue?.title : ""}
         options={venueOptions}
-        onChange={(val) => {
+        onChange={(val: string | { value: string; label: string }) => {
           setRecord(prev => {
             if (!prev) return prev;
 
