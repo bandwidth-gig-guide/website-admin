@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import styles from './FormComponentDropdownList.module.css';
-
-type Option = string | number | { value: string | number; label: string };
-
-type ValueChangeHandler = (value: { value: string; label: string } | string) => void;
-type EventChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 interface Props {
   label: string;
   name: string;
   value: string;
-  options: Option[];
-  onChange: ValueChangeHandler | EventChangeHandler;
+  options: (string | number)[];
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   required?: boolean;
 }
 
@@ -21,43 +16,19 @@ const FormComponentDropdownList: React.FC<Props> = ({
   value,
   options = [],
   onChange,
-  required = true
+  required = true,
 }) => {
-  const normalizedOptions = options.map(opt => {
-    if (typeof opt === "string" || typeof opt === "number") {
-      return { value: String(opt), label: String(opt) };
-    }
-    return { value: String(opt.value), label: String(opt.label) };
-  });
+  const normalizedOptions = options.map(opt => String(opt));
 
-  const initialLabel =
-    normalizedOptions.find(o => o.value === value)?.label || value;
-
-  const [inputValue, setInputValue] = useState(initialLabel);
+  const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
-    const newLabel =
-      normalizedOptions.find(o => o.value === value)?.label || value;
-    setInputValue(newLabel);
-  }, [value, normalizedOptions]);
+    setInputValue(value);
+  }, [value]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newText = e.target.value;
-    setInputValue(newText);
-
-    const match = normalizedOptions.find(o => o.label === newText);
-
-    if (typeof onChange === "function") {
-      if (onChange.length === 1 && "target" in e) {
-        (onChange as EventChangeHandler)(e);
-      } else {
-        if (match) {
-          (onChange as ValueChangeHandler)(match);
-        } else {
-          (onChange as ValueChangeHandler)(newText);
-        }
-      }
-    }
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+    onChange(e);
   };
 
   return (
@@ -74,7 +45,7 @@ const FormComponentDropdownList: React.FC<Props> = ({
       />
       <datalist id={`${name}-options`}>
         {normalizedOptions.map(opt => (
-          <option key={opt.value} value={opt.label} />
+          <option key={opt} value={opt} />
         ))}
       </datalist>
     </div>
