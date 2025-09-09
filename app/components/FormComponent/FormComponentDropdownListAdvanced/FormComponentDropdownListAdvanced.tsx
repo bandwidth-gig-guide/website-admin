@@ -57,8 +57,8 @@ const FormComponentDropdownListAdvanced: React.FC<Props> = ({
         list={`${name}-options`}
       />
       <datalist id={`${name}-options`}>
-        {normalizedOptions.map(opt => (
-          <option key={opt.value} value={opt.label} />
+        {normalizedOptions.map((option, index) => (
+          <option key={index} value={option.label} />
         ))}
       </datalist>
     </div>
