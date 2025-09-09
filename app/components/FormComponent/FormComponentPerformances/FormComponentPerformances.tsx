@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./FormComponentPerformances.module.css";
 import { Event } from "../../../types/models/Event";
 import axios from "axios";
@@ -135,11 +135,26 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
                   <FormComponentDropdownList
                     label={formatLabel(performance.setListPosition)}
                     name={`performances[${index}].title`}
-                    value={performance.title}
-                    options={["Amber Drift", "The Amazing Devil"]}
-                    onChange={() => { }}
+                    value={performance.artistId || performance.title}
+                    options={artistOptions}
+                    onChange={(val) => {
+                      setRecord(prev => {
+                        const updated = [...prev.performances];
+                        if (typeof val === "string") {
+                          updated[index] = { ...updated[index], title: val, artistId: "" };
+                        } else {
+                          updated[index] = {
+                            ...updated[index],
+                            title: val.label,
+                            artistId: val.value
+                          };
+                        }
+                        return { ...prev, performances: updated };
+                      });
+                    }}
                     required={true}
                   />
+
                 </div>
                 <div>
                   <button
