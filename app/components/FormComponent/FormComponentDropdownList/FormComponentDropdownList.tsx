@@ -22,7 +22,7 @@ const FormComponentInputWithOptions: React.FC<Props> = ({
     <div className={styles.wrapper}>
       <label htmlFor={name}>{label}</label>
       <input
-        type="text"
+        type="search"
         id={name}
         name={name}
         value={value}
