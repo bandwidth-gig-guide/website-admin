@@ -19,12 +19,35 @@ services:
     networks:
       - network-bandwidth
 
+  website-main:
+    image: ghcr.io/bandwidth-gig-guide/website-main:latest
+    container_name: website-main
+    networks:
+      - network-bandwidth
+
+  website-admin:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        BUILD_MODE: development
+    container_name: website-admin
+    networks:
+      - network-bandwidth
+    environment:
+      - APP_MODE=development
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+
   api-gateway:
     image: ghcr.io/bandwidth-gig-guide/api-gateway:latest
     container_name: api-gateway
     depends_on:
       - service-public
       - service-admin
+      - website-main
+      - website-admin
     ports:
       - "80:80"
     networks:
