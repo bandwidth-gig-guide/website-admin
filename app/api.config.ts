@@ -1,3 +1,3 @@
-const apiUrl = process.env.API_URL || "http://localhost:80/admin";
+const apiUrl = process.env.API_URL || "http://admin.localhost/admin";
 
 export default apiUrl;
