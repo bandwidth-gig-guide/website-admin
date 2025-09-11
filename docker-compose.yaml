@@ -2,6 +2,8 @@ services:
   db-main:
     image: ghcr.io/bandwidth-gig-guide/db-main:latest
     container_name: db-main
+    volumes:
+      - db-main-data:/var/lib/postgresql/data
     networks:
       - network-bandwidth
 
@@ -28,13 +30,8 @@ services:
     networks:
       - network-bandwidth
 
-  website-main:
-    image: ghcr.io/bandwidth-gig-guide/website-main:latest
-    container_name: website-main
-    ports:
-      - "8000:3000"
-    networks:
-      - network-bandwidth
+volumes:
+  db-main-data:
 
 networks:
   network-bandwidth:
