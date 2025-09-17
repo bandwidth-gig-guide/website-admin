@@ -36,6 +36,7 @@ services:
       - network-bandwidth
     environment:
       - APP_MODE=development
+      - NEXT_PUBLIC_APP_MODE=development
     volumes:
       - ./app:/app
       - /app/node_modules
