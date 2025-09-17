@@ -84,7 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ReactKeycloakProvider
       authClient={keycloak}
-      initOptions={{ onLoad: 'login-required', checkLoginIframe: false }}
+      initOptions={{ onLoad: 'check-sso', checkLoginIframe: false }}
     >
       <ProtectedApp>
         <Head>
