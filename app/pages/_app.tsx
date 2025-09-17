@@ -16,7 +16,6 @@ import { ROUTES } from '../constants/routes';
 import Header from '../components/Header/Header';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const isDevEnvironment = process.env.NEXT_PUBLIC_APP_MODE === 'development';
   const { id } = useRouter().query;
   const [currentToggle, setCurrentToggle] = useState<string | null>(null);
   const availableToggleIds = ROUTES.find(route => useRouter().pathname.startsWith(route.href))?.toggles ?? [];
@@ -82,23 +81,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [currentToggle, availableToggleIds]);
 
-  if (isDevEnvironment) return (
-    <div className='app-wrapper'>
-      <Header
-        currentToggle={currentToggle}
-        setCurrentToggle={setCurrentToggle}
-        availableToggleIds={availableToggleIds}
-      />
-      <main>
-        <Component {...pageProps} currentToggle={currentToggle} />
-      </main>
-    </div>
-  )
-
-  if (!isDevEnvironment) return (
+  return (
     <ReactKeycloakProvider
       authClient={keycloak}
-      initOptions={{ onLoad: 'login-required', checkLoginIframe: false }}
+      initOptions={{ onLoad: 'check-sso', checkLoginIframe: false }}
     >
       <ProtectedApp>
         <Head>

@@ -36,7 +36,6 @@ services:
       - network-bandwidth
     environment:
       - APP_MODE=development
-      - NEXT_PUBLIC_APP_MODE=development
     volumes:
       - ./app:/app
       - /app/node_modules
@@ -54,8 +53,39 @@ services:
     networks:
       - network-bandwidth
 
+  db-auth:
+    image: ghcr.io/bandwidth-gig-guide/db-auth:latest
+    container_name: db-auth
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db-auth
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: db-password
+    volumes:
+      - db-auth-data:/var/lib/postgresql/data
+    networks:
+      - network-bandwidth
+
+  service-auth:
+    image: ghcr.io/bandwidth-gig-guide/service-auth:latest
+    container_name: service-auth
+    restart: unless-stopped
+    environment:
+      PROXY_ADDRESS_FORWARDING: "true"
+      KC_HOSTNAME: auth.localhost
+      KC_PROXY: edge
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db-auth:5432/db-auth
+      KC_DB_USERNAME: db-user
+      KC_DB_PASSWORD: db-password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - network-bandwidth
+
 volumes:
   db-main-data:
+  db-auth-data:
 
 networks:
   network-bandwidth:
