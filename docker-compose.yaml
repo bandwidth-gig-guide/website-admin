@@ -2,91 +2,111 @@ services:
   db-main:
     image: ghcr.io/bandwidth-gig-guide/db-main:latest
     container_name: db-main
+    restart: unless-stopped
+    env_file:
+      - ./dev/dev.env
     volumes:
       - db-main-data:/var/lib/postgresql/data
     networks:
-      - network-bandwidth
+      - bandwidth
+
+  db-user:
+    image: postgres:16-alpine
+    container_name: db-user
+    restart: unless-stopped
+    env_file:
+      - ./dev/dev.env
+    volumes:
+      - db-user-data:/var/lib/postgresql/data
+    networks:
+      - bandwidth
 
   service-public:
     image: ghcr.io/bandwidth-gig-guide/service-public:latest
     container_name: service-public
+    restart: unless-stopped
+    env_file:
+      - ./dev/dev.env
+    depends_on:
+      - db-main
     networks:
-      - network-bandwidth
+      - bandwidth
 
   service-admin:
     image: ghcr.io/bandwidth-gig-guide/service-admin:latest
     container_name: service-admin
+    restart: unless-stopped
+    env_file:
+      - ./dev/dev.env
+    depends_on:
+      - db-main
     networks:
-      - network-bandwidth
+      - bandwidth
 
   website-main:
     image: ghcr.io/bandwidth-gig-guide/website-main:latest
     container_name: website-main
+    restart: unless-stopped
     networks:
-      - network-bandwidth
+      - bandwidth
 
   website-admin:
     build:
       context: .
-      dockerfile: ./Dockerfile
-      args:
-        BUILD_MODE: development
+      dockerfile: ./dev/dev.Dockerfile
     container_name: website-admin
-    networks:
-      - network-bandwidth
-    environment:
-      - APP_MODE=development
+    restart: unless-stopped
+    env_file:
+      - ./dev/dev.env
     volumes:
       - ./app:/app
       - /app/node_modules
-
-  api-gateway:
-    image: ghcr.io/bandwidth-gig-guide/api-gateway:latest
-    container_name: api-gateway
     depends_on:
-      - service-public
-      - service-admin
-      - website-main
-      - website-admin
+      - db-main
+    networks:
+      - bandwidth
+
+  reverse-proxy:
+    image: caddy:2-alpine
+    container_name: reverse-proxy
+    restart: unless-stopped
     ports:
       - "80:80"
-    networks:
-      - network-bandwidth
-
-  db-auth:
-    image: ghcr.io/bandwidth-gig-guide/db-auth:latest
-    container_name: db-auth
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: db-auth
-      POSTGRES_USER: db-user
-      POSTGRES_PASSWORD: db-password
+      - "443:443"
     volumes:
-      - db-auth-data:/var/lib/postgresql/data
+      - reverse-proxy-data:/data
+      - reverse-proxy-config:/config
+      - ./dev/dev.Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - service-admin
+      - service-public
+      - website-main
+      - website-admin
     networks:
-      - network-bandwidth
+      - bandwidth
 
   service-auth:
-    image: ghcr.io/bandwidth-gig-guide/service-auth:latest
+    image: quay.io/keycloak/keycloak:25.0.2
     container_name: service-auth
     restart: unless-stopped
-    environment:
-      PROXY_ADDRESS_FORWARDING: "true"
-      KC_HOSTNAME: auth.localhost
-      KC_PROXY: edge
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://db-auth:5432/db-auth
-      KC_DB_USERNAME: db-user
-      KC_DB_PASSWORD: db-password
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+      - --import-realm
+    env_file:
+      - ./dev/dev.env
+    volumes:
+      - service-auth-data:/opt/keycloak/data
+      - ./dev/dev.realm.json:/opt/keycloak/data/import/dev.realm.json:ro
     networks:
-      - network-bandwidth
+      - bandwidth
 
 volumes:
   db-main-data:
-  db-auth-data:
+  db-user-data:
+  reverse-proxy-data:
+  reverse-proxy-config:
+  service-auth-data:
 
 networks:
-  network-bandwidth:
+  bandwidth:
     driver: bridge
