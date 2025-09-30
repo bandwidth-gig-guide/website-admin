@@ -4,7 +4,7 @@ import axios from 'axios';
 import camelcaseKeys from "camelcase-keys";
 
 // Config
-import apiUrl from '../../api.config'
+import getConfig from "next/config";
 
 // Types
 import { Event } from '../../types/models/Event'
@@ -27,9 +27,10 @@ const RowEvent: React.FC<Props> = ({ eventId }) => {
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
   const [socials, setSocials] = useState<string[]>([]);
   const router = useRouter();
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
-    axios.get(`${apiUrl}/event/${eventId}`)
+    axios.get(`${api}/event/${eventId}`)
       .then(response => { setEvent(camelcaseKeys(response.data, { deep: true })) });
   }, [eventId]);
 

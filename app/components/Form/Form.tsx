@@ -7,7 +7,7 @@ import { pascalcaseKeys } from "../../util/pascalcaseKeys";
 import styles from "./Form.module.css";
 
 // Config
-import apiUrl from "../../api.config";
+import getConfig from "next/config";
 
 // Types
 import { PageType } from "../../types/enums/PageType";
@@ -30,9 +30,10 @@ interface Props {
 const Form: React.FC<Props> = ({ type, record, setRecord, currentToggle }) => {
   if (!record) return;
 
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
   const recordId: uuid = record[`${type}Id`];
   const isExistingRecord: boolean = recordId !== undefined && recordId !== "";
-  const url = `${apiUrl}/${type}${isExistingRecord ? `/${recordId}` : ''}`;
+  const url = `${api}/${type}/${isExistingRecord ? `${recordId}` : ''}`;
   const urlMainWebsite = `http://localhost:8000/${type}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

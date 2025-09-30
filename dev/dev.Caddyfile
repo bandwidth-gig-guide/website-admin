@@ -1,0 +1,23 @@
+{
+	storage file_system /data
+}
+
+localhost {
+    handle_path /api/* {
+        reverse_proxy service-public:80
+    }
+    
+    reverse_proxy website-main:3000
+}
+
+admin.localhost {
+    handle_path /api/* {
+        reverse_proxy service-admin:80
+    }
+    
+    reverse_proxy website-admin:3000
+}
+
+auth.localhost {
+    reverse_proxy service-auth:8080
+}

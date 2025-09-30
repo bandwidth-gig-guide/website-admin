@@ -4,7 +4,7 @@ import axios from 'axios';
 import camelcaseKeys from "camelcase-keys";
 
 // Config
-import apiUrl from '../../api.config'
+import getConfig from "next/config";
 
 // Types
 import { Venue } from '../../types/models/Venue'
@@ -28,9 +28,10 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
   const [socials, setSocials] = useState<string[]>([]);
   const router = useRouter();
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
-    axios.get(`${apiUrl}/venue/${venueId}`)
+    axios.get(`${api}/venue/${venueId}`)
       .then(response => { setVenue(camelcaseKeys(response.data, { deep: true })) });
   }, [venueId]);
 

@@ -14,5 +14,5 @@ export const ProtectedApp: React.FC<Props> = ({ children }) => {
     }
   }, [initialized, keycloak]);
 
-  return <>{children}</>;
+  if (keycloak.authenticated) return <>{children}</>;
 };

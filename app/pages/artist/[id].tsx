@@ -5,7 +5,7 @@ import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
 
 // Config
-import apiUrl from "../../api.config";
+import getConfig from "next/config";
 
 // Types
 import { Artist } from "../../types/models/Artist";
@@ -21,10 +21,11 @@ interface Props {
 const ArtistPage: React.FC<Props> = ({ currentToggle }) => {
   const [artist, setArtist] = useState<Artist>();
   const { id } = useRouter().query;
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
     if (!id) return;
-    axios.get(`${apiUrl}/artist/${id}`)
+    axios.get(`${api}/artist/${id}`)
       .then(response => {
         setArtist(camelcaseKeys(response.data, { deep: true }));
       });

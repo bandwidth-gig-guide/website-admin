@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./FormComponentPerformances.module.css";
 import { Event } from "../../../types/models/Event";
 import axios from "axios";
-import apiUrl from "../../../api.config";
-
+import getConfig from "next/config";
 import FormComponentDateTime from "../FormComponentDateTime/FormComponentDateTime";
 import FormComponentDropdownListAdvanced from "../FormComponentDropdownListAdvanced/FormComponentDropdownListAdvanced";
 
@@ -15,9 +14,10 @@ interface Props {
 const FormComponentPerformances = ({ record, setRecord }: Props) => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [artistOptions, setArtistOptions] = useState<{ value: string; label: string }[]>([]);
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
-    axios.get(`${apiUrl}/artist/id-and-title`)
+    axios.get(`${api}/artist/id-and-title`)
       .then(response => {
         const options = response.data.map((artist: { ArtistID: string; Title: string }) => ({
           value: artist.ArtistID,

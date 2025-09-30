@@ -4,7 +4,7 @@ import axios from 'axios';
 import camelcaseKeys from "camelcase-keys";
 
 // Config
-import apiUrl from '../../api.config'
+import getConfig from "next/config";
 
 // Types
 import { Artist } from '../../types/models/Artist'
@@ -27,9 +27,10 @@ const RowArtist: React.FC<Props> = ({ artistId }) => {
   const [socials, setSocials] = useState<string[]>([]);
   const [embeds, setEmbeds] = useState<string[]>([]);
   const router = useRouter();
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
-    axios.get(`${apiUrl}/artist/${artistId}`)
+    axios.get(`${api}/artist/${artistId}`)
       .then(response => { setArtist(camelcaseKeys(response.data, { deep: true })) });
   }, [artistId]);
 

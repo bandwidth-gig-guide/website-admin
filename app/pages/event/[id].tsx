@@ -5,7 +5,7 @@ import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
 
 // Config
-import apiUrl from "../../api.config";
+import getConfig from "next/config";
 
 // Types
 import { Event } from "../../types/models/Event";
@@ -21,10 +21,11 @@ interface Props {
 const EventPage: React.FC<Props>= ({ currentToggle }) => {
   const [event, setEvent] = useState<Event>();
   const { id } = useRouter().query;
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
     if (!id) return;
-    axios.get(`${apiUrl}/event/${id}`)
+    axios.get(`${api}/event/${id}`)
       .then(response => {
         setEvent(camelcaseKeys(response.data, { deep: true }));
       });
