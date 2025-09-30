@@ -5,7 +5,7 @@ import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
 
 // Config
-import apiUrl from "../../api.config";
+import getConfig from "next/config";
 
 // Types
 import { Venue } from "../../types/models/Venue";
@@ -21,10 +21,11 @@ interface Props {
 const VenuePage: React.FC<Props> = ({ currentToggle }) => {
   const [venue, setVenue] = useState<Venue>();
   const { id } = useRouter().query;
+  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
     if (!id) return;
-    axios.get(`${apiUrl}/venue/${id}`)
+    axios.get(`${api}/venue/${id}`)
       .then(response => {
         setVenue(camelcaseKeys(response.data, { deep: true }));
       });
