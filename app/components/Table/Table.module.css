@@ -1,4 +1,12 @@
 .wrapper {
     border-radius: 8px;
     border: 1px solid var(--color-border);
+
+    .pagination {
+        margin: var(--spacing-gap);
+
+        span {
+            margin-inline: var(--spacing-gap);
+        }
+    }
 }
