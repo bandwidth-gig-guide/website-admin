@@ -13,7 +13,7 @@ interface Props {
   pageType: PageType;
 }
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 48;
 
 const Table: React.FC<Props> = ({ ids, pageType }) => {
   const [page, setPage] = useState(0);
