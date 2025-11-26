@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import styles from './FormVenue.module.css'
 
 // Components
 import FormComponentDropdownList from "../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
@@ -11,6 +12,7 @@ import FormComponentSocials from "../FormComponent/FormComponentSocials/FormComp
 import FormComponentStages from "../FormComponent/FormComponentStages/FormComponentStages";
 import FormComponentTextArea from "../FormComponent/FormComponentTextArea/FormComponentTextArea";
 import FormComponentTextInput from "../FormComponent/FormComponentTextInput/FormComponentTextInput";
+import FormComponentCheckbox from "../FormComponent/FormComponentCheckbox/FormComponentCheckbox";
 
 // Types & Constants
 import { Venue } from "../../types/models/Venue";
@@ -88,6 +90,24 @@ const FormVenue: React.FC<Props> = ({
             required={true}
           />
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Toggles</legend>
+          <div className={styles.chipWrapper}>
+            <FormComponentCheckbox
+              label="Featured Venue"
+              name="isFeatured"
+              checked={venue.isFeatured}
+              onChange={(e) => setVenue(prev => ({ ...prev, isFeatured: e.target.checked }))}
+            />
+            <FormComponentCheckbox
+              label="Monitored Venue"
+              name="isMonitored"
+              checked={venue.isMonitored}
+              onChange={(e) => setVenue(prev => ({ ...prev, isMonitored: e.target.checked }))}
+            />
+          </div>
       </fieldset>
 
       <fieldset>
