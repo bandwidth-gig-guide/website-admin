@@ -9,6 +9,8 @@ import { CURRENT_TOGGLE_KEY } from '../../constants/localstorage';
 import { TOGGLES } from '../../constants/toggles';
 import { ROUTES } from '../../constants/routes';
 
+import SearchBar from '../SearchBar/SearchBar';
+
 interface Props {
   currentToggle: string | null;
   setCurrentToggle: React.Dispatch<React.SetStateAction<string | null>>;
@@ -68,9 +70,7 @@ const Header: React.FC<Props> = ({ currentToggle, setCurrentToggle, availableTog
         )}
 
         {/* Search Bar */}
-        <div className={styles.searchBar}>
-          [ Search Bar ]
-        </div>
+        <SearchBar />
 
       </header>
     </div>
