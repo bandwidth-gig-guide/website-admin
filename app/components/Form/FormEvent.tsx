@@ -10,6 +10,7 @@ import FormComponentTextArea from "../FormComponent/FormComponentTextArea/FormCo
 import FormComponentTextInput from "../FormComponent/FormComponentTextInput/FormComponentTextInput";
 import FormComponentTicketPrices from "../FormComponent/FormComponentTicketPrices/FormComponentTicketPrices";
 import FormComponentVenue from "../FormComponent/FormComponentVenue/FormComponentVenue";
+import FormComponentCheckbox from "../FormComponent/FormComponentCheckbox/FormComponentCheckbox";
 
 // Types and Constants
 import { Event } from "../../types/models/Event";
@@ -73,6 +74,16 @@ const FormEvent: React.FC<FormEventProps> = ({
           value={event.description}
           onChange={onChange}
         />
+      </fieldset>
+
+      <fieldset>
+        <legend>Toggles</legend>
+          <FormComponentCheckbox
+            label="Featured Event"
+            name="isFeatured"
+            checked={event.isFeatured}
+            onChange={(e) => setEvent(prev => ({ ...prev, isFeatured: e.target.checked }))}
+          />
       </fieldset>
 
       <fieldset>

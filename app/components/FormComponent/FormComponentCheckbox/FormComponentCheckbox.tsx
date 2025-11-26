@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./FormComponentCheckbox.module.css"
 
 interface Props {
@@ -16,9 +16,22 @@ const FormComponentCheckbox: React.FC<Props> = ({
   onChange,
   required = true
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleWrapperClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
+
   return (
-    <div className={`${styles.wrapper} ${checked ? styles.checked : ''}`}>
+    <div 
+      className={`${styles.wrapper} ${checked ? styles.checked : ''}`}
+      onClick={handleWrapperClick}
+    >
+      {label}
       <input
+        ref={inputRef}
         id={name}
         type="checkbox"
         name={name}

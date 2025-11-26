@@ -16,6 +16,7 @@ export type Venue = {
     phoneNumber: string;
     googleMapsEmbedUrl: url;
     isFeatured: boolean;
+    isMonitored: boolean;
     images: Image[];
     socials: Social[];
     types: string[];
@@ -37,6 +38,7 @@ export const defaultVenue: Venue = {
   phoneNumber: "",
   googleMapsEmbedUrl: "" as unknown as url,
   isFeatured: false,
+  isMonitored: false,
   images: [],
   socials: [],
   types: [],

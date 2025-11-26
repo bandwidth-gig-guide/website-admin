@@ -9,6 +9,7 @@ import FormComponentNumberInput from "../FormComponent/FormComponentNumberInput/
 import FormComponentSocials from "../FormComponent/FormComponentSocials/FormComponentSocials";
 import FormComponentTextArea from "../FormComponent/FormComponentTextArea/FormComponentTextArea";
 import FormComponentTextInput from "../FormComponent/FormComponentTextInput/FormComponentTextInput";
+import FormComponentCheckbox from "../FormComponent/FormComponentCheckbox/FormComponentCheckbox";
 
 // Types & Constants
 import { Artist } from "../../types/models/Artist";
@@ -77,6 +78,16 @@ const FormArtist: React.FC<FormArtistProps> = ({
             onChange={onChange}
           />
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Toggles</legend>
+          <FormComponentCheckbox
+            label="Featured Artist"
+            name="isFeatured"
+            checked={artist.isFeatured}
+            onChange={(e) => setArtist(prev => ({ ...prev, isFeatured: e.target.checked }))}
+          />
       </fieldset>
 
       <fieldset>
