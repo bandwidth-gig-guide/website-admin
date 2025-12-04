@@ -25,7 +25,7 @@ const SearchBar = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useEffect(() => {
-    axios.get(`${api}/search/id-and-title`, {
+    axios.get(`${api}/search/all/id-and-title`, {
       params: { searchString }
     })
       .then(response => { setSearchResult(camelcaseKeys(response.data, { deep: true })) });
