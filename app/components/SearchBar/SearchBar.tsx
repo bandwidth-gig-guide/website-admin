@@ -18,21 +18,22 @@ interface SearchResult {
 
 const SearchBar = () => {
   const router = useRouter();
-  const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
+  const api = getConfig().publicRuntimeConfig.SERVICE_SEARCH_API_URL
   const inputRef = useRef<HTMLInputElement>(null)
   const [searchResult, setSearchResult] = useState<SearchResult>({ event: [], artist: [], venue: [] });
   const [searchString, setSearchString] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useEffect(() => {
-    axios.get(`${api}/search/all/id-and-title`, {
+    axios.get(`${api}/all/id-and-title`, {
       params: { searchString }
     })
       .then(response => { setSearchResult(camelcaseKeys(response.data, { deep: true })) });
   }, [searchString]);
 
-  const handleImageClick = () => {
+  const handleComponentClick = () => {
     inputRef.current?.focus()
+    handleFocus();
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +41,6 @@ const SearchBar = () => {
   }
 
   const handleRowClick = (type: string, id: string) => {
-
     router.push(`/${type}/${id}`);
   }
 
@@ -48,16 +48,14 @@ const SearchBar = () => {
     setIsFocused(true);
   }
 
-  const handleBlur = () => {
-    setTimeout(() => {
-      setIsFocused(false);
-    }, 150);
+  const clearSearchString = () => {
+    setSearchString('');
   }
 
   const hasResults = searchResult.event.length > 0 || searchResult.artist.length > 0 || searchResult.venue.length > 0;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={handleComponentClick}>
       <label htmlFor="searchBar">Search Bar</label>
       <div className={styles.inputWrapper}>
         <input
@@ -68,9 +66,15 @@ const SearchBar = () => {
           value={searchString}
           onChange={handleInputChange}
           onFocus={handleFocus}
-          onBlur={handleBlur}
         />
-        <img src="/search.svg" alt="" onClick={handleImageClick} />
+        {searchString && !hasResults ? (
+          <>
+            <p className={styles.noResultsText}>(no results)</p>
+            <img src="/circle-cross.svg" alt="Clear Results Icon" onClick={clearSearchString}/>
+          </>
+        ) : (
+          <img src="/search.svg" alt="Search Icon" onClick={handleComponentClick} />
+        )}
       </div>
 
       {hasResults && searchString && isFocused && (
@@ -122,8 +126,6 @@ const SearchBar = () => {
 
         </div>
       )}
-
-
     </div>
   )
 }
