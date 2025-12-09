@@ -13,6 +13,14 @@
     justify-content: left;
     align-items: center;
     gap: 4px;
+  }
 
+  .bottomRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    width: 100%;
+    gap: 4px;
+    margin-top: 12px;
   }
 }

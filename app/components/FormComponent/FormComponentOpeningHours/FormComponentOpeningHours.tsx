@@ -18,20 +18,20 @@ const DAYS = [
 ];
 
 const defaultHours = {
-  monOpen: "00:00:00",
-  monClose: "00:00:00",
-  tueOpen: "00:00:00",
-  tueClose: "00:00:00",
-  wedOpen: "00:00:00",
-  wedClose: "00:00:00",
-  thurOpen: "00:00:00",
-  thurClose: "00:00:00",
-  friOpen: "00:00:00",
-  friClose: "00:00:00",
-  satOpen: "00:00:00",
-  satClose: "00:00:00",
-  sunOpen: "00:00:00",
-  sunClose: "00:00:00",
+  monOpen: "23:58:00",
+  monClose: "23:58:00",
+  tueOpen: "23:58:00",
+  tueClose: "23:58:00",
+  wedOpen: "23:58:00",
+  wedClose: "23:58:00",
+  thurOpen: "23:58:00",
+  thurClose: "23:58:00",
+  friOpen: "23:58:00",
+  friClose: "23:58:00",
+  satOpen: "23:58:00",
+  satClose: "23:58:00",
+  sunOpen: "23:58:00",
+  sunClose: "23:58:00",
 };
 
 function formatTime(time: string) {
@@ -60,17 +60,6 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
     }));
   };
 
-  const handleClosed = (openKey: string, closeKey: string) => {
-    setRecord((prev: any) => ({
-      ...prev,
-      openingHours: {
-        ...prev.openingHours,
-        [openKey]: "00:00:00",
-        [closeKey]: "00:00:00",
-      },
-    }));
-  };
-
   const handleOpenTilLate = (closeKey: string) => {
     setRecord((prev: any) => ({
       ...prev,
@@ -78,6 +67,37 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
         ...prev.openingHours,
         [closeKey]: "23:59:00",
       },
+    }));
+  };
+
+  const handleClosed = (openKey: string, closeKey: string) => {
+    setRecord((prev: any) => ({
+      ...prev,
+      openingHours: {
+        ...prev.openingHours,
+        [openKey]: "23:58:00",
+        [closeKey]: "23:58:00",
+      },
+    }));
+  };
+
+  const handleOpenForEvents = () => {
+    setRecord((prev: any) => ({
+      ...prev,
+      openingHours: Object.keys(defaultHours).reduce((accumulator, key) => ({
+        ...accumulator,
+        [key]: "23:57:00"
+      }), {}),
+    }));
+  };
+
+  const handleUnknownOpeningTimes = () => {
+    setRecord((prev: any) => ({
+      ...prev,
+      openingHours: Object.keys(defaultHours).reduce((accumulator, key) => ({
+        ...accumulator,
+        [key]: "23:56:00"
+      }), {}),
     }));
   };
 
@@ -101,7 +121,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
             onClick={() => handleClosed(openKey, closeKey)}
             className={`
               toggleButton
-              ${record.openingHours[openKey] === "00:00:00" && record.openingHours[closeKey] === "00:00:00" ? "activeButton" : ''}
+              ${record.openingHours[openKey] === "23:58:00" && record.openingHours[closeKey] === "23:58:00" ? "activeButton" : ''}
             `}
           >
             Closed
@@ -118,6 +138,30 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
           </button>
         </div>
       ))}
+
+      <div className={styles.bottomRow}>
+        <button
+          type="button"
+          onClick={handleOpenForEvents}
+          className={`
+            toggleButton
+            ${record.openingHours && Object.values(record.openingHours).every(time => time === "23:57:00") ? "activeButton" : ''}
+        `}
+        >
+          Open for Events
+        </button>
+
+        <button
+          type="button"
+          onClick={handleUnknownOpeningTimes}
+          className={`
+            toggleButton
+            ${record.openingHours && Object.values(record.openingHours).every(time => time === "23:56:00") ? "activeButton" : ''}
+          `}
+        >
+          Hours Unknown
+        </button>
+      </div>
     </div>
   );
 };
