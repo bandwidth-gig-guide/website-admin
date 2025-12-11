@@ -59,6 +59,24 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
     });
   };
 
+
+  const handleSpecialGuestsPerformance = () => {
+    setRecord((prev: any) => {
+      if (!prev) return prev;
+      const newPerformance = {
+        title: "Special Guests",
+        imageUrl: "",
+        artistId: "00000000-0000-0000-0000-000000000000", // "Specials Guests"
+        setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
+        startDateTime: new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
+      };
+      return {
+        ...prev,
+        performances: [...(prev.performances || []), newPerformance]
+      };
+    });
+  }
+
   const handleRemovePerformance = (index: number) => {
     setRecord(prev => {
       if (!prev) return prev;
@@ -172,9 +190,15 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
           </div>
         ))}
 
-      <button type="button" className="addButton" onClick={handleAddPerformance}>
-        Add Performance
-      </button>
+      <div className={styles.buttons}>
+        <button type="button" className="addButton" onClick={handleSpecialGuestsPerformance}>
+          Add "Special Guests"
+        </button>
+        <button type="button" className="addButton" onClick={handleAddPerformance}>
+          Add Performance
+        </button>
+      </div>
+
     </div>
   );
 };
