@@ -55,4 +55,11 @@
             }
         }
     }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        margin-top: 24px;
+    }
 }
