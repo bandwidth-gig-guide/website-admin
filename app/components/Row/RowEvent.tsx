@@ -26,12 +26,14 @@ const RowEvent: React.FC<Props> = ({ eventId }) => {
   const [typeCount, setTypeCount] = useState<number>(0);
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
   const [socials, setSocials] = useState<string[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const router = useRouter();
   const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
     axios.get(`${api}/event/${eventId}`)
-      .then(response => { setEvent(camelcaseKeys(response.data, { deep: true })) });
+      .then(response => { setEvent(camelcaseKeys(response.data, { deep: true })) })
+      .then(() => {setIsLoaded(true)});
   }, [eventId]);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const RowEvent: React.FC<Props> = ({ eventId }) => {
     router.push(`/event/${eventId}`);
   };
 
-  return (
+  if (isLoaded) return (
     <tr onClick={handleRowClick}>
       <td>{event.eventId}</td>
       <td>{event.title}</td>

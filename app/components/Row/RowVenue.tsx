@@ -27,12 +27,14 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
   const [contacts, setContacts] = useState<string[]>([]);
   const [descriptionWordCount, setDescriptionWordCount] = useState<number>(0);
   const [socials, setSocials] = useState<string[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const router = useRouter();
   const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
     axios.get(`${api}/venue/${venueId}`)
-      .then(response => { setVenue(camelcaseKeys(response.data, { deep: true })) });
+      .then(response => { setVenue(camelcaseKeys(response.data, { deep: true })) })
+      .then(() => {setIsLoaded(true)});
   }, [venueId]);
 
   useEffect(() => {
@@ -65,7 +67,7 @@ const RowVenue: React.FC<Props> = ({ venueId }) => {
     router.push(`/venue/${venueId}`);
   };
 
-  return (
+  if (isLoaded) return (
     <tr onClick={handleRowClick}>
       <td>{venue.venueId}</td>
       <td>{venue.title}</td>
