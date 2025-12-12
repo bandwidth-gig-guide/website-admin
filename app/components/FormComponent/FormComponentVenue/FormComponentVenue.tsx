@@ -12,7 +12,7 @@ interface Props {
   setRecord: React.Dispatch<React.SetStateAction<Event>>;
 }
 
-const DIVIDER: string = " -- ";
+const DIVIDER: string = " ~ ";
 
 const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
   
@@ -43,9 +43,10 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
       <FormComponentDropdownListAdvanced
         label={label}
         name={name}
-        value={record?.venue?.venueID || DIVIDER}
+        value={record?.venue?.venueId || ""}
         options={venueOptions}
         setValue={(val) => {
+          const selectedVenueTitle = val.label.split(DIVIDER)[0];
           const selectedStageTitle = val.label.split(DIVIDER)[1];
           const selectedVenue = venueOptions.find((venue) => venue.stageTitle === selectedStageTitle);
           setRecord(prev => ({
@@ -53,9 +54,9 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
             venue: {
               ...prev.venue,
               venueID: val.value,
-              title: val.label.split(DIVIDER)[0],
+              title: selectedVenueTitle,
               stageId: selectedVenue?.stageId || "",
-              stageTitle: selectedStageTitle,
+              stageTitle: selectedVenue?.stageTitle || "",
               imageUrl: prev.venue?.imageUrl || ""
             }
           }));
