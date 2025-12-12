@@ -1,7 +1,7 @@
 export type EventVenue = {
-    venueID: uuid;
+    venueId: uuid;
     title: string;
-    stageID?: uuid;
+    stageId?: uuid;
     stageTitle: string;
     imageUrl: url;
 }

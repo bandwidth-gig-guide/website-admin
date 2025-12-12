@@ -12,10 +12,17 @@ interface Props {
   setRecord: React.Dispatch<React.SetStateAction<Event>>;
 }
 
+const DIVIDER: string = " ~ ";
+
 const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
-  const [venueOptions, setVenueOptions] = useState<
-    { value: string; label: string; stageId: string; stageTitle: string }[]
-  >([]);
+  
+  const [venueOptions, setVenueOptions] = useState<{
+    value: string;
+    label: string;
+    stageId: string;
+    stageTitle: string
+  }[]>([]);
+
   const api = getConfig().publicRuntimeConfig.SERVICE_ADMIN_API_URL
 
   useEffect(() => {
@@ -23,7 +30,7 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
       .then(response => {
         const options = response.data.map((venue: { VenueID: string; Title: string; StageID: string; StageTitle: string }) => ({
           value: venue.VenueID,
-          label: `${venue.Title} | ${venue.StageTitle}`,
+          label: `${venue.Title}${DIVIDER}${venue.StageTitle}`,
           stageId: venue.StageID,
           stageTitle: venue.StageTitle
         }));
@@ -36,20 +43,21 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
       <FormComponentDropdownListAdvanced
         label={label}
         name={name}
-        value={record?.venue?.venueID || ""}
+        value={record?.venue?.venueId || ""}
         options={venueOptions}
         setValue={(val) => {
-          const selectedStageTitle = val.label.split(" | ")[1];
+          const selectedVenueTitle = val.label.split(DIVIDER)[0];
+          const selectedStageTitle = val.label.split(DIVIDER)[1];
           const selectedVenue = venueOptions.find((venue) => venue.stageTitle === selectedStageTitle);
           setRecord(prev => ({
             ...prev,
             venue: {
               ...prev.venue,
               venueID: val.value,
-              title: val.label.split(" | ")[0],
+              title: selectedVenueTitle,
               stageId: selectedVenue?.stageId || "",
-              stageTitle: selectedStageTitle,
-              imageUrl: prev.venue?.imageUrl || "https://dummy.com"
+              stageTitle: selectedVenue?.stageTitle || "",
+              imageUrl: prev.venue?.imageUrl || ""
             }
           }));
         }}
