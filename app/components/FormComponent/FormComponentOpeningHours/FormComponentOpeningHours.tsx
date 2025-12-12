@@ -118,6 +118,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
           />
           <button
             type="button"
+            tabIndex={-1}
             onClick={() => handleClosed(openKey, closeKey)}
             className={`
               toggleButton
@@ -128,6 +129,7 @@ const FormComponentOpeningHours = ({ record, setRecord }: Props) => {
           </button>
           <button
             type="button"
+            tabIndex={-1}
             onClick={() => handleOpenTilLate(closeKey)}
             className={`
               toggleButton

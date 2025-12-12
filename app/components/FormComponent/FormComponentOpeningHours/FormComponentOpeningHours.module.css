@@ -23,4 +23,9 @@
     gap: 4px;
     margin-top: 12px;
   }
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
 }
