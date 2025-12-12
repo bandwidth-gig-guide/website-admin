@@ -20,42 +20,64 @@ const SearchBar = () => {
   const router = useRouter();
   const api = getConfig().publicRuntimeConfig.SERVICE_SEARCH_API_URL
   const inputRef = useRef<HTMLInputElement>(null)
+  const componentRef = useRef<HTMLDivElement>(null)
   const [searchResult, setSearchResult] = useState<SearchResult>({ event: [], artist: [], venue: [] });
   const [searchString, setSearchString] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  useEffect(() => {
-    axios.get(`${api}/all/id-and-title`, {
-      params: { searchString }
-    })
-      .then(response => { setSearchResult(camelcaseKeys(response.data, { deep: true })) });
-  }, [searchString]);
+  const hasResults = searchResult.event.length > 0 || searchResult.artist.length > 0 || searchResult.venue.length > 0;
+  const isDropdownOpen = hasResults && searchString && isFocused;
 
-  const handleComponentClick = () => {
+
+  const handleFocus = () => {
     inputRef.current?.focus()
-    handleFocus();
+    componentRef.current?.focus()
+    setIsFocused(true);
+  }
+
+  const handleBlur = () => {
+    inputRef.current?.blur();
+    componentRef.current?.blur();
+    setIsFocused(false);
+  }
+
+  const handleClearSearch = () => {
+    setSearchString('');
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchString(e.target.value);
   }
 
-  const handleRowClick = (type: string, id: string) => {
-    router.push(`/${type}/${id}`);
+  const handleSelectItem = async (type: string, id: string) => {
+    await router.push(`/${type}/${id}`);
+    handleBlur();
   }
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  }
 
-  const clearSearchString = () => {
-    setSearchString('');
-  }
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
+        handleBlur();
+      }
+    };
 
-  const hasResults = searchResult.event.length > 0 || searchResult.artist.length > 0 || searchResult.venue.length > 0;
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    axios.get(`${api}/all/id-and-title`, { params: { searchString } })
+      .then(response => { setSearchResult(camelcaseKeys(response.data, { deep: true })) });
+  }, [searchString]);
+
 
   return (
-    <div className={styles.wrapper} onClick={handleComponentClick}>
+    <div className={styles.wrapper} ref={componentRef} onClick={handleFocus}>
       <label htmlFor="searchBar">Search Bar</label>
       <div className={styles.inputWrapper}>
         <input
@@ -67,17 +89,14 @@ const SearchBar = () => {
           onChange={handleInputChange}
           onFocus={handleFocus}
         />
-        {searchString && !hasResults ? (
-          <>
-            <p className={styles.noResultsText}>(no results)</p>
-            <img src="/circle-cross.svg" alt="Clear Results Icon" onClick={clearSearchString}/>
-          </>
+        {searchString ? (
+          <img src="/circle-cross.svg" alt="Clear Results Icon" onClick={handleClearSearch} />
         ) : (
-          <img src="/search.svg" alt="Search Icon" onClick={handleComponentClick} />
+          <img src="/search.svg" alt="Search Icon" onClick={handleFocus} />
         )}
       </div>
 
-      {hasResults && searchString && isFocused && (
+      {isDropdownOpen && (
         <div className={styles.dropdown}>
           {searchResult.event.length > 0 &&
             <div className={styles.dropdownSection}>
@@ -86,7 +105,7 @@ const SearchBar = () => {
                 <p
                   key={`event-${item.id}`}
                   className={styles.resultRow}
-                  onClick={() => handleRowClick('event', item.id)}
+                  onClick={() => handleSelectItem('event', item.id)}
                 >
                   {item.title}
                 </p>
@@ -101,7 +120,7 @@ const SearchBar = () => {
                 <p
                   key={`artist-${item.id}`}
                   className={styles.resultRow}
-                  onClick={() => handleRowClick('artist', item.id)}
+                  onClick={() => handleSelectItem('artist', item.id)}
                 >
                   {item.title}
                 </p>
@@ -116,7 +135,7 @@ const SearchBar = () => {
                 <p
                   key={`venue-${item.id}`}
                   className={styles.resultRow}
-                  onClick={() => handleRowClick('venue', item.id)}
+                  onClick={() => handleSelectItem('venue', item.id)}
                 >
                   {item.title}
                 </p>

@@ -1,6 +1,6 @@
 .wrapper {
     position: relative;
-    width: 400px;
+    width: 300px;
     z-index: 9;
 
     label {
@@ -26,6 +26,7 @@
         background-color: transparent;
         flex: 1;
         z-index: 10;
+        pointer-events: none;
     }
 
     input:focus {
@@ -48,7 +49,7 @@
         background-color: #fff;
         border: 1px solid #ccc;
         border-top: none;
-        width: 400px;
+        width: 300px;
         overflow: hidden;
         border-radius: 0 0 20px 20px;
     }
