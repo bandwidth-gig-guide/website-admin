@@ -57,7 +57,7 @@ const FormComponentVenue = ({ label, name, record, setRecord }: Props) => {
               title: selectedVenueTitle,
               stageId: selectedVenue?.stageId || "",
               stageTitle: selectedVenue?.stageTitle || "",
-              imageUrl: prev.venue?.imageUrl || ""
+              imageUrl: prev.venue?.imageUrl || "https://fakeaddress.com"
             }
           }));
         }}
