@@ -26,7 +26,7 @@ const FormComponentTicketPrices: React.FC<Props> = ({ record, setRecord }) => {
       if (!prev) return prev;
       return {
         ...prev,
-        prices: [...(prev.prices || []), { ticketType: "", price: 0 }]
+        prices: [...(prev.prices || []), { ticketType: "General Admission", price: 0 }]
       };
     });
   };
