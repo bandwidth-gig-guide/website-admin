@@ -5,6 +5,7 @@ import axios from "axios";
 import getConfig from "next/config";
 import FormComponentDateTime from "../FormComponentDateTime/FormComponentDateTime";
 import FormComponentDropdownListAdvanced from "../FormComponentDropdownListAdvanced/FormComponentDropdownListAdvanced";
+import { ReservedId } from "../../../constants/ReservedId"
 
 interface Props {
   record: Event;
@@ -43,14 +44,15 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
     });
   };
 
-  const handleAddPerformance = () => {
+  const handleAddPerformance = (reservedId?: ReservedId) => {
     setRecord((prev: any) => {
       if (!prev) return prev;
       const newPerformance = {
-        title: "",
+        title: reservedId?.title ?? "",
         imageUrl: "",
-        setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
-        startDateTime: prev.startDateTime ? new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' : new Date().toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
+        artistId: reservedId?.id ?? "",
+        setListPosition: record.performances?.length ? record.performances.length + 1 : 1,
+        startDateTime: record.startDateTime.split('T')[0] + 'T00:01:00'
       };
       return {
         ...prev,
@@ -59,41 +61,6 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
     });
   };
 
-
-  const handleDjSetPerformance = () => {
-    setRecord((prev: any) => {
-      if (!prev) return prev;
-      const newPerformance = {
-        title: "DJ Set",
-        imageUrl: "",
-        artistId: "00000000-0000-0000-0000-000000000001",
-        setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
-        startDateTime: prev.startDateTime ? new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' : new Date().toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
-      };
-      return {
-        ...prev,
-        performances: [...(prev.performances || []), newPerformance]
-      };
-    });
-  }
-
-
-  const handleSpecialGuestsPerformance = () => {
-    setRecord((prev: any) => {
-      if (!prev) return prev;
-      const newPerformance = {
-        title: "Special Guests",
-        imageUrl: "",
-        artistId: "00000000-0000-0000-0000-000000000000",
-        setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
-        startDateTime: prev.startDateTime ? new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' : new Date().toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
-      };
-      return {
-        ...prev,
-        performances: [...(prev.performances || []), newPerformance]
-      };
-    });
-  }
 
   const handleRemovePerformance = (index: number) => {
     setRecord(prev => {
@@ -209,15 +176,25 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
         ))}
 
       <div className={styles.buttons}>
-        <button type="button" className="addButton" onClick={handleDjSetPerformance}>
-          "DJ Set"
-        </button>
-        <button type="button" className="addButton" onClick={handleSpecialGuestsPerformance}>
-          "Special Guests"
-        </button>
-        <button type="button" className="addButton" onClick={handleAddPerformance}>
+        <button
+          type="button"
+          className="addButton"
+          onClick={() => handleAddPerformance()}>
           Add Performance
         </button>
+        </div>
+      <div className={styles.extraButtons}>
+
+        {Object.values(ReservedId).map((id, index) => (
+          <button
+            key={index}
+            type="button"
+            className="addButton"
+            onClick={() => { handleAddPerformance(id) }}>
+            {id.title}
+          </button>
+        ))}
+        
       </div>
 
     </div>

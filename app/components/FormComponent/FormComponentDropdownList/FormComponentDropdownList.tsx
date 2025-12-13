@@ -23,6 +23,16 @@ const FormComponentDropdownList: React.FC<Props> = ({
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
+    if (value) {
+      const syntheticEvent = {
+        target: { name, value },
+        currentTarget: { name, value }
+      } as React.ChangeEvent<HTMLInputElement>;
+      onChange(syntheticEvent);
+    }
+  }, [])
+
+  useEffect(() => {
     setInputValue(value);
   }, [value]);
 

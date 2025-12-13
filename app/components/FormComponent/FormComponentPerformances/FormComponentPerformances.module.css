@@ -62,4 +62,14 @@
         gap: 8px;
         margin-top: 24px;
     }
+
+    .extraButtons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 8px;
+
+        button {
+            text-wrap: nowrap;
+        }
+    }
 }
