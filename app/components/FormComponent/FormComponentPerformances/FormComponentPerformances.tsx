@@ -209,7 +209,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
         ))}
 
       <div className={styles.buttons}>
-        <button type="button" className="addButton" onClick={handleSpecialGuestsPerformance}>
+        <button type="button" className="addButton" onClick={handleDjSetPerformance}>
           "DJ Set"
         </button>
         <button type="button" className="addButton" onClick={handleSpecialGuestsPerformance}>
