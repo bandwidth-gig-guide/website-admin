@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './FormComponentDateTime.module.css';
 
 
@@ -17,6 +17,11 @@ const FormComponentDateTime: React.FC<{
 }) => {
   const fallbackValue = value || `${new Date().toISOString().split('T')[0]}T00:01:00`;
   const [datePart, timePart] = fallbackValue.split("T");
+
+  
+  useEffect(() => {
+    onChange(`${datePart}T${timePart}`);
+  }, []);
 
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
