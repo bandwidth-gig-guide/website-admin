@@ -50,7 +50,7 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
         title: "",
         imageUrl: "",
         setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
-        startDateTime: prev.startDateTime
+        startDateTime: prev.startDateTime ? new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' : new Date().toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
       };
       return {
         ...prev,
