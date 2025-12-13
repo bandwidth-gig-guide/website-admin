@@ -60,13 +60,31 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
   };
 
 
+  const handleDjSetPerformance = () => {
+    setRecord((prev: any) => {
+      if (!prev) return prev;
+      const newPerformance = {
+        title: "DJ Set",
+        imageUrl: "",
+        artistId: "00000000-0000-0000-0000-000000000001",
+        setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
+        startDateTime: prev.startDateTime ? new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' : new Date().toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
+      };
+      return {
+        ...prev,
+        performances: [...(prev.performances || []), newPerformance]
+      };
+    });
+  }
+
+
   const handleSpecialGuestsPerformance = () => {
     setRecord((prev: any) => {
       if (!prev) return prev;
       const newPerformance = {
         title: "Special Guests",
         imageUrl: "",
-        artistId: "00000000-0000-0000-0000-000000000000", // "Specials Guests"
+        artistId: "00000000-0000-0000-0000-000000000000",
         setListPosition: prev.performances && prev.performances.length > 0 ? prev.performances.length + 1 : 1,
         startDateTime: prev.startDateTime ? new Date(prev.startDateTime).toISOString().split('T')[0] + 'T00:01:00' : new Date().toISOString().split('T')[0] + 'T00:01:00' // "Time Unknown"
       };
@@ -192,7 +210,10 @@ const FormComponentPerformances = ({ record, setRecord }: Props) => {
 
       <div className={styles.buttons}>
         <button type="button" className="addButton" onClick={handleSpecialGuestsPerformance}>
-          Add "Special Guests"
+          "DJ Set"
+        </button>
+        <button type="button" className="addButton" onClick={handleSpecialGuestsPerformance}>
+          "Special Guests"
         </button>
         <button type="button" className="addButton" onClick={handleAddPerformance}>
           Add Performance
