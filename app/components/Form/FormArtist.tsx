@@ -54,20 +54,20 @@ const FormArtist: React.FC<FormArtistProps> = ({
           <FormComponentDropdownList
             label="Country"
             name="country"
-            value={artist.country}
+            value={artist.country ?? "Australia"}
             onChange={onChange}
             options={COUNTRY}
           />
           <FormComponentTextInput
             label="City"
             name="city"
-            value={artist.city}
+            value={artist.city ?? "Melbourne"}
             onChange={onChange}
           />
           <FormComponentDropdownList
             label="State"
             name="stateCode"
-            value={artist.stateCode}
+            value={artist.stateCode ?? "VIC"}
             onChange={onChange}
             options={STATE_CODE}
           />
@@ -85,7 +85,7 @@ const FormArtist: React.FC<FormArtistProps> = ({
           <FormComponentCheckbox
             label="Featured Artist"
             name="isFeatured"
-            checked={artist.isFeatured}
+            checked={artist.isFeatured ?? false}
             onChange={(e) => setArtist(prev => ({ ...prev, isFeatured: e.target.checked }))}
           />
       </fieldset>

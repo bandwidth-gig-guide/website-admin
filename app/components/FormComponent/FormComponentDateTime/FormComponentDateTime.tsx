@@ -1,22 +1,23 @@
 import React from "react";
 import styles from './FormComponentDateTime.module.css';
 
-interface Props {
+
+const FormComponentDateTime: React.FC<{
   label: string;
   name: string;
-  value: string; // ISO string: "2025-08-20T18:00:00"
+  value?: string; // ISO string: "2025-01-01T18:00:00"
   onChange: (newIsoValue: string) => void;
   required?: boolean;
-}
-
-const FormComponentDateTime: React.FC<Props> = ({ 
+}> = ({
   label,
   name,
-  value,
+  value = "",
   onChange,
-  required = true 
+  required = true
 }) => {
-  const [datePart = "", timePart = ""] = (value ? value : "").split("T");
+  const fallbackValue = value || `${new Date().toISOString().split('T')[0]}T00:01:00`;
+  const [datePart, timePart] = fallbackValue.split("T");
+
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;
@@ -25,6 +26,7 @@ const FormComponentDateTime: React.FC<Props> = ({
     }
   };
 
+
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = e.target.value;
     if (newTime && datePart) {
@@ -32,15 +34,17 @@ const FormComponentDateTime: React.FC<Props> = ({
     }
   };
 
+
   const handleTimeUnknown = () => {
-    if (datePart) {
       onChange(`${datePart}T00:01:00`);
-    }
   };
+
 
   return (
     <div className={styles.wrapper}>
-      <label htmlFor={`${name}-date`}>{label}</label>
+      <label htmlFor={`${name}-date`}>
+        {label}
+      </label>
       <input
         type="date"
         id={`${name}-date`}
@@ -57,15 +61,12 @@ const FormComponentDateTime: React.FC<Props> = ({
         onChange={handleTimeChange}
         required={required}
       />
-      <button 
-        type="button" 
+      <button
+        type="button"
         onClick={handleTimeUnknown}
-        className={`
-          toggleButton
-          ${timePart === "00:01:00" ? "activeButton" : ""}
-        `}
+        className={`toggleButton ${timePart === "00:01:00" ? "activeButton" : ""}`}
       >
-        Time unknown
+        Time Unknown
       </button>
     </div>
   );
