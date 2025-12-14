@@ -35,6 +35,12 @@ const Table: React.FC<Props> = ({ ids, pageType }) => {
           <button onClick={() => router.push(`/${pageType}/new`)}>
             Create New {pageType.charAt(0).toUpperCase() + pageType.slice(1)}
           </button>
+          {pageType === PageType.Artist &&
+            <button onClick={() => router.push(`/${pageType}/unresearched/`)}>
+              Unresearched
+            </button>
+          }
+
         </div>
 
         <div className={styles.pagination}>
