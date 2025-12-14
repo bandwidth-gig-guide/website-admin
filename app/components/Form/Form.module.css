@@ -15,3 +15,9 @@
         overflow-y: scroll;
     }
 }
+
+.togglesWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+    gap: 8px;
+}

@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import styles from './Form.module.css'
 
 // Components
 import FormComponentDropdownList from "../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
@@ -82,20 +83,20 @@ const FormArtist: React.FC<FormArtistProps> = ({
 
       <fieldset>
         <legend>Toggles</legend>
+        <div className={styles.togglesWrapper}>
           <FormComponentCheckbox
             label="Featured Artist"
             name="isFeatured"
             checked={artist.isFeatured ?? false}
             onChange={(e) => setArtist(prev => ({ ...prev, isFeatured: e.target.checked }))}
           />
-      </fieldset>
-
-      <fieldset>
-        <legend>Socials</legend>
-        <FormComponentSocials
-          record={artist}
-          setRecord={setArtist}
-        />
+          <FormComponentCheckbox
+            label="Researched Artist"
+            name="isResearched"
+            checked={artist.isResearched ?? false}
+            onChange={(e) => setArtist(prev => ({ ...prev, isResearched: e.target.checked }))}
+          />
+        </div>
       </fieldset>
 
       <fieldset>
