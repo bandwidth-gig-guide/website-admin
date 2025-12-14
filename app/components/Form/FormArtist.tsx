@@ -108,6 +108,14 @@ const FormArtist: React.FC<FormArtistProps> = ({
       </fieldset>
 
       <fieldset>
+        <legend>Socials</legend>
+        <FormComponentSocials
+          record={artist}
+          setRecord={setArtist}
+        />
+      </fieldset>
+
+      <fieldset>
         <legend>Tags</legend>
         <FormComponentList
           listName="tags"
