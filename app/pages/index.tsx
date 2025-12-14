@@ -17,6 +17,9 @@ const Home = () => {
           {route.label}
         </button>
       ))}
+      <button onClick={() => router.push('/artist/unresearched')}>
+        Unresearched Artist
+      </button>
 
     </>
   )
