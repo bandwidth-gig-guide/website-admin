@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from './FormComponentTextArea.module.css';
 import { DESCRIPTION_MIN, DESCRIPTION_MAX } from "../../../constants/minMaxValues";
 
-interface Props {
+const FormComponentTextArea: React.FC<{
   label: string;
   name: string;
   value: string;
@@ -10,9 +10,7 @@ interface Props {
   required?: boolean;
   rows?: number;
   isDescription?: boolean;
-}
-
-const FormComponentTextArea: React.FC<Props> = ({
+}> = ({
   label,
   name,
   value,
@@ -21,54 +19,65 @@ const FormComponentTextArea: React.FC<Props> = ({
   rows = 6,
   isDescription = true
 }) => {
-  const [isAppropriateLength, setIsAppropriateLength] = useState<boolean>(false);
-  const [wordCount, setWordCount] = useState<number>(0);
+    const [isAppropriateLength, setIsAppropriateLength] = useState<boolean>(false);
+    const [wordCount, setWordCount] = useState<number>(0);
 
-  useEffect(() => {
-    if (!isDescription) {
-      setIsAppropriateLength(true);
-    }
-  }, [isDescription])
+    useEffect(() => {
+      if (value) {
+        const syntheticEvent = {
+          target: { name, value },
+          currentTarget: { name, value }
+        } as React.ChangeEvent<HTMLTextAreaElement>;
+        onChange(syntheticEvent);
+      }
+    }, []);
 
-  useEffect(() => {
-    if (value === undefined) {
-      setWordCount(0);
-      return;
-    }
-    const count = value.trim().split(/\s+/).filter(Boolean).length;
-    setWordCount(count);
-    if (isDescription) {
-      setIsAppropriateLength(
-        count >= DESCRIPTION_MIN &&
-        count <= DESCRIPTION_MAX
-      );
-    }
-  }, [value, isDescription]);
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.textWrapper}>
-        <label htmlFor={name}>{label}</label>
-        <div className={styles.wordCount}>
-          <p className={!isAppropriateLength ? styles.warning : ''}>
-            {wordCount} Words
-          </p>
-          {isDescription && (
-            <p>Target: {DESCRIPTION_MIN} - {DESCRIPTION_MAX}</p>
-          )}
+    useEffect(() => {
+      if (!isDescription) {
+        setIsAppropriateLength(true);
+      }
+    }, [isDescription])
+
+    useEffect(() => {
+      if (value === undefined) {
+        setWordCount(0);
+        return;
+      }
+      const count = value.trim().split(/\s+/).filter(Boolean).length;
+      setWordCount(count);
+      if (isDescription) {
+        setIsAppropriateLength(
+          count >= DESCRIPTION_MIN &&
+          count <= DESCRIPTION_MAX
+        );
+      }
+    }, [value, isDescription]);
+
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.textWrapper}>
+          <label htmlFor={name}>{label}</label>
+          <div className={styles.wordCount}>
+            <p className={!isAppropriateLength ? styles.warning : ''}>
+              {wordCount} Words
+            </p>
+            {isDescription && (
+              <p>Target: {DESCRIPTION_MIN} - {DESCRIPTION_MAX}</p>
+            )}
+          </div>
         </div>
+        <textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          rows={rows}
+          style={{ resize: "vertical" }}
+        />
       </div>
-      <textarea
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        rows={rows}
-        style={{ resize: "vertical" }}
-      />
-    </div>
-  );
-};
+    );
+  };
 
 export default FormComponentTextArea;

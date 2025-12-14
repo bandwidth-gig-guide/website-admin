@@ -46,7 +46,7 @@ const FormArtist: React.FC<FormArtistProps> = ({
           <FormComponentNumberInput
             label="Year Founded"
             name="yearFounded"
-            value={artist.yearFounded}
+            value={artist.yearFounded || 0}
             onChange={onChange}
             min={1920}
             max={new Date().getFullYear()}
@@ -75,7 +75,7 @@ const FormArtist: React.FC<FormArtistProps> = ({
           <FormComponentTextArea
             label="Description"
             name="description"
-            value={artist.description}
+            value={artist.description || "Placeholder"}
             onChange={onChange}
           />
         </div>
