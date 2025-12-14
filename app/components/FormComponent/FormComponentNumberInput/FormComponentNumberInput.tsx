@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './FormComponentNumberInput.module.css'
 
 interface Props {
@@ -23,6 +23,16 @@ const FormComponentNumberInput: React.FC<Props> = ({
   numberType = 'any'
 }) => {
   let inputProps: React.InputHTMLAttributes<HTMLInputElement> = {};
+
+    useEffect(() => {
+        const syntheticEvent = {
+          target: {
+            name: name,
+            value: value.toString()
+          }
+        } as React.ChangeEvent<HTMLInputElement>;
+        onChange(syntheticEvent);
+    }, []);
 
   if (numberType === 'year' || numberType === 'postCode') {
     inputProps.min = min !== undefined ? min : 1000;

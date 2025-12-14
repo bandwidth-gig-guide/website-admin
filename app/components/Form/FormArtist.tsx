@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import styles from './Form.module.css'
 
 // Components
 import FormComponentDropdownList from "../FormComponent/FormComponentDropdownList/FormComponentDropdownList";
@@ -45,7 +46,7 @@ const FormArtist: React.FC<FormArtistProps> = ({
           <FormComponentNumberInput
             label="Year Founded"
             name="yearFounded"
-            value={artist.yearFounded}
+            value={artist.yearFounded || 0}
             onChange={onChange}
             min={1920}
             max={new Date().getFullYear()}
@@ -74,7 +75,7 @@ const FormArtist: React.FC<FormArtistProps> = ({
           <FormComponentTextArea
             label="Description"
             name="description"
-            value={artist.description}
+            value={artist.description || "Placeholder"}
             onChange={onChange}
           />
         </div>
@@ -82,25 +83,33 @@ const FormArtist: React.FC<FormArtistProps> = ({
 
       <fieldset>
         <legend>Toggles</legend>
+        <div className={styles.togglesWrapper}>
           <FormComponentCheckbox
             label="Featured Artist"
             name="isFeatured"
             checked={artist.isFeatured ?? false}
             onChange={(e) => setArtist(prev => ({ ...prev, isFeatured: e.target.checked }))}
           />
+          <FormComponentCheckbox
+            label="Researched Artist"
+            name="isResearched"
+            checked={artist.isResearched ?? false}
+            onChange={(e) => setArtist(prev => ({ ...prev, isResearched: e.target.checked }))}
+          />
+        </div>
       </fieldset>
 
       <fieldset>
-        <legend>Socials</legend>
-        <FormComponentSocials
+        <legend>Images</legend>
+        <FormComponentImages
           record={artist}
           setRecord={setArtist}
         />
       </fieldset>
 
       <fieldset>
-        <legend>Images</legend>
-        <FormComponentImages
+        <legend>Socials</legend>
+        <FormComponentSocials
           record={artist}
           setRecord={setArtist}
         />

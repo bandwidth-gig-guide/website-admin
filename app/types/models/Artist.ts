@@ -12,6 +12,7 @@ export type Artist = {
     spotifyEmbedUrl?: url;
     youtubeEmbedUrl?: url;
     isFeatured: boolean;
+    isResearched: boolean;
     images: Image[];
     socials: Social[];
     types: string[];
